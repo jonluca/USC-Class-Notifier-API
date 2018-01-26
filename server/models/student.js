@@ -51,4 +51,14 @@ const student = new mongoose.Schema({
     }
 });
 
+student.methods.isAlreadyWatching = function isAlreadyWatching(section) {
+    for (var sec of this.sectionsWatching) {
+        if (sec.sectionNumber === section.sectionNumber) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
 module.exports = db.model('students', student);

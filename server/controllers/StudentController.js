@@ -5,7 +5,7 @@ const paidEmails = require('../core/emailsWithTextNotifications');
 let StudentController = {};
 
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
-
+    // Create new user from their request
     let s = new student();
     s.email = email;
     s.verificationKey = key;
@@ -23,7 +23,6 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
         return callback(user);
     });
 
-    // Generate user, save
 };
 
 StudentController.verifyByKey = (key, callback) => {
@@ -66,6 +65,11 @@ StudentController.addClassToUser = (email, section) => {
             logger.error(`User ${email} not found when attempting to add class!`);
             return callback(false);
         }
+        // If they're already watching this section
+        if (user.isAlreadyWatching(section)) {
+            return callback(user);
+        }
+        user.sectionsWatching.push(section);
         return callback(user);
     });
 
