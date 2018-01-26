@@ -3,7 +3,8 @@ const router = express.Router();
 const logger = require('log4js').getLogger("notification");
 const StudentController = require("../controllers/StudentController");
 const phoneParser = require('phone-parser');
-var validator = require('validator');
+const validator = require('validator');
+const rand = require("random-key");
 
 function parsePhone(number) {
     if (!number) {
@@ -47,13 +48,13 @@ router.get('/verify', function (req, res, next) {
     });
 });
 
-/* Verify user account. */
+/* Add a class to a user account. */
 router.post('/notify', function (req, res, next) {
     const email = req.query.email;
     const sectionNumber = req.body.courseid;
     const department = req.body.department;
     let phone = parsePhone(req.body.phone);
-    let id = req.body.id;
+    let uscid = req.body.id;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip;
 
     if (!validator.isEmail(email)) {
@@ -61,11 +62,30 @@ router.post('/notify', function (req, res, next) {
         return res.status(400).send({"error": "Invalid email!"}).end();
     }
 
-    UserController.userExists(email, (userExists)=>{
-        if(userExists){
+    if (!sectionNumber || !department) {
+        return res.status(400).send({"error": "Invalid department or section!"}).end();
+    }
 
+    const section = {
+        sectionNumber: sectionNumber,
+        department: department
+    };
+
+    UserController.userExists(email, (userExists) => {
+        if (!userExists) {
+            UserController.createUser(email, rand.generate(32), phone, uscid, ip, (success) => {
+                if (!success) {
+                    return res.status(500).send({"error": "Unable to create user account! Please email jdecaro@usc.edu with your information."}).end();
+                }
+
+            });
         }
-    })
+        else {
+            UserController.addClassToUser(email, section, (result) => {
+
+            });
+        }
+    });
 });
 
 module.exports = router;
