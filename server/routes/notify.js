@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const logger = require('log4js').getLogger("notification");
 const StudentController = require("../controllers/StudentController");
+const EmailController = require('../controllers/EmailController');
 const phoneParser = require('phone-parser');
 const validator = require('validator');
 const rand = require("random-key");
