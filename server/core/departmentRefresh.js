@@ -1,7 +1,7 @@
 const cron = require('cron');
 const StudentController = require("../controllers/StudentController");
 const logger = require('log4js').getLogger("department");
-
+const ONE_SECOND = 1000;
 /*
 Cron job that runs every 15 minutes. Pulls newest classes
 Time interval changed to 1 hour during non-registration time
@@ -28,7 +28,7 @@ function refreshDepartments(departments) {
     let options = {
         url: `http://web-app.usc.edu/web/soc/api/classes/20181?refresh=Mary4adAL1ttleLamp`,
         headers,
-        timeout: 120000
+        timeout: 2 * 60 * ONE_SECOND
     };
 
     for (const department of departments) {
@@ -48,10 +48,10 @@ function refreshDepartments(departments) {
                             parseCourses(body);
                         }
                         else {
-                            departmentLog.error(`Error refreshing regular department ${department}`);
+                            logger.error(`Error refreshing regular department ${department}`);
                         }
                     });
-                }, 30 * 1000);
+                }, 30 * ONE_SECOND);
 
             }
         });
