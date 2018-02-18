@@ -93,6 +93,7 @@ StudentController.getAllWatchedDepartments = async () => {
     }, (err, docs) => {
         _.map(docs, 'sectionsWatching');
         let departments = [...new Set(a)];
+        return departments;
     });
 };
 module.exports = StudentController;
