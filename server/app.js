@@ -5,19 +5,19 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const notify = require('./routes/notify');
 const app = express();
-
+const refresher = require('./core/departmentRefresh');
 // Add security headers and options
 require('./utils/security')(app);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', notify);
 

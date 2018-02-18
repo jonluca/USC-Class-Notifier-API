@@ -29,7 +29,7 @@ function validSection(section, department) {
         return false;
     }
 
-    if (ValidDepartments.indexOf(department.toUpperCase()) === -1) {
+    if (!ValidDepartments.includes(department.toUpperCase())) {
         return false;
     }
 
@@ -37,12 +37,12 @@ function validSection(section, department) {
 }
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
     res.render('landing');
 });
 
 /* Verify user account. */
-router.get('/verify', function (req, res, next) {
+router.get('/verify', (req, res, next) => {
     const email = req.query.email;
     const key = req.query.key;
 
@@ -65,8 +65,8 @@ router.get('/verify', function (req, res, next) {
 });
 
 /* Add a class to a user account. */
-router.post('/notify', function (req, res, next) {
-    const email = req.query.email;
+router.post('/notify', (req, res, next) => {
+    const email = req.body.email;
     const sectionNumber = req.body.courseid;
     const department = req.body.department;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip;
@@ -88,13 +88,13 @@ router.post('/notify', function (req, res, next) {
         department: department.toUpperCase().trim()
     };
 
-    UserController.userExists(email, (userExists) => {
+    StudentController.userExists(email, (userExists) => {
         if (!userExists) {
-            UserController.createUser(email, rand.generate(32), phone, uscid, ip, (success) => {
+            StudentController.createUser(email, rand.generate(32), phone, uscid, ip, (success) => {
                 if (!success) {
                     return res.status(500).send({"error": "Unable to create user account! Please email jdecaro@usc.edu with your information."}).end();
                 }
-                UserController.addClassToUser(email, section, (result) => {
+                StudentController.addClassToUser(email, section, (result) => {
                     if (!result) {
                         return res.status(500).send({"error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."}).end();
                     }
@@ -103,7 +103,10 @@ router.post('/notify', function (req, res, next) {
             });
         }
         else {
-            UserController.addClassToUser(email, section, (result) => {
+            StudentController.addClassToUser(email, section, (result) => {
+                if (!result) {
+                    return res.status(500).send({"error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."}).end();
+                }
                 return res.status(200).end();
             });
         }

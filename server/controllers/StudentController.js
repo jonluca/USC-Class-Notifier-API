@@ -1,6 +1,7 @@
 const student = require('../models/student');
 const logger = require('log4js').getLogger("notification");
-const paidEmails = require('../core/emailsWithTextNotifications');
+const emailHasPaidForText = require('../core/emailsWithTextNotifications');
+const _ = require('lodash');
 
 let StudentController = {};
 
@@ -10,9 +11,9 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
     s.email = email;
     s.verificationKey = key;
     s.phone = phone;
-    s.uscid = id;
+    s.uscid = uscid;
     s.ip = ip;
-    s.paidForTextNotifications = paidEmails(email);
+    s.paidForTextNotifications = emailHasPaidForText(email);
 
     s.save((err, user) => {
         if (err) {
@@ -22,21 +23,20 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
         logger.info(`Succesfully created user ${email}`);
         return callback(user);
     });
-
 };
 
 StudentController.verifyByKey = (key, callback) => {
-    student.findOneAndUpdate({verificationKey: key}, {validAccount: true}, function (err, doc) {
+    student.findOneAndUpdate({verificationKey: key}, {validAccount: true}, (err, doc) => {
         if (err || !doc) {
             return callback(false);
         }
-        logger.info("Verified " + email);
+        logger.info(`Verified ${email}`);
         return callback(true);
     });
 };
 
 StudentController.isVerified = (email, callback) => {
-    student.findOne({email: email}, (err, user) => {
+    student.findOne({email}, (err, user) => {
         if (err || !user) {
             logger.debug(`Error checking if ${email} is valid`);
             return callback(false);
@@ -46,7 +46,7 @@ StudentController.isVerified = (email, callback) => {
 };
 
 StudentController.userExists = (email, callback) => {
-    student.findOne({email: email}, (err, user) => {
+    student.findOne({email}, (err, user) => {
         if (err) {
             logger.error(`Error checking if user ${email} exists`);
             return callback(false);
@@ -55,8 +55,8 @@ StudentController.userExists = (email, callback) => {
     });
 };
 
-StudentController.addClassToUser = (email, section) => {
-    student.findOne({email: email}, (err, user) => {
+StudentController.addClassToUser = (email, section, callback) => {
+    student.findOne({email}, (err, user) => {
         if (err) {
             logger.error(`Error checking if user ${email} exists`);
             return callback(false);
@@ -70,9 +70,29 @@ StudentController.addClassToUser = (email, section) => {
             return callback(user);
         }
         user.sectionsWatching.push(section);
+        user.markModified('sectionsWatching');
+        user.save();
         return callback(user);
     });
-
 };
 
+StudentController.removeUser = (email, key, callback) => {
+    student.findOneAndUpdate({verificationKey: key}, {deleted: true}, (err, doc) => {
+        if (err || !doc) {
+            return callback(false);
+        }
+        logger.info(`Deleted ${email}`);
+        return callback(true);
+    });
+};
+
+StudentController.getAllWatchedDepartments = async () => {
+    student.find({
+        validAccount: true,
+        semester: "20181"
+    }, (err, docs) => {
+        _.map(docs, 'sectionsWatching');
+        let departments = [...new Set(a)];
+    });
+};
 module.exports = StudentController;

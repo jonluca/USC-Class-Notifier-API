@@ -6,7 +6,7 @@ const semester = "20181";
 
 const section = {
     sectionNumber: {
-        type: Number
+        type: String
     },
     department: {
         type: String
@@ -57,7 +57,6 @@ student.methods.isAlreadyWatching = function isAlreadyWatching(section) {
             return true;
         }
     }
-
     return false;
 };
 
