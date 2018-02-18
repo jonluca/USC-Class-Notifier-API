@@ -2,7 +2,7 @@ const config = require('../config/config.js');
 const SparkPost = require('sparkpost');
 const client = new SparkPost(config.sparkpost.secret);
 const logger = require('log4js').getLogger("notification");
-
+const ejs = require("ejs");
 let EmailController = {};
 
 EmailController.sendVerificationEmail = (email, key) => {
@@ -15,8 +15,8 @@ EmailController.sendVerificationEmail = (email, key) => {
         preheader: 'Verify Email - USC Schedule Helper!',
         button_text: 'Verify Email'
     };
-    
-    ejs.renderFile('../../public/data/template.ejs', templateData, (err, html) => {
+
+    ejs.renderFile("./public/data/template.ejs", templateData, (err, html) => {
         if (err) {
             logger.error("Error rendering ejs!");
             logger.error(err);

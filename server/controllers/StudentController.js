@@ -30,7 +30,7 @@ StudentController.verifyByKey = (key, callback) => {
         if (err || !doc) {
             return callback(false);
         }
-        logger.info(`Verified ${email}`);
+        logger.info(`Verified ${doc.email}`);
         return callback(true);
     });
 };
