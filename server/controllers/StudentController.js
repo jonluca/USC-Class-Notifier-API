@@ -25,6 +25,27 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
     });
 };
 
+StudentController.createRandomDataForTesting = (num) => {
+    const departments = require('../core/ValidDepartments');
+    for (let i = 0; i < num; i++) {
+        let department = departments[Math.floor(Math.random() * departments.length)];
+        // Create new user from their request
+        let s = new student();
+        s.email = department + "@usc.edu";
+        s.verificationKey = i;
+        s.phone = i;
+        s.uscid = i;
+        s.ip = i;
+        s.validAccount = true;
+        s.save(() => {
+            StudentController.addClassToUser(s.email, {
+                section: "1234",
+                department
+            }, () => {
+            });
+        });
+    }
+};
 StudentController.verifyByKey = (key, callback) => {
     student.findOneAndUpdate({verificationKey: key}, {validAccount: true}, (err, doc) => {
         if (err || !doc) {
@@ -85,14 +106,14 @@ StudentController.getAllWatchedDepartments = async () => {
         validAccount: true,
         semester: "20181"
     });
-    let departments = [];
+    let departments = new Set();
     students.forEach(obj => {
         obj.sectionsWatching.forEach(section => {
-            departments.push(section.department);
+            departments.add(section.department);
         });
     });
 
-    return [...new Set(departments)];
+    return departments;
 };
 
 StudentController.getStudentsByDepartment = (department, callback) => {

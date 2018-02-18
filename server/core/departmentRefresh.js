@@ -21,8 +21,7 @@ StudentController.getAllWatchedDepartments().then((data, err) => {
         logger.err(err);
         return;
     }
-    let departments = _.map(data, 'sectionsWatching');
-    refreshDepartments();
+    refreshDepartments(data);
 
 });
 
