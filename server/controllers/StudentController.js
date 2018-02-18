@@ -81,10 +81,18 @@ StudentController.removeUser = (email, key, callback) => {
 };
 
 StudentController.getAllWatchedDepartments = async () => {
-    return await student.find({
+    let students = await student.find({
         validAccount: true,
         semester: "20181"
     });
+    let departments = [];
+    students.forEach(obj => {
+        obj.sectionsWatching.forEach(section => {
+            departments.push(section.department);
+        });
+    });
+
+    return [...new Set(departments)];
 };
 
 StudentController.getStudentsByDepartment = (department, callback) => {

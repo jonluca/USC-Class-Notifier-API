@@ -8,6 +8,7 @@ const validator = require('validator');
 const rand = require("random-key");
 const ValidDepartments = require('../core/ValidDepartments');
 
+
 function parsePhone(number) {
     if (!number) {
         return "";

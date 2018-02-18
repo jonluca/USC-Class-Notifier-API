@@ -23,6 +23,7 @@
     "serve-favicon": "~2.4.5",
     "sparkpost": "^2.1.2",
     "supports-color": "^5.1.0",
-    "validator": "^9.4.0"
+    "validator": "^9.4.0",
+    "lodash": "latest"
   }
 }
