@@ -86,11 +86,14 @@ async function parseCourses(body) {
     let departmentInfo = JSON.parse(body);
     /*Object key checks for returned JSON - the Schedule of Classes API is a bit finicky and not very reliable*/
     if (departmentInfo && departmentInfo.Dept_Info && departmentInfo.Dept_Info.abbreviation) {
-      
+
       const departmentName = departmentInfo.Dept_Info.abbreviation;
       let students = await StudentController.getStudentsByDepartment(departmentName);
       let courses = new ClassController(departmentInfo);
-
+      for (const student of students) {
+        checkAvailability(student, courses);
+      }
+      checkAvailability(students, courses);
     } else {
       logger.error("Courses error: " + JSON.stringify(departmentInfo));
     }
@@ -98,4 +101,12 @@ async function parseCourses(body) {
     logger.error("Error parsing returned JSON: ");
     logger.error(e.message); // error in the above string (in this case, yes)!
   }
+}
+
+function checkAvailability(student, courses) {
+
+  for (const section of student.sectionsWatching) {
+    let section = courses.getSection(section.sectionNumber);
+  }
+
 }
