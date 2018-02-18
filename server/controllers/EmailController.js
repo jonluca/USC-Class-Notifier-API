@@ -31,7 +31,7 @@ EmailController.sendVerificationEmail = (email, key) => {
       recipients: [{
         address: email
       }]
-    }).then(data => {
+    }).then(() => {
       logger.info(`Sent verification email to ${email} with key ${key}`);
     }).catch(err => {
       logger.error(`Whoops! Something went wrong verifying ${email}`);
@@ -51,7 +51,7 @@ EmailController.sendSpotsAvailableEmail = (email, content, classID) => {
     recipients: [{
       address: email
     }]
-  }).then(data => {
+  }).then(() => {
     logger.info(`Spots are open for ${classID}. Sent email to ${email}`);
   }).catch(err => {
     logger.error(`Whoops! Something went wrong sending an email saying there are open spots to ${email}`);

@@ -2,7 +2,7 @@ const student = require('../models/student');
 const logger = require('log4js').getLogger("notification");
 const emailHasPaidForText = require('../core/emailsWithTextNotifications');
 const _ = require('lodash');
-
+const config = require("../config/config");
 let StudentController = {};
 
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
@@ -104,12 +104,14 @@ StudentController.removeUser = (email, key, callback) => {
 StudentController.getAllWatchedDepartments = async () => {
   let students = await student.find({
     validAccount: true,
-    semester: "20181"
+    semester: config.semester
   });
   let departments = new Set();
   students.forEach(obj => {
     obj.sectionsWatching.forEach(section => {
-      departments.add(section.department);
+      if (!section.notified) {
+        departments.add(section.department);
+      }
     });
   });
 
@@ -127,7 +129,7 @@ StudentController.getStudentsByDepartment = (department, callback) => {
     validAccount: true,
     deleted: false,
     notified: false,
-    semester: "20181"
+    semester: config.semester
   };
   student.find(query, (err, docs) => {
     if (err || docs === undefined) {
