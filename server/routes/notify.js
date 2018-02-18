@@ -39,9 +39,6 @@ function validSection(section, department) {
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  StudentController.getStudentsByDepartment("CSCI", (students) => {
-    console.log(students);
-  });
   res.render('landing');
 });
 

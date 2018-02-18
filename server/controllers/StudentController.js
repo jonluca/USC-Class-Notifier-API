@@ -114,29 +114,23 @@ StudentController.getAllWatchedDepartments = async () => {
       }
     });
   });
-
   return departments;
 };
 
-StudentController.getStudentsByDepartment = (department, callback) => {
+StudentController.getStudentsByDepartment = async (department) => {
   //Search for users that are being notified for that department
   const query = {
     "sectionsWatching": {
       $elemMatch: {
-        department: department
+        department: department,
+        notified: false
       }
     },
     validAccount: true,
     deleted: false,
-    notified: false,
     semester: config.semester
   };
-  student.find(query, (err, docs) => {
-    if (err || docs === undefined) {
-      callback(false);
-    }
-    callback(docs);
-  });
+  return await student.find(query);
 };
 
 StudentController.validateAccounts = () => {
