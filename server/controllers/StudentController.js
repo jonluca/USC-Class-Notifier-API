@@ -87,13 +87,18 @@ StudentController.removeUser = (email, key, callback) => {
 };
 
 StudentController.getAllWatchedDepartments = async () => {
-    student.find({
+    return await student.find({
         validAccount: true,
         semester: "20181"
-    }, (err, docs) => {
-        _.map(docs, 'sectionsWatching');
-        let departments = [...new Set(a)];
-        return departments;
+    });
+};
+
+StudentController.validateAccounts = () => {
+    student.update({}, {valid: true}, {multi: true}, function (err, res) {
+        if (err) {
+            logger.error(err);
+        }
+        logger.info("Made all accounts valid");
     });
 };
 module.exports = StudentController;

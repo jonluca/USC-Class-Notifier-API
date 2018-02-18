@@ -12,8 +12,9 @@ cron.job("* */15 * * * *", async () => {
     refreshDepartments(await StudentController.getAllWatchedDepartments());
 }).start();
 
-refreshDepartments(StudentController.getAllWatchedDepartments());
-
+StudentController.getAllWatchedDepartments().then((data) => {
+    refreshDepartments(data);
+});
 
 function refreshDepartments(departments) {
 
