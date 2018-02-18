@@ -4,6 +4,7 @@ const logger = require('log4js').getLogger("department");
 const ONE_SECOND = 1000;
 const request = require("request");
 const _ = require("lodash");
+const config = require("../config/config");
 /*
 Cron job that runs every 15 minutes. Pulls newest classes
 Time interval changed to 1 hour during non-registration time
@@ -11,9 +12,7 @@ Time interval changed to 1 hour during non-registration time
 
 cron.job("0 */15 * * * *", async () => {
   logger.info('Hard Class Refresh Starting');
-  let students = await StudentController.getAllWatchedDepartments();
-  let departments = _.map(students, 'sectionsWatching');
-  refreshDepartments();
+  refreshDepartments(await StudentController.getAllWatchedDepartments());
 }).start();
 
 StudentController.getAllWatchedDepartments().then((data, err) => {
@@ -22,11 +21,13 @@ StudentController.getAllWatchedDepartments().then((data, err) => {
     return;
   }
   refreshDepartments(data);
-
 });
 
 function refreshDepartments(departments) {
-
+  /*If data was invalid/uniterable, return (fail silently)*/
+  if (!departments) {
+    return;
+  }
   //Headers so they know who's pulling their information
   const headers = {
     'DNT': '1',
@@ -35,14 +36,14 @@ function refreshDepartments(departments) {
   };
 
   let options = {
-    url: `http://web-app.usc.edu/web/soc/api/classes/20181?refresh=Mary4adAL1ttleLamp`,
+    url: `http://web-app.usc.edu/web/soc/api/classes/${config.semester}?refresh=Mary4adAL1ttleLamp`,
     headers,
     timeout: 2 * 60 * ONE_SECOND
   };
 
   for (const department of departments) {
 
-    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/20181?refresh=Mary4adAL1ttleLamp`;
+    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}?refresh=Mary4adAL1ttleLamp`;
 
     request(options, (error, response, body) => {
       if (!error && response.statusCode === 200) {
@@ -62,7 +63,7 @@ function retryRefreshWithoutHardPull(department) {
     'Cache-Control': 'max-age=0'
   };
   let options = {
-    url: `http://web-app.usc.edu/web/soc/api/classes/${department}/20181`,
+    url: `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}`,
     headers,
     timeout: 2 * 60 * ONE_SECOND
   };

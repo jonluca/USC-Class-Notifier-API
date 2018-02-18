@@ -2,7 +2,7 @@ const db = require('../core/mongo');
 const mongoose = require('mongoose');
 
 //Update every semester to only query the current reg
-const semester = "20181";
+const semester = require("../config/config").semester;
 
 const section = {
   sectionNumber: {
@@ -10,6 +10,10 @@ const section = {
   },
   department: {
     type: String
+  },
+  notified: {
+    type: Boolean,
+    default: false
   }
 };
 
@@ -23,10 +27,7 @@ const student = new mongoose.Schema({
   sectionsWatching: [section],
   verificationKey: String,
   phone: String,
-  notified: {
-    type: Boolean,
-    default: false
-  },
+
   validAccount: {
     type: Boolean,
     default: false
