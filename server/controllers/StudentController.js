@@ -45,14 +45,8 @@ StudentController.isVerified = (email, callback) => {
     });
 };
 
-StudentController.userExists = (email, callback) => {
-    student.findOne({email}, (err, user) => {
-        if (err) {
-            logger.error(`Error checking if user ${email} exists`);
-            return callback(false);
-        }
-        return callback(user);
-    });
+StudentController.userExists = async (email) => {
+    return await student.findOne({email});
 };
 
 StudentController.addClassToUser = (email, section, callback) => {
@@ -90,6 +84,27 @@ StudentController.getAllWatchedDepartments = async () => {
     return await student.find({
         validAccount: true,
         semester: "20181"
+    });
+};
+
+StudentController.getStudentsByDepartment = (department, callback) => {
+    //Search for users that are being notified for that department
+    const query = {
+        "sectionsWatching": {
+            $elemMatch: {
+                department: department
+            }
+        },
+        validAccount: true,
+        deleted: false,
+        notified: false,
+        semester: "20181"
+    };
+    student.find(query, (err, docs) => {
+        if (err || docs === undefined) {
+            callback(false);
+        }
+        callback(docs);
     });
 };
 

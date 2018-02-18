@@ -38,6 +38,9 @@ function validSection(section, department) {
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+    StudentController.getStudentsByDepartment("CSCI", (students) => {
+        console.log(students);
+    });
     res.render('landing');
 });
 
@@ -88,12 +91,14 @@ router.post('/notify', (req, res, next) => {
         department: department.toUpperCase().trim()
     };
 
-    StudentController.userExists(email, (userExists) => {
+    StudentController.userExists(email).then((userExists) => {
         if (!userExists) {
-            StudentController.createUser(email, rand.generate(32), phone, uscid, ip, (success) => {
+            const key = rand.generate(32);
+            StudentController.createUser(email, key, phone, uscid, ip, (success) => {
                 if (!success) {
                     return res.status(500).send({"error": "Unable to create user account! Please email jdecaro@usc.edu with your information."}).end();
                 }
+                EmailController.sendVerificationEmail(email, key);
                 StudentController.addClassToUser(email, section, (result) => {
                     if (!result) {
                         return res.status(500).send({"error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."}).end();
@@ -111,6 +116,7 @@ router.post('/notify', (req, res, next) => {
             });
         }
     });
+
 });
 
 module.exports = router;
