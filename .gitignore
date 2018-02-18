@@ -51,3 +51,4 @@ typings/
 *.tgz
 .yarn-integrity
 .env
+server/config/config.js
