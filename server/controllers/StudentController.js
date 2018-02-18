@@ -94,11 +94,11 @@ StudentController.getAllWatchedDepartments = async () => {
 };
 
 StudentController.validateAccounts = () => {
-    student.update({}, {valid: true}, {multi: true}, function (err, res) {
+    student.update({}, {validAccount: true}, {multi: true}, function (err, res) {
         if (err) {
-            logger.error(err);
+            console.log(err);
         }
-        logger.info("Made all accounts valid");
+        console.log("Made all accounts valid");
     });
 };
 module.exports = StudentController;
