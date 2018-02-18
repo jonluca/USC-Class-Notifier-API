@@ -2,18 +2,28 @@ const cron = require('cron');
 const StudentController = require("../controllers/StudentController");
 const logger = require('log4js').getLogger("department");
 const ONE_SECOND = 1000;
+const request = require("request");
+const _ = require("lodash");
 /*
 Cron job that runs every 15 minutes. Pulls newest classes
 Time interval changed to 1 hour during non-registration time
 */
 
-cron.job("* */15 * * * *", async () => {
+cron.job("0 */15 * * * *", async () => {
     logger.info('Hard Class Refresh Starting');
-    refreshDepartments(await StudentController.getAllWatchedDepartments());
+    let students = await StudentController.getAllWatchedDepartments();
+    let departments = _.map(students, 'sectionsWatching');
+    refreshDepartments();
 }).start();
 
-StudentController.getAllWatchedDepartments().then((data) => {
-    refreshDepartments(data);
+StudentController.getAllWatchedDepartments().then((data, err) => {
+    if (err) {
+        logger.err(err);
+        return;
+    }
+    let departments = _.map(data, 'sectionsWatching');
+    refreshDepartments();
+
 });
 
 function refreshDepartments(departments) {
