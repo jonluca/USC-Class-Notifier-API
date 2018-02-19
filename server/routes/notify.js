@@ -7,6 +7,7 @@ const phoneParser = require('phone-parser');
 const validator = require('validator');
 const rand = require("random-key");
 const ValidDepartments = require('../core/ValidDepartments');
+const manualRefresh = require('../core/departmentRefresh');
 
 function parsePhone(number) {
   if (!number) {
@@ -36,6 +37,13 @@ function validSection(section, department) {
 
   return true;
 }
+
+/* GET home page. */
+router.get('/refresh', (req, res, next) => {
+  res.render('landing');
+  logger.info("Manual Refresh Requested");
+  manualRefresh();
+});
 
 /* GET home page. */
 router.get('/', (req, res, next) => {

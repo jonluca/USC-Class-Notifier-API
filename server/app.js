@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const notify = require('./routes/notify');
 const app = express();
-const refresher = require('./core/departmentRefresh');
 // Add security headers and options
 require('./utils/security')(app);
 
