@@ -3,10 +3,11 @@ const logger = require('log4js').getLogger("notification");
 const emailHasPaidForText = require('../core/emailsWithTextNotifications');
 const _ = require('lodash');
 const config = require("../config/config");
-
+const EmailController = require("./EmailController");
+const TextController = require("./TextController");
 
 let StudentController = {};
-const EmailController = require("./EmailController");
+
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   // Create new user from their request
   let s = new student();
@@ -97,6 +98,9 @@ StudentController.addClassToUser = (email, section, callback) => {
 StudentController.notifyUser = (email, section) => {
   student.findOne({email}, (err, user) => {
     EmailController.sendSpotsAvailableEmail(email, user.key, section);
+    if (user.paidForTextNotifications || emailHasPaidForText(email)) {
+      TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
+    }
     for (const sectionUser of user.sectionsWatching) {
       if (sectionUser.sectionNumber == section.sectionNumber) {
         sectionUser.notified = true;
