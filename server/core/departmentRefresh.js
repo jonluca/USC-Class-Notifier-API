@@ -13,7 +13,7 @@ Cron job that runs every 15 minutes. Pulls newest classes
 Time interval changed to 1 hour during non-registration time
 */
 
-cron.job("0 */15 * * * *", async () => {
+cron.job("0 */45 * * * *", async () => {
   refresh();
 }).start();
 
