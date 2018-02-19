@@ -3,6 +3,9 @@ const SparkPost = require('sparkpost');
 const client = new SparkPost(config.sparkpost.secret);
 const logger = require('log4js').getLogger("notification");
 const ejs = require("ejs");
+
+const template = "./public/data/template.ejs";
+
 let EmailController = {};
 
 EmailController.sendVerificationEmail = (email, key) => {
@@ -16,7 +19,7 @@ EmailController.sendVerificationEmail = (email, key) => {
     button_text: 'Verify Email'
   };
 
-  ejs.renderFile("./public/data/template.ejs", templateData, (err, html) => {
+  ejs.renderFile(template, templateData, (err, html) => {
     if (err) {
       logger.error("Error rendering ejs!");
       logger.error(err);
@@ -41,10 +44,10 @@ EmailController.sendVerificationEmail = (email, key) => {
 
 };
 
-EmailController.sendSpotsAvailableEmail = (email, content, section) => {
+EmailController.sendSpotsAvailableEmail = (email, key, section) => {
   const reset_url = "https://jonlu.ca/soc_api/verify?email=" + email + "&key=" + key;
   let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName}.<br> <br> `;
-  if (spots_available > 1) {
+  if (section.available > 1) {
     text += `There are now ${section.available} spots available. <br> <br> You will not receive this email again.`;
   } else {
     text += `There is now ${section.available} spot available. <br> <br> You will not receive this email again.<br>`;

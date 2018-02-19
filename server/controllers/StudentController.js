@@ -95,7 +95,7 @@ StudentController.notifyUser = (email, section) => {
   student.findOne({email}, (err, user) => {
     EmailController.sendSpotsAvailableEmail(email, user.key, section);
     for (const sectionUser of user.sectionsWatching) {
-      if (sectionUser.sectionNumber == section.id) {
+      if (sectionUser.sectionNumber == section.sectionNumber) {
         sectionUser.notified = true;
         user.markModified('sectionsWatching');
         user.save();

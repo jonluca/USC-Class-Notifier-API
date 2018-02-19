@@ -22,6 +22,7 @@ class ClassController {
             this.addSectionDetails(section);
             this.sections[section.id].courseID = course.PublishedCourseID;
             this.sections[section.id].courseName = course.CourseData.title;
+            this.sections[section.id].sectionNumber = section.id;
           }
         } else {
           this.addSectionDetails(sectionData);
