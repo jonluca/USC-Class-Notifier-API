@@ -32,7 +32,9 @@ class ClassController {
   }
 
   getSection(sectionNumber) {
-    return this.sections[sectionNumber];
+    if (this.sections.hasOwnProperty(sectionNumber)) {
+      return this.sections[sectionNumber];
+    }
   }
 
   addSectionDetails(section) {

@@ -6,6 +6,10 @@
 const app = require('../server/app');
 const debug = require('debug')('class-notifier-api:server');
 const http = require('http');
+/*Listen for unhandled promises*/
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
 
 /**
  * Initialise log4js first, so we don't miss any log messages
@@ -90,3 +94,5 @@ function onListening() {
   debug('Listening on ' + bind);
   logger.info("Listening on " + bind);
 }
+
+
