@@ -10,7 +10,7 @@ let EmailController = {};
 
 EmailController.sendVerificationEmail = (email, key) => {
 
-  const url = `https://jonlu.ca/soc_api/verify?email=${email}&key=${key}`;
+  const url = `https://jonlu.ca/soc/verify?email=${email}&key=${key}`;
   const text = "Hello! <br> <br> Please verify your account by clicking the following link!";
   let templateData = {
     url,
@@ -45,7 +45,7 @@ EmailController.sendVerificationEmail = (email, key) => {
 };
 
 EmailController.sendSpotsAvailableEmail = (email, key, section) => {
-  const reset_url = "https://jonlu.ca/soc_api/verify?email=" + email + "&key=" + key;
+  const reset_url = "https://jonlu.ca/soc/verify?email=" + email + "&key=" + key;
   let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName}.<br> <br> `;
   if (section.available > 1) {
     text += `There are now ${section.available} spots available. <br> <br> You will not receive this email again.`;

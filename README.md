@@ -5,21 +5,21 @@ USC Class Notifier API is a free to use web API for notifications for the number
 
 ## Utilizing the API
 
-There are only three end-points to soc_api. This service is open to any developers, provided they abide by the rate limits and license.
+There are only three end-points to soc. This service is open to any developers, provided they abide by the rate limits and license.
 
 
 ### Registration
 
 | Endpoint | Parameters |
 | -------- | -------- |
-| https://jonlu.ca/soc_api/notify | POST: `email, courseid, department, phone` |
+| https://jonlu.ca/soc/notify | POST: `email, courseid, department, phone` |
 
 A sample AJAX POST request looks like:
 
 ```
 $.ajax({
     method: 'POST',
-    url: "https://jonlu.ca/soc_api/notify",
+    url: "https://jonlu.ca/soc/notify",
     type: 'json',
     data: {
         email: email,
@@ -67,14 +67,14 @@ To manually remove a user from being notified of a section, you can use the `rem
 
 | Endpoint | Parameters |
 | -------- | -------- |
-| https://jonlu.ca/soc_api/remove | POST: `email, key` |
+| https://jonlu.ca/soc/remove | POST: `email, key` |
 
 A sample AJAX POST request looks like:
 
 ```
 $.ajax({
     method: 'POST',
-    url: "https://jonlu.ca/soc_api/notify",
+    url: "https://jonlu.ca/soc/notify",
     type: 'json',
     data: {
         email: email,
