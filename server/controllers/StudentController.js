@@ -3,6 +3,8 @@ const logger = require('log4js').getLogger("notification");
 const emailHasPaidForText = require('../core/emailsWithTextNotifications');
 const _ = require('lodash');
 const config = require("../config/config");
+
+
 let StudentController = {};
 const EmailController = require("./EmailController");
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
@@ -84,6 +86,7 @@ StudentController.addClassToUser = (email, section, callback) => {
     if (user.isAlreadyWatching(section)) {
       return callback(user);
     }
+    logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);
     user.markModified('sectionsWatching');
     user.save();
@@ -97,10 +100,10 @@ StudentController.notifyUser = (email, section) => {
     for (const sectionUser of user.sectionsWatching) {
       if (sectionUser.sectionNumber == section.sectionNumber) {
         sectionUser.notified = true;
-        user.markModified('sectionsWatching');
-        user.save();
       }
     }
+    user.markModified('sectionsWatching');
+    user.save();
   });
 };
 

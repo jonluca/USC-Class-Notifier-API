@@ -102,26 +102,27 @@ router.post('/notify', (req, res, next) => {
       const key = rand.generate(32);
       StudentController.createUser(email, key, phone, uscid, ip, (success) => {
         if (!success) {
+          logger.error(`Unable to create account for ${email}`);
           return res.status(500).send({"error": "Unable to create user account! Please email jdecaro@usc.edu with your information."}).end();
         }
         EmailController.sendVerificationEmail(email, key);
-        StudentController.addClassToUser(email, section, (result) => {
-          if (!result) {
-            return res.status(500).send({"error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."}).end();
-          }
-          return res.status(200).end();
-        });
+        addClass(res, email, section);
       });
     } else {
-      StudentController.addClassToUser(email, section, (result) => {
-        if (!result) {
-          return res.status(500).send({"error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."}).end();
-        }
-        return res.status(200).end();
-      });
+      addClass(res, email, section);
     }
   });
-
 });
+
+function addClass(res, email, section) {
+  StudentController.addClassToUser(email, section, (result) => {
+    if (!result) {
+      logger.error(`Unable to add class to account for ${email}`);
+      return res.status(500).send({"error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."}).end();
+    }
+
+    return res.status(200).end();
+  });
+}
 
 module.exports = router;
