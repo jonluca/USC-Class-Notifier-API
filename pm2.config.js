@@ -5,7 +5,7 @@ module.exports = {
    */
   apps: [// First application
     {
-      name: 'SOC',
+      name: 'SOC2',
       script: 'bin/www',
       env: {
         NODE_ENV: 'production'
