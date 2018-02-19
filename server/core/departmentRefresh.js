@@ -103,10 +103,17 @@ async function parseCourses(body) {
   }
 }
 
-function checkAvailability(student, courses) {
+async function checkAvailability(student, courses) {
 
   for (const section of student.sectionsWatching) {
     let section = courses.getSection(section.sectionNumber);
+    const total_spots = section.spaces_available;
+    const registered = section.number_registered;
+    const spots_available = parseInt(total_spots) - parseInt(registered);
+
+    if (spots_available > 0) {
+      StudentController.notifyUser(student.email, section);
+    }
   }
 
 }

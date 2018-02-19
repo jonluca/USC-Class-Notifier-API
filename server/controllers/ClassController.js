@@ -19,10 +19,12 @@ class ClassController {
 
         if (Array.isArray(sectionData)) {
           for (const section of sectionData) {
-            this.sections[section.id] = section;
+            this.addSectionDetails(section);
+            this.sections[section.id].courseID = course.PublishedCourseID;
+            this.sections[section.id].courseName = course.CourseData.title;
           }
         } else {
-          this.sections[sectionData.id] = sectionData;
+          this.addSectionDetails(sectionData);
         }
       }
 
@@ -33,6 +35,13 @@ class ClassController {
     return this.sections[sectionNumber];
   }
 
+  addSectionDetails(section) {
+    this.sections[section.id] = {};
+    const total_spots = section.spaces_available;
+    const registered = section.number_registered;
+    const available = parseInt(total_spots) - parseInt(registered);
+    this.sections[section.id].available = available;
+  }
 }
 
 module.exports = ClassController;
