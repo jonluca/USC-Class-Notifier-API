@@ -4,7 +4,7 @@ const emailHasPaidForText = require('../core/emailsWithTextNotifications');
 const _ = require('lodash');
 const config = require("../config/config");
 let StudentController = {};
-
+const EmailController = require("./EmailController");
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   // Create new user from their request
   let s = new student();
@@ -91,6 +91,18 @@ StudentController.addClassToUser = (email, section, callback) => {
   });
 };
 
+StudentController.notifyUser = (email, section) => {
+  student.findOne({email}, (err, user) => {
+    EmailController.sendSpotsAvailableEmail(email, user.key, section);
+    for (const sectionUser of user.sectionsWatching) {
+      if (sectionUser.sectionNumber == section.id) {
+        sectionUser.notified = true;
+        user.markModified('sectionsWatching');
+        user.save();
+      }
+    }
+  });
+};
 StudentController.removeUser = (email, key, callback) => {
   student.findOneAndUpdate({verificationKey: key}, {deleted: true}, (err, doc) => {
     if (err || !doc) {
