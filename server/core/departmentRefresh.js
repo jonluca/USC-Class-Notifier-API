@@ -14,17 +14,13 @@ Time interval changed to 1 hour during non-registration time
 */
 
 cron.job("0 */15 * * * *", async () => {
-  logger.info('Hard Class Refresh Starting');
-  refreshDepartments(await StudentController.getAllWatchedDepartments());
+  refresh();
 }).start();
 
-StudentController.getAllWatchedDepartments().then((data, err) => {
-  if (err) {
-    logger.err(err);
-    return;
-  }
-  refreshDepartments(data);
-});
+async function refresh() {
+  logger.info('Hard Class Refresh Starting');
+  refreshDepartments(await StudentController.getAllWatchedDepartments());
+}
 
 function refreshDepartments(departments) {
   /*If data was invalid/uniterable, return (fail silently)*/
@@ -112,5 +108,6 @@ async function checkAvailability(student, courses) {
       }
     }
   }
-
 }
+
+module.exports = refresh;
