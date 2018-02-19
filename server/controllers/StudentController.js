@@ -103,6 +103,7 @@ StudentController.notifyUser = (email, section) => {
     }
   });
 };
+
 StudentController.removeUser = (email, key, callback) => {
   student.findOneAndUpdate({verificationKey: key}, {deleted: true}, (err, doc) => {
     if (err || !doc) {
