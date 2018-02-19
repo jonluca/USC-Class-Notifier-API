@@ -24,4 +24,5 @@ TextController.sendMessage = (number, message) => {
     });
   }
 };
+
 module.exports = TextController;
