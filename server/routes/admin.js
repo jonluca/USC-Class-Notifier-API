@@ -8,16 +8,13 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET users listing. */
-router.get('/users', function (req, res, next) {
-  async function test() {
-    let people = await notifier.find({}, null, {
-      sort: {
-        date: 1
-      }
-    });
-    res.send(people);
-  }
-  test();
+router.get('/users', async function (req, res, next) {
+  let people = await notifier.find({}, null, {
+    sort: {
+      date: 1
+    }
+  });
+  res.send(people);
 });
 
 module.exports = router;
