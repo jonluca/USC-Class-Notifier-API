@@ -14,7 +14,6 @@ const limiter = new RateLimit({
 });
 
 module.exports = function (app) {
-  app.use(helmet());
   app.use(limiter);
   //Apache-like logs
   app.set('trust proxy', true);
