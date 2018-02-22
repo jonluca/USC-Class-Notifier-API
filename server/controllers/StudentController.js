@@ -14,7 +14,7 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   s.email = email;
   s.verificationKey = key;
   s.phone = phone;
-  s.uscid = uscid;
+  s.uscID = uscid;
   s.ip = ip;
   s.paidForTextNotifications = emailHasPaidForText(email);
 
