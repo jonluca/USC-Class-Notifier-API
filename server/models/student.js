@@ -14,6 +14,10 @@ const section = {
   notified: {
     type: Boolean,
     default: false
+  },
+  date: {
+    type: Date,
+    default: new Date().toISOString()
   }
 };
 

@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $.ajax({
     method: 'get',
-    url: "https://jonlu.ca/soc_api/admin/users",
+    url: "https://jonlu.ca/soc/admin/users",
     type: 'json',
     success: function (data, textStatus, jqXHR) {
       //Handle data and status code here
@@ -13,11 +13,22 @@ $(document).ready(function () {
         hour: '2-digit',
         minute: '2-digit'
       };
-      for (var person of data) {
-        var time = new Date(person.date);
-        var timeMS = time.getTime() / 1000;
-        let row = `<tr><td>${person.email}</td><td>${person.phone}</td><td>${person.department}</td><td>${person.uid}</td><td>${person.date.toLocaleString('en-us', options)}</td><td>${person.email_sent}</td><td>${person.valid}</td><td>${person.semester}</td><td>${timeMS}</td></tr>`;
-        $('#data tr:last').after(row);
+      for (let person of data) {
+        for (let course of person.sectionsWatching) {
+          let time = new Date(course.date);
+          let timeMS = time.getTime() / 1000;
+          let row = `<tr>`;
+          row += `<td>${person.email}</td>`;
+          row += `<td>${person.phone}</td>`;
+          row += `<td>${course.department}</td>`;
+          row += `<td>${person.uscID}</td>`;
+          row += `<td>${course.date.toLocaleString('en-us', options)}</td>`;
+          row += `<td>${course.notified}</td>`;
+          row += `<td>${person.validAccount}</td>`;
+          row += `<td>${person.semester}</td>`;
+          row += `<td>${timeMS}</td></tr>`;
+          $('#data tr:last').after(row);
+        }
       }
     }
   });
