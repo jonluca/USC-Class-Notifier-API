@@ -3,7 +3,6 @@ const RateLimit = require('express-rate-limit');
 const fs = require('fs');
 const path = require('path');
 const morgan = require('morgan');
-const cors = require('cors');
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/access.log'), {
   flags: 'a'
@@ -16,7 +15,6 @@ const limiter = new RateLimit({
 
 module.exports = function (app) {
   app.use(helmet());
-  app.use(cors());
   app.use(limiter);
   //Apache-like logs
   app.set('trust proxy', true);
