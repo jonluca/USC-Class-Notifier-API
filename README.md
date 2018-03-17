@@ -49,7 +49,7 @@ Valid sample data:
 | department | SI |
 | phone | 1234567890 |
 
-This would be a valid request to be notified about section 61400 in the SI department. This class specifically maps to `Changing Family Forms`, a GE 6. Any request missing any of these three parameters is discarded.
+This would be a valid request to be notified about section 61400 in the SI department. This class specifically maps to `Changing Family Forms`, a GE F. Any request missing any of these three parameters is discarded.
 
 The response is based entirely off of the HTTP status code.
 
