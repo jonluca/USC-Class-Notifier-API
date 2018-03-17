@@ -26,6 +26,9 @@ class ClassController {
           }
         } else {
           this.addSectionDetails(sectionData);
+          this.sections[sectionData.id].courseID = course.PublishedCourseID;
+          this.sections[sectionData.id].courseName = course.CourseData.title;
+          this.sections[sectionData.id].sectionNumber = sectionData.id;
         }
       }
 
