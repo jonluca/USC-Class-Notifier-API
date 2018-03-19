@@ -1,5 +1,6 @@
 # USC-Class Notifier API
 
+
 USC Class Notifier API is a free to use web API for notifications for the number of spots available in each section at USC. It uses Express as its server and MongoDB as its database and is able to send out emails as needed. It also preserves security (more than enough for a project of this nature) by requiring email authentication for use.
 
 
