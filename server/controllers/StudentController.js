@@ -96,22 +96,21 @@ StudentController.addClassToUser = (email, section, callback) => {
 };
 
 StudentController.notifyUser = async (email, section) => {
-  await student.findOne({email}, async (err, user) => {
-    //EmailController.sendSpotsAvailableEmail(email, user.key, section);
-    if (user.paidForTextNotifications || emailHasPaidForText(email)) {
-      TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
+  let user = await student.findOne({email});
+  //EmailController.sendSpotsAvailableEmail(email, user.key, section);
+  if (user.paidForTextNotifications || emailHasPaidForText(email)) {
+    TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
+  }
+  for (const sectionUser of user.sectionsWatching) {
+    if (sectionUser.sectionNumber == section.sectionNumber) {
+      sectionUser.notified = true;
     }
-    for (const sectionUser of user.sectionsWatching) {
-      if (sectionUser.sectionNumber == section.sectionNumber) {
-        sectionUser.notified = true;
-      }
+  }
+  user.markModified('sectionsWatching');
+  return await user.save(function (err) {
+    if (err) {
+      console.log(err);
     }
-    user.markModified('sectionsWatching');
-    await user.save(function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
   });
 };
 
