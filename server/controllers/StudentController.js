@@ -97,7 +97,7 @@ StudentController.addClassToUser = (email, section, callback) => {
 
 StudentController.notifyUser = async (email, section) => {
   let user = await student.findOne({email});
-  //EmailController.sendSpotsAvailableEmail(email, user.key, section);
+  EmailController.sendSpotsAvailableEmail(email, user.key, section);
   if (user.paidForTextNotifications || emailHasPaidForText(email)) {
     TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
   }
