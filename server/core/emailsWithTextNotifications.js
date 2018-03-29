@@ -5,4 +5,4 @@ function emailHasPaid(email) {
 }
 
 module.exports = emailHasPaid;
-
+module.exports.emails = emails;

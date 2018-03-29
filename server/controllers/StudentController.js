@@ -161,4 +161,15 @@ StudentController.validateAccounts = () => {
     console.log("Made all accounts valid");
   });
 };
+
+StudentController.markAccountsAsPaid = () => {
+  let emails = emailHasPaidForText.emails;
+  for (let email of emails) {
+    student.update({email: email.toLowerCase()}, {paidForTextNotifications: true}, function (err, res) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+};
 module.exports = StudentController;
