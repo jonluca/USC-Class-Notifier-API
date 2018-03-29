@@ -91,7 +91,6 @@ async function parseCourses(body) {
       for (const student of students) {
         checkAvailability(student, courses);
       }
-      checkAvailability(students, courses);
     } else {
       logger.error("Courses error: " + JSON.stringify(departmentInfo));
     }
