@@ -87,6 +87,7 @@ async function parseCourses(body) {
 
       const departmentName = departmentInfo.Dept_Info.abbreviation;
       let students = await StudentController.getStudentsByDepartment(departmentName);
+      console.log(students);
       let courses = new ClassController(departmentInfo);
       for (const student of students) {
         checkAvailability(student, courses);
