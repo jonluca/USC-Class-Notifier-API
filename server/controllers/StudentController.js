@@ -107,7 +107,7 @@ StudentController.notifyUser = async (email, section) => {
     }
   }
   user.markModified('sectionsWatching');
-  return await user.save(function (err) {
+  await user.save(function (err) {
     if (err) {
       console.log(err);
     }

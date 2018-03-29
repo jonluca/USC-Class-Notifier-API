@@ -87,10 +87,9 @@ async function parseCourses(body) {
 
       const departmentName = departmentInfo.Dept_Info.abbreviation;
       let students = await StudentController.getStudentsByDepartment(departmentName);
-      console.log(students);
       let courses = new ClassController(departmentInfo);
       for (const student of students) {
-        checkAvailability(student, courses);
+        await checkAvailability(student, courses);
       }
     } else {
       logger.error("Courses error: " + JSON.stringify(departmentInfo));
@@ -108,7 +107,7 @@ async function checkAvailability(student, courses) {
       let course = courses.getSection(section.sectionNumber);
       /*If the course has available spots, notify them*/
       if (course && course.available > 0) {
-        let res = await StudentController.notifyUser(student.email, course);
+        await StudentController.notifyUser(student.email, course);
       }
     }
   }
