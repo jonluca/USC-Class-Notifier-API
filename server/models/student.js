@@ -54,7 +54,7 @@ const student = new mongoose.Schema({
     type: Date,
     default: new Date().toISOString()
   }
-}, {versionKey: false});
+});
 
 student.methods.isAlreadyWatching = function isAlreadyWatching(section) {
   for (var sec of this.sectionsWatching) {
