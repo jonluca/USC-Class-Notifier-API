@@ -102,10 +102,12 @@ async function parseCourses(body) {
 
 async function checkAvailability(student, courses) {
   if (student && student.sectionsWatching) {
+    /*For each section they are watching*/
     for (const section of student.sectionsWatching) {
       let course = courses.getSection(section.sectionNumber);
+      /*If the course has available spots, notify them*/
       if (course && course.available > 0) {
-        StudentController.notifyUser(student.email, course);
+        await StudentController.notifyUser(student.email, course);
       }
     }
   }
