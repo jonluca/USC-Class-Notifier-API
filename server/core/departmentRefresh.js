@@ -9,9 +9,9 @@ const ONE_SECOND = 1000;
 const StudentController = require("../controllers/StudentController");
 const ClassController = require("../controllers/ClassController");
 /*
-Cron job that runs every 15 minutes. Pulls newest classes
-Time interval changed to 1 hour during non-registration time
-*/
+ Cron job that runs every 15 minutes. Pulls newest classes
+ Time interval changed to 1 hour during non-registration time
+ */
 
 cron.job("0 */45 * * * *", async () => {
   refresh();
@@ -23,6 +23,8 @@ async function refresh() {
 }
 
 function refreshDepartments(departments) {
+  // On every refresh make sure we mark all accounts that have paid as paid
+  StudentController.markAccountsAsPaid();
   /*If data was invalid/uniterable, return (fail silently)*/
   if (!departments) {
     return;
@@ -42,7 +44,7 @@ function refreshDepartments(departments) {
 
   for (const department of departments) {
 
-    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}`;//?refresh=Mary4adAL1ttleLamp`;
+    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}?refresh=Mary4adAL1ttleLamp`;
 
     request(options, (error, response, body) => {
       if (!error && response.statusCode === 200) {
