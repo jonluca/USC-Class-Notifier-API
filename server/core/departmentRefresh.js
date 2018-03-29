@@ -107,7 +107,7 @@ async function checkAvailability(student, courses) {
       let course = courses.getSection(section.sectionNumber);
       /*If the course has available spots, notify them*/
       if (course && course.available > 0) {
-        await StudentController.notifyUser(student.email, course);
+        let res = await StudentController.notifyUser(student.email, course);
       }
     }
   }
