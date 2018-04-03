@@ -106,10 +106,18 @@ async function checkAvailability(student, courses) {
     for (const section of student.sectionsWatching) {
       let course = courses.getSection(section.sectionNumber);
       /*If the course has available spots, notify them*/
-      if (course && course.available > 0) {
-        await StudentController.notifyUser(student.email, course);
+      if (course && course.available > 0 && !section.notified) {
+        logger.info('notifying ' + student.email +section)
+        await StudentController.notifyUser(student, course);
+        section.notified = true;
       }
     }
+    student.markModified('sectionsWatching');
+    await student.save(function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
   }
 }
 
