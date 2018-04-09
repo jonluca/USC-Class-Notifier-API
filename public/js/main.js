@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $.ajax({
     method: 'GET',
-    url: "soc/admin/users",
+    url: "admin/users",
     type: 'json',
     success: function (data, textStatus, jqXHR) {
       //Handle data and status code here
