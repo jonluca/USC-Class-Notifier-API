@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $.ajax({
-    method: 'get',
-    url: "https://jonlu.ca/soc/admin/users",
+    method: 'GET',
+    url: "soc/admin/users",
     type: 'json',
     success: function (data, textStatus, jqXHR) {
       //Handle data and status code here

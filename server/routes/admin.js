@@ -9,13 +9,10 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET users listing. */
-router.get('/users', async function (req, res, next) {
-  let people = await students.find({}, null, {
-    sort: {
-      date: 1
-    }
+router.get('/users', function (req, res, next) {
+  students.find({}, (err, people) => {
+    return res.json(people).end();
   });
-  res.send(people);
 });
 
 module.exports = router;
