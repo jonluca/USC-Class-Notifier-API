@@ -45,7 +45,7 @@ EmailController.sendVerificationEmail = (email, key) => {
 };
 
 EmailController.sendSpotsAvailableEmail = (email, key, section) => {
-  const reset_url = "https://jonlu.ca/soc/verify?email=" + email + "&key=" + key;
+  const watchAgainUrl = "https://jonlu.ca/soc/verify?email=" + email + "&key=" + key;
   let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName}.<br> <br> `;
   if (section.available > 1) {
     text += `There are now ${section.available} spots available. <br> <br> You will not receive this email again.`;
@@ -57,7 +57,7 @@ EmailController.sendSpotsAvailableEmail = (email, key, section) => {
  <br> <p style="font-size:10px"><a href="mailto:jdecaro@usc.edu">Made with ♥ in Los Angeles</a></p>`;
 
   let templateData = {
-    url: reset_url,
+    url: watchAgainUrl,
     text: text,
     preheader: 'Spots are available!',
     button_text: 'Click here to continue receiving emails for this section'

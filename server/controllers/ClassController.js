@@ -19,16 +19,12 @@ class ClassController {
 
         if (Array.isArray(sectionData)) {
           for (const section of sectionData) {
-            this.addSectionDetails(section);
-            this.sections[section.id].courseID = course.PublishedCourseID;
-            this.sections[section.id].courseName = course.CourseData.title;
-            this.sections[section.id].sectionNumber = section.id;
+            this.addSectionDetails(section, course);
+
           }
         } else {
-          this.addSectionDetails(sectionData);
-          this.sections[sectionData.id].courseID = course.PublishedCourseID;
-          this.sections[sectionData.id].courseName = course.CourseData.title;
-          this.sections[sectionData.id].sectionNumber = sectionData.id;
+          this.addSectionDetails(sectionData, course);
+
         }
       }
 
@@ -41,12 +37,20 @@ class ClassController {
     }
   }
 
-  addSectionDetails(section) {
+  addSectionDetails(section, course) {
     this.sections[section.id] = {};
     const total_spots = section.spaces_available;
     const registered = section.number_registered;
     const available = parseInt(total_spots) - parseInt(registered);
     this.sections[section.id].available = available;
+    this.sections[section.id].courseID = course.PublishedCourseID;
+    this.sections[section.id].courseName = course.CourseData.title;
+    this.sections[section.id].sectionNumber = section.id;
+
+    // For GEs and GSEMs, they woun't have courseID in th emain object because it's from a bunch of different departments
+    if(typeof(this.sections[section.id].courseID) != "string"){
+      this.sections[section.id].courseID = course.CourseData.prefix + "-" + course.CourseData.number;
+    }
   }
 }
 
