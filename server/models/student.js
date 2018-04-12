@@ -31,7 +31,6 @@ const student = new mongoose.Schema({
   sectionsWatching: [section],
   verificationKey: String,
   phone: String,
-
   validAccount: {
     type: Boolean,
     default: false
@@ -57,12 +56,21 @@ const student = new mongoose.Schema({
 });
 
 student.methods.isAlreadyWatching = function isAlreadyWatching(section) {
-  for (var sec of this.sectionsWatching) {
+  for (let sec of this.sectionsWatching) {
     if (sec.sectionNumber === section.sectionNumber) {
       return true;
     }
   }
   return false;
+};
+
+student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(section) {
+  for (let sec of this.sectionsWatching) {
+    if (sec.sectionNumber === section.sectionNumber) {
+      sec.notified = false;
+      this.save();
+    }
+  }
 };
 
 module.exports = db.model('students', student);
