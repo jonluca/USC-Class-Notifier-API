@@ -59,6 +59,16 @@ StudentController.verifyByKey = (key, callback) => {
   });
 };
 
+StudentController.verifyByEmail = (email, callback) => {
+  student.findOneAndUpdate({email: email}, {validAccount: true}, (err, doc) => {
+    if (err || !doc) {
+      return callback(false);
+    }
+    logger.info(`Verified by email ${doc.email}`);
+    return callback(true);
+  });
+};
+
 StudentController.isVerified = (email, callback) => {
   student.findOne({email}, (err, user) => {
     if (err || !user) {
@@ -85,6 +95,8 @@ StudentController.addClassToUser = (email, section, callback) => {
     }
     // If they're already watching this section
     if (user.isAlreadyWatching(section)) {
+      user.markSectionAsNotNotified(section);
+      logger.info(`Marked section ${section.sectionNumber} for ${user.email} as not notified`);
       return callback(user);
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
@@ -99,6 +111,7 @@ StudentController.notifyUser = async (user, section) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section);
   if (user.paidForTextNotifications || emailHasPaidForText(user.email)) {
     TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
+    logger.info(`Sent text message to ${email} for ${section.department} - ${section.sectionNumber}`);
   }
 };
 

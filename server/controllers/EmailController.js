@@ -27,7 +27,7 @@ EmailController.sendVerificationEmail = (email, key) => {
     } // Handle error
     client.transmissions.send({
       content: {
-        from: 'no-reply@jonlu.ca',
+        from: 'schedule-helper@jonlu.ca',
         subject: 'Verify Email - USC Schedule Helper',
         html
       },
