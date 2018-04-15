@@ -163,6 +163,7 @@ StudentController.validateAccounts = () => {
       console.log(err);
     }
     console.log("Made all accounts valid");
+    console.log("Modified " + res.nModified + " accounts.");
   });
 };
 
