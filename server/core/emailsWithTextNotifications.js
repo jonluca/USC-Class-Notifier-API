@@ -5,7 +5,7 @@ const emails = ["tranrl@usc.edu", "sarahyao@usc.edu", "anavbatr@usc.edu", "zack7
     "hxian@usc.edu", "mitchepl@usc.edu", "bryceste@usc.edu", "chanlee@usc.edu", "daniel@devereaux.cz", "eleblanc@usc.edu", "jpelliot@usc.edu", "zhan464@usc.edu", "nredfern@usc.edu", "chjameso@usc.edu", "swoap@usc.edu"
     , "yock@usc.edu", "tribbitt@usc.edu", "jinjiach@usc.edu", "mr.hakimian@gmail.com", "jamiedriscoll11@gmail.com", "jinchenz@usc.edu", "joyceali@usc.edu", "aamarnat@usc.edu", "danckert@usc.edu", "ghstenge@usc.edu",
     "grava@usc.edu", "markosky@usc.edu", "ursitti@usc.edu", "danckert@usc.edu", "aaronesm@usc.edu", "djsoroud@usc.edu", "jlsharpe@usc.edu", "marknish@usc.edu", "baldwinm@usc.edu", "tudahl@usc.edu", "alyssay@usc.edu",
-    "jacksock@usc.edu", "pwakelan@usc.edu"];
+    "jacksock@usc.edu", "pwakelan@usc.edu", "smcginn@usc.edu", "cblamber@usc.edu", "gsmcmaho@usc.edu", "szabojoh@usc.edu"];
 
 function emailHasPaid(email) {
     return emails.includes(email);
