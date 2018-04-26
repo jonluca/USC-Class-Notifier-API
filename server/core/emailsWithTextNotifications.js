@@ -7,7 +7,7 @@ const emails = ["tranrl@usc.edu", "sarahyao@usc.edu", "anavbatr@usc.edu", "zack7
     "grava@usc.edu", "markosky@usc.edu", "ursitti@usc.edu", "danckert@usc.edu", "aaronesm@usc.edu", "djsoroud@usc.edu", "jlsharpe@usc.edu", "marknish@usc.edu", "baldwinm@usc.edu", "tudahl@usc.edu", "alyssay@usc.edu",
     "jacksock@usc.edu", "pwakelan@usc.edu", "smcginn@usc.edu", "cblamber@usc.edu", "gsmcmaho@usc.edu", "szabojoh@usc.edu", "steupert@usc.edu", "masonwis@usc.edu", "gazola@usc.edu", "sarakell@usc.edu", "zhangjij@usc.edu",
     "jackienichols@me.com", "borgida@usc.edu", "arguevar@usc.edu", "maansima@usc.edu", "opereira@usc.edu", "rccampbe@usc.edu", "abelyaeva98@gmail.com", "bposnock@usc.edu", "ayeshoua@usc.edu", "natalieprideaux@gmail.com",
-    "wellsjr@usc.edu", "davinc@usc.edu", "antoineh@usc.edu", "aneetsin@usc.edu", "eltahir@usc.edu", "nweir@usc.edu"];
+    "wellsjr@usc.edu", "davinc@usc.edu", "antoineh@usc.edu", "aneetsin@usc.edu", "eltahir@usc.edu", "nweir@usc.edu", "lynchk@usc.edu", "caeberle@usc.edu"];
 
 function emailHasPaid(email) {
     return emails.includes(email);
