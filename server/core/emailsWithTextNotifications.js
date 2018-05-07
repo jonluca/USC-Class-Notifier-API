@@ -40,6 +40,7 @@ const emails = [
     "grava@usc.edu",
     "gsmcmaho@usc.edu",
     "gyashar@usc.edu",
+    "hakimian@gmail.com",
     "hxian@usc.edu",
     "inesrami@usc.edu",
     "ipenagos@usc.edu",
