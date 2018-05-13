@@ -107,7 +107,8 @@ const emails = [
     "zhangjij@usc.edu",
     "zoerberger@gmail.com",
     "zsiam@usc.edu",
-    "schugh@usc.edu"
+    "schugh@usc.edu",
+    "sskeough@usc.edu"
 ];
 
 function emailHasPaid(email) {
