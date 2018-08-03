@@ -53,3 +53,4 @@ typings/
 .yarn-integrity
 .env
 server/config/config.js
+server/core/emailsWithTextNotifications.js
