@@ -132,7 +132,16 @@ const emails = [
     "rmcmacki@usc.edu",
     "williamberezovsky@gmail.com",
     "schugh@usc.edu",
-    "jgschwar@usc.edu"
+    "jgschwar@usc.edu",
+    "ipenagos@usc.edu",
+    "angussmi@usc.edu",
+    "muiyamsn@usc.edu",
+    "silv884@usc.edu",
+    "kfeldman@usc.edu",
+    "bradlreynolds@gmail.com",
+    "lrhowell@usc.edu",
+    "chanceweston@gmail.com",
+    "andywoodruff3@gmail.com"
 ];
 
 function emailHasPaid(email) {
