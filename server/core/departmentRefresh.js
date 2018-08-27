@@ -73,7 +73,7 @@ function retryRefreshWithoutHardPull(department) {
       if (!error && response.statusCode === 200) {
         parseCourses(body);
       } else {
-        logger.error(`Error refreshing department ${department} - no refresh key`);
+        logger.warn(`Error refreshing department ${department} even without the database refresh key`);
       }
     });
   }, 30 * ONE_SECOND);
