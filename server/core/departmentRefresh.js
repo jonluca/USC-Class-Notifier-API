@@ -3,7 +3,8 @@ const logger = require('log4js').getLogger("department");
 const request = require("request");
 /*---CONFIG---*/
 const config = require("../config/config");
-const ONE_SECOND = 1000;
+const ONE_SECOND_MS = 1000;
+const timeout = 5 * 60 * ONE_SECOND_MS;
 
 /*---CONTROLLERS---*/
 const StudentController = require("../controllers/StudentController");
@@ -39,7 +40,7 @@ function refreshDepartments(departments) {
   let options = {
     url: `http://web-app.usc.edu/web/soc/api/classes/${config.semester}?refresh=Mary4adAL1ttleLamp`,
     headers,
-    timeout: 2 * 60 * ONE_SECOND
+    timeout: timeout
   };
 
   for (const department of departments) {
@@ -66,7 +67,7 @@ function retryRefreshWithoutHardPull(department) {
   let options = {
     url: `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}`,
     headers,
-    timeout: 2 * 60 * ONE_SECOND
+    timeout
   };
   setTimeout(() => {
     request(options, (error, response, body) => {
@@ -76,7 +77,7 @@ function retryRefreshWithoutHardPull(department) {
         logger.warn(`Error refreshing department ${department} even without the database refresh key`);
       }
     });
-  }, 30 * ONE_SECOND);
+  }, 30 * ONE_SECOND_MS);
 }
 
 async function parseCourses(body) {

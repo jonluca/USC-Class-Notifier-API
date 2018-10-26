@@ -41,8 +41,7 @@ class ClassController {
     this.sections[section.id] = {};
     const total_spots = section.spaces_available;
     const registered = section.number_registered;
-    const available = parseInt(total_spots) - parseInt(registered);
-    this.sections[section.id].available = available;
+    this.sections[section.id].available = parseInt(total_spots) - parseInt(registered);
     this.sections[section.id].courseID = course.PublishedCourseID;
     this.sections[section.id].courseName = course.CourseData.title;
     this.sections[section.id].sectionNumber = section.id;
