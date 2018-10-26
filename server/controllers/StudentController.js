@@ -151,8 +151,7 @@ StudentController.getStudentsByDepartment = async (department) => {
       }
     },
     validAccount: true,
-    deleted: false,
-    semester: config.semester
+    deleted: false // removed - add in next semester to limit queries semester: config.semester
   };
   return await student.find(query);
 };
