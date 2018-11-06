@@ -15,6 +15,9 @@ function parsePhone(number) {
   }
   let phone = number.trim();
   let parsedPhone = "";
+  if(phone.startsWith("+1")){
+    phone = phone.slice(2);
+  }
   // Try to fix common error of doing 1xxxxxxxxxxx
   if (phone.length === 11 && phone.startsWith(1)) {
     phone = phone.slice(1);
