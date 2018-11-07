@@ -103,16 +103,18 @@ let emails = [
   "zberg@usc.edu",
   "zeb.berg12@gmail.com",
   "zrfisher@usc.edu"
-]
-for(let i = 0; i<emails.length; i++){
-	emails[i] = emails[i].toLowerCase();
+];
+
+for (let i = 0; i < emails.length; i++) {
+  emails[i] = emails[i].toLowerCase();
 }
+
 function emailHasPaid(email) {
-    if(!email){
-	    return false;
-    }
-    email = email.toLowerCase();
-    return emails.includes(email);
+  if (!email) {
+    return false;
+  }
+  email = email.toLowerCase();
+  return emails.includes(email);
 }
 
 module.exports = emailHasPaid;
