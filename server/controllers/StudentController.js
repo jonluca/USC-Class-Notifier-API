@@ -96,7 +96,7 @@ StudentController.addClassToUser = (email, section, callback) => {
     // If they're already watching this section
     if (user.isAlreadyWatching(section)) {
       user.markSectionAsNotNotified(section);
-      logger.info(`Marked section ${section.sectionNumber} for ${user.email} as not notified`);
+      logger.info(`Marked section ${section.department} - ${section.sectionNumber} for ${user.email} as not notified`);
       return callback(user);
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
