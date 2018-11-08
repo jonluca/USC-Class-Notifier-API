@@ -59,6 +59,9 @@ function refreshDepartments(departments) {
 }
 
 function retryRefreshWithoutHardPull(department) {
+  if (!department) {
+    return;
+  }
   const headers = {
     'DNT': '1',
     'User-Agent': 'http://jonlu.ca/soc',
