@@ -113,6 +113,7 @@ let emails = [
   "catherine.ross@live.com",
   "cateperino@gmail.com",
   "tdgoldsm@usc.edu",
+  "roginson@usc.edu",
   "rsomalle@usc.edu",
   "evanhaas@usc.edu",
   "kelleyng@usc.edu",
