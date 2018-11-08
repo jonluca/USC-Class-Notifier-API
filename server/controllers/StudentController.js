@@ -133,7 +133,7 @@ StudentController.getAllWatchedDepartments = async () => {
   let departments = new Set();
   students.forEach(obj => {
     obj.sectionsWatching.forEach(section => {
-      if (!section.notified) {
+      if (!section.notified && section.department) {
         departments.add(section.department);
       }
     });
