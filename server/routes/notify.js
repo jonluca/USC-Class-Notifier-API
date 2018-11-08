@@ -71,20 +71,26 @@ router.get('/verify', (req, res, next) => {
 
   StudentController.verifyByEmail(email, (verified) => {
     if (verified) {
-      StudentController.addClassToUser(email, {sectionNumber: section}, (result) => {
-        if (!result) {
-          logger.error(`Unable to reverify class to account for ${email}`);
-          return res.status(400).render("verify.ejs", {
+      if (section) {
+        StudentController.addClassToUser(email, {sectionNumber: section}, (result) => {
+          if (!result) {
+            logger.error(`Unable to reverify class to account for ${email}`);
+            return res.status(400).render("verify.ejs", {
+              email,
+              status: "Error verifying!"
+            });
+          }
+          return res.status(200).render("verify.ejs", {
             email,
-            status: "Error verifying!"
+            status: "Verified"
           });
-        }
+        });
+      } else {
         return res.status(200).render("verify.ejs", {
           email,
           status: "Verified"
         });
-      });
-
+      }
     }
     return res.status(400).render("verify.ejs", {
       email,
