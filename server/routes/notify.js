@@ -15,7 +15,7 @@ function parsePhone(number) {
   }
   let phone = number.trim();
   let parsedPhone = "";
-  if(phone.startsWith("+1")){
+  if (phone.startsWith("+1")) {
     phone = phone.slice(2);
   }
   // Try to fix common error of doing 1xxxxxxxxxxx
@@ -38,11 +38,8 @@ function validSection(section, department) {
     return false;
   }
 
-  if (!ValidDepartments.includes(department.toUpperCase())) {
-    return false;
-  }
+  return ValidDepartments.includes(department.toUpperCase());
 
-  return true;
 }
 
 /* GET home page. */
@@ -61,6 +58,7 @@ router.get('/', (req, res, next) => {
 router.get('/verify', (req, res, next) => {
   const email = req.query.email;
   const key = req.query.key;
+  const section = req.query.section;
 
   if (!email || !key) {
     return res.status(300).render("landing").end();
@@ -73,10 +71,20 @@ router.get('/verify', (req, res, next) => {
 
   StudentController.verifyByEmail(email, (verified) => {
     if (verified) {
-      return res.status(200).render("verify.ejs", {
-        email,
-        status: "Verified"
+      StudentController.addClassToUser(email, {sectionNumber: section}, (result) => {
+        if (!result) {
+          logger.error(`Unable to reverify class to account for ${email}`);
+          return res.status(400).render("verify.ejs", {
+            email,
+            status: "Error verifying!"
+          });
+        }
+        return res.status(200).render("verify.ejs", {
+          email,
+          status: "Verified"
+        });
       });
+
     }
     return res.status(400).render("verify.ejs", {
       email,
