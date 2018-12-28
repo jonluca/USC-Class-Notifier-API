@@ -51,7 +51,6 @@ function refreshDepartments(departments) {
       if (!error && response.statusCode === 200) {
         parseCourses(body);
       } else {
-        logger.warn(`Error refreshing department ${department}`);
         retryRefreshWithoutHardPull(department);
       }
     });
