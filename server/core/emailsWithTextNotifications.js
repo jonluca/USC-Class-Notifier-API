@@ -106,6 +106,7 @@ let emails = [
   "jddeguzm@usc.edu",
   "jennanla@usc.edu",
   "jillburk@usc.edu",
+  "jingyiz@usc.edu",
   "jmshephe@usc.edu",
   "johnpauv@usc.edu",
   "jonathanmenyhart@yahoo.com",
