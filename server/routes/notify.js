@@ -91,11 +91,12 @@ router.get('/verify', (req, res, next) => {
           status: "Verified"
         });
       }
+    } else {
+      return res.status(400).render("verify.ejs", {
+        email,
+        status: "Error verifying!"
+      });
     }
-    return res.status(400).render("verify.ejs", {
-      email,
-      status: "Error verifying!"
-    });
   });
 });
 
