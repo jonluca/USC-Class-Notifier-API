@@ -252,6 +252,7 @@ let emails =[
   "wiktor@usc.edu",
   "wingchin@usc.edu",
   "Nicoleak@usc.edu",
+  "Wyndhams@usc.edu",
   "wuqianqi@usc.edu",
   "woltersd@usc.edu",
   "wongjj@usc.edu",
