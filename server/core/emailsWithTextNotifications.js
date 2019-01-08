@@ -257,6 +257,7 @@ let emails = [
   "vaanyasg@usc.edu",
   "valxing@gmail.com",
   "viviana@usc.edu",
+  "cristynd@usc.edu",
   "vomacka@usc.edu",
   "wangjerr@usc.edu",
   "warasila@usc.edu",
@@ -297,6 +298,7 @@ function emailHasPaid(email) {
     return false;
   }
   email = email.toLowerCase();
+  email = email.trim();
   return emails.includes(email);
 }
 
