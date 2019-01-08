@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>USC SOC API</title>
+    <title>USC Schedule Helper</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -15,17 +15,40 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
+<body>
 <div class="container">
-    <h1 class="text-center" id="info">Email: <%= email %></h1>
-    <h1 class="text-center" id="info">Status: <%= status %></h1>
-    <h2 class="text-center" id="info" style="font-size:12px">If you want text notifications, venmo
-        @JonLuca $1 with your email in the subject and I'll manually enable them for your account. </h2>
-
-    <h4 class="text-center" id="info">This service is still in <b>beta</b>. There is no guarantee
+    <% if(status && status == "Verified") { %>
+        <div class='verified'>
+            <div class='inner'>
+                <p>
+                    ✔
+                    <span>Verified</span>
+                </p>
+            </div>
+        </div>
+    <% }else if(status && status == "Error verifying!") { %>
+        <div class='notverified'>
+            <div class='inner'>
+                <p>
+                    ✗
+                    <span>Error</span>
+                </p>
+            </div>
+        </div>
+    <% } %>
+    <h1 class="text-center info"><%= email %></h1>
+    <h1 class="text-center info"><%= status %></h1>
+    <p class="text-center info subtext larger-text">If you want text notifications, venmo
+        @JonLuca $1 with your <b>email in the subject</b> and I'll manually enable them for your account. Valid for 1
+        class per semester.</p>
+    <br>
+    <p class="text-center info subtext">This service is still in <b>beta</b>. There is no guarantee
         that it'll work - please still check the class you'd like periodically to see if spots open up. This
-        service is provided without warranty or support. If you registered for a class that is not full, and
+        service is provided without warranty or support.
+
+        <br>If you registered for a class that is not full, and
         still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
-                href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any questions.</h4>
+                href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any questions.</p>
 </div>
 <footer class="text-center" id="footer">
     <p>&copy;
@@ -34,6 +57,18 @@
             project on
             GitHub!</a></p>
 </footer>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-90475221-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
 
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'UA-90475221-1');
+</script>
 </body>
 </html>

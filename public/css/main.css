@@ -1,44 +1,184 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-
 html {
-    height: 100%;
+  height: 100%;
 }
 
-body {
-    font-family: 'Raleway', sans-serif;
-    background: #EB3349; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #F45C43, #EB3349); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #F45C43, #EB3349); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    position: relative;
-    min-height: 100%;
-    flex: 1;
+.info {
+  color: black;
 }
 
-#info {
-    color: white;
+.subtext {
+  width: 40%;
+  margin: 0 auto;
 }
 
 a {
-    color: #FFCC00;
+  color: #1f8043;
 }
 
 a:hover {
-    color: #FFCC00;
+  color: #1f8043;
 }
 
 .modal-content {
-    display: none;
+  display: none;
 }
 
 #footer {
-    color: white; /* Height of the footer */
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 20px;
-    padding-left: 20px;
+  color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  padding-left: 20px;
 }
 
 .container {
-    padding-left: 20px;
+  padding-left: 20px;
+  padding-bottom: 50px;
+}
+
+.larger-text{
+  font-size: 20px;
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Lato Black'), local('Lato-Black'), url(http://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPHA.ttf) format('truetype');
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  background: #fff;
+  padding: 100px 0 0 0;
+  text-align: center;
+}
+
+body div {
+  display: inline-block;
+  -webkit-border-radius: 100%;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 100%;
+  -moz-background-clip: padding;
+  border-radius: 100%;
+  background-clip: padding-box;
+}
+
+body .verified {
+  background: #fff;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border: #2ecc71 2px dashed;
+  left: 0;
+}
+
+body .verified .inner {
+  background: #fff;
+  background-image: 8121991;
+  background-image: -webkit-radial-gradient(center center, #fff 0%, #e6f9ee 100%);
+  background-image: -moz-radial-gradient(center center, #fff 0%, #e6f9ee 100%);
+  background-image: -o-radial-gradient(center center, #fff 0%, #e6f9ee 100%);
+  background-image: radial-gradient(center center, #fff 0%, #e6f9ee 100%);
+  width: 185px;
+  height: 185px;
+  position: absolute;
+  border: #e6f9ee 1px solid;
+  left: 5px;
+  top: 5px;
+}
+
+body .verified .inner p {
+  font-size: 100px;
+  font-family: Lato, helvetica, sans-serif;
+  text-shadow: 2px 4px 0 rgba(0, 0, 0, 0.05);
+  line-height: 170px;
+  color: #27ae60;
+}
+
+body .verified .inner p span {
+  background: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: none;
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  -webkit-border-radius: 200px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 200px;
+  -moz-background-clip: padding;
+  border-radius: 200px;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 0 1px #bcf0d2 inset, 0 1px 0 3px rgba(0, 0, 0, 0.02);
+  -moz-box-shadow: 0 0 0 1px #bcf0d2 inset, 0 1px 0 3px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 0 0 1px #bcf0d2 inset, 0 1px 0 3px rgba(0, 0, 0, 0.02);
+  left: 0;
+  bottom: 5px;
+}
+
+body .notverified {
+  background: #fff;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border: #ae1d1a 2px dashed;
+  left: 0;
+}
+
+body .notverified .inner {
+  background: #fff;
+  background-image: 8121991;
+  background-image: -webkit-radial-gradient(center center, #fff 0%, #f9d0c4 100%);
+  background-image: -moz-radial-gradient(center center, #fff 0%, #f9d0c4 100%);
+  background-image: -o-radial-gradient(center center, #fff 0%, #f9d0c4 100%);
+  background-image: radial-gradient(center center, #fff 0%, #f9d0c4 100%);
+  width: 185px;
+  height: 185px;
+  position: absolute;
+  border: #e6f9ee 1px solid;
+  left: 5px;
+  top: 5px;
+}
+
+body .notverified .inner p {
+  font-size: 100px;
+  font-family: Lato, helvetica, sans-serif;
+  text-shadow: 2px 4px 0 rgba(0, 0, 0, 0.05);
+  line-height: 170px;
+  color: #ae1d1a;
+}
+
+body .notverified .inner p span {
+  background: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: none;
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  -webkit-border-radius: 200px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 200px;
+  -moz-background-clip: padding;
+  border-radius: 200px;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 0 1px #f0918d inset, 0 1px 0 3px rgba(0, 0, 0, 0.02);
+  -moz-box-shadow: 0 0 0 1px #f0918d inset, 0 1px 0 3px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 0 0 1px #f0918d inset, 0 1px 0 3px rgba(0, 0, 0, 0.02);
+  left: 0;
+  bottom: 5px;
 }
