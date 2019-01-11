@@ -48,7 +48,7 @@ EmailController.sendSpotsAvailableEmail = (email, key, section) => {
   const watchAgainUrl = "https://jonlu.ca/soc/verify?email=" + email + "&key=" + key + "&section=" + section.sectionNumber;
   let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName}.<br> <br> `;
   if (section.available > 1) {
-    text += `There are now ${section.available} spots available. <br> <br> You will not receive this email again.`;
+    text += `There are now ${section.available} spots available. <br> <br> You will not receive this email again.<br>`;
   } else {
     text += `There is now ${section.available} spot available. <br> <br> You will not receive this email again.<br>`;
   }
