@@ -110,8 +110,8 @@ StudentController.addClassToUser = (email, section, callback) => {
 StudentController.notifyUser = async (user, section) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section);
   if (user.paidForTextNotifications || emailHasPaidForText(user.email)) {
-    TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
     logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
+    TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
   }
 };
 
