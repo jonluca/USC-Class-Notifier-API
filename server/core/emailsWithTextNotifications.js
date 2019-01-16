@@ -283,6 +283,7 @@ let emails = [
   "tacherlo@usc.edu",
   "takahash@usc.edu",
   "tbarrick@usc.edu",
+  "orford@usc.edu",
   "tdgoldsm@usc.edu",
   "tefphotography@gmail.com",
   "tienwong19@gmail.com",
