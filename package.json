@@ -29,7 +29,7 @@
     "supports-color": "5.5.0",
     "twilio": "3.26.1",
     "validator": "10.10.0",
-    "snyk": "1.121.1"
+    "snyk": "1.134.2"
   },
   "snyk": true
 }
