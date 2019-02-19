@@ -1979,9 +1979,9 @@ moment@2.19.3:
   version "2.23.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.23.0.tgz#759ea491ac97d54bac5ad776996e2a58cc1bc225"
 
-mongodb-core@3.1.9:
-  version "3.1.9"
-  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.1.9.tgz#c31ee407bf932b0149eaed775c17ee09974e4ca3"
+mongodb-core@3.1.11:
+  version "3.1.11"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.1.11.tgz#b253038dbb4d7329f3d1c2ee5400bb0c9221fde5"
   dependencies:
     bson "^1.1.0"
     require_optional "^1.0.1"
@@ -1989,30 +1989,30 @@ mongodb-core@3.1.9:
   optionalDependencies:
     saslprep "^1.0.0"
 
-mongodb@3.1.10:
-  version "3.1.10"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.1.10.tgz#45ad9b74ea376f4122d0881b75e5489b9e504ed7"
+mongodb@3.1.13:
+  version "3.1.13"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.1.13.tgz#f8cdcbb36ad7a08b570bd1271c8525753f75f9f4"
   dependencies:
-    mongodb-core "3.1.9"
+    mongodb-core "3.1.11"
     safe-buffer "^5.1.2"
 
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
-mongoose@5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.4.2.tgz#3f3d87e0082f3e28bf24f0e3f87e107195996461"
+mongoose@5.4.14:
+  version "5.4.14"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.4.14.tgz#8cc074c9990db0a26062a779f461abb91c9c483c"
   dependencies:
     async "2.6.1"
     bson "~1.1.0"
     kareem "2.3.0"
-    mongodb "3.1.10"
-    mongodb-core "3.1.9"
+    mongodb "3.1.13"
+    mongodb-core "3.1.11"
     mongoose-legacy-pluralize "1.0.2"
     mpath "0.5.1"
     mquery "3.2.0"
-    ms "2.0.0"
+    ms "2.1.1"
     regexp-clone "0.0.1"
     safe-buffer "5.1.2"
     sliced "1.0.1"
