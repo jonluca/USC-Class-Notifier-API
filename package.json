@@ -21,7 +21,7 @@
     "log4js": "4.1.0",
     "mongoose": "5.4.22",
     "morgan": "1.9.1",
-    "npm-check-updates": "3.1.4",
+    "npm-check-updates": "3.1.5",
     "phone-parser": "0.0.2",
     "random-key": "0.3.2",
     "serve-favicon": "2.5.0",
