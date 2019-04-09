@@ -1862,9 +1862,9 @@ normalize-url@^3.1.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
 
-npm-check-updates@3.1.5:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-3.1.5.tgz#c4fb5d71a7c0e9ecd3fb4e784969e1e3c4e9df65"
+npm-check-updates@3.1.7:
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-3.1.7.tgz#54ab8cbacbe0c0ddee6228749cbacf4abdc11ffc"
   dependencies:
     bluebird "^3.5.3"
     chalk "^2.4.2"
