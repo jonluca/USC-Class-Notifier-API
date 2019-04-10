@@ -23,6 +23,7 @@ let emails = [
 
 for (let i = 0; i < emails.length; i++) {
   emails[i] = emails[i].toLowerCase();
+  emails[i] = emails[i].trim();
 }
 
 // Not used by SOCAPI, just helper functions for when I'm cleaning up the email list
