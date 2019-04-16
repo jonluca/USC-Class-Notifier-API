@@ -19,7 +19,7 @@
     "helmet": "3.16.0",
     "lodash": "latest",
     "log4js": "4.1.0",
-    "mongoose": "5.5.1",
+    "mongoose": "5.5.2",
     "morgan": "1.9.1",
     "npm-check-updates": "3.1.8",
     "phone-parser": "0.0.2",
