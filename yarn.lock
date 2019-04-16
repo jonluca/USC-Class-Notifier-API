@@ -2962,9 +2962,9 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
 
-twilio@3.30.0:
-  version "3.30.0"
-  resolved "https://registry.yarnpkg.com/twilio/-/twilio-3.30.0.tgz#8ed3a756ccd9199e979dafc97f973c4321833793"
+twilio@3.30.1:
+  version "3.30.1"
+  resolved "https://registry.yarnpkg.com/twilio/-/twilio-3.30.1.tgz#f30ab824e8b1c9ed7f90d719b8d2cd967952c4e1"
   dependencies:
     "@types/express" "^4.11.1"
     deprecate "1.0.0"
