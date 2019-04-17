@@ -63,10 +63,26 @@ let emails = [
   "yunsungy@usc.edu",
   "zapolski@usc.edu",
   "zhuojunc@usc.edu",
+
   "zhuyue@usc.edu",
   "bartecki@usc.edu",
   "balasky@usc.edu",
   "carsonjamesmarsh@gmail.com"
+
+  "kathygon@usc.edu",
+  "Marknish@usc.edu",
+  "chjameso@usc.edu",
+  "gtking@usc.edu",
+  "gagneeld@usc.edu",
+  "paul13099650@gmail.com",
+  "jghoy19@gmail.com",
+  "nfarr@usc.edu",
+  "kyleapet@usc.edu",
+  "Slouis@usc.edu",
+  "salinaca@usc.edu",
+  "adamegyed@gmail.com",
+  "kuehler@usc.edu"
+
 ]
 
 for (let i = 0; i < emails.length; i++) {
