@@ -71,7 +71,8 @@ let emails = [ '947730940@qq.com',
   'yunsungy@usc.edu',
   'zapolski@usc.edu',
   'zhuojunc@usc.edu',
-  'zhuyue@usc.edu' ]
+  'zhuyue@usc.edu',
+  'dtaras1124@gmail.com' ]
 
 for (let i = 0; i < emails.length; i++) {
   emails[i] = emails[i].toLowerCase();
