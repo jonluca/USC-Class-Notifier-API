@@ -15,7 +15,7 @@
     "debug": "4.1.1",
     "ejs": "2.6.1",
     "express": "4.16.4",
-    "express-rate-limit": "3.4.0",
+    "express-rate-limit": "3.4.1",
     "helmet": "3.16.0",
     "lodash": "latest",
     "log4js": "4.1.0",
