@@ -2555,13 +2555,21 @@ snyk-docker-plugin@1.22.1:
     semver "^5.6.0"
     tslib "^1"
 
-snyk-go-plugin@1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/snyk-go-plugin/-/snyk-go-plugin-1.6.1.tgz#fad24de943a587d676af9408e5b3976d6b20267d"
+snyk-go-parser@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/snyk-go-parser/-/snyk-go-parser-1.0.2.tgz#7f60455b5af9407ad06ddc310d4a139300545646"
   dependencies:
+    toml "^3.0.0"
+    tslib "^1.9.3"
+
+snyk-go-plugin@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/snyk-go-plugin/-/snyk-go-plugin-1.7.0.tgz#b69e12f04204eae73b243b4a52dd8f9ac2eaa8e9"
+  dependencies:
+    debug "^4.1.1"
     graphlib "^2.1.1"
+    snyk-go-parser "1.0.2"
     tmp "0.0.33"
-    toml "^2.3.2"
 
 snyk-gradle-plugin@2.7.1:
   version "2.7.1"
@@ -2594,9 +2602,9 @@ snyk-nodejs-lockfile-parser@1.13.0:
     tslib "^1.9.3"
     uuid "^3.3.2"
 
-snyk-nuget-plugin@1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/snyk-nuget-plugin/-/snyk-nuget-plugin-1.9.1.tgz#e45c34ec8efbc998401ae8bb6eeedff7c19bf3e7"
+snyk-nuget-plugin@1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/snyk-nuget-plugin/-/snyk-nuget-plugin-1.9.2.tgz#e06b114e3a7b029d127480f23739042b297c2b13"
   dependencies:
     debug "^3.1.0"
     jszip "^3.1.5"
@@ -2683,9 +2691,9 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@1.151.1:
-  version "1.151.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.151.1.tgz#8485666c199e78846aca5f2f71dcb10d4fecf5f2"
+snyk@1.153.0:
+  version "1.153.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.153.0.tgz#5ee2061717fd6e57685ccb3061eb9df4b58b8c79"
   dependencies:
     "@snyk/dep-graph" "1.4.1"
     "@snyk/gemfile" "1.2.0"
@@ -2706,12 +2714,12 @@ snyk@1.151.1:
     semver "^6.0.0"
     snyk-config "^2.2.1"
     snyk-docker-plugin "1.22.1"
-    snyk-go-plugin "1.6.1"
+    snyk-go-plugin "1.7.0"
     snyk-gradle-plugin "2.7.1"
     snyk-module "1.9.1"
     snyk-mvn-plugin "2.0.1"
     snyk-nodejs-lockfile-parser "1.13.0"
-    snyk-nuget-plugin "1.9.1"
+    snyk-nuget-plugin "1.9.2"
     snyk-php-plugin "1.5.2"
     snyk-policy "1.13.5"
     snyk-python-plugin "1.9.2"
@@ -2931,9 +2939,9 @@ to-readable-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/to-readable-stream/-/to-readable-stream-1.0.0.tgz#ce0aa0c2f3df6adf852efb404a783e77c0475771"
 
-toml@^2.3.2:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/toml/-/toml-2.3.5.tgz#a1f5d7f7efd300fa426258f3e74374536191e3db"
+toml@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/toml/-/toml-3.0.0.tgz#342160f1af1904ec9d204d03a5d61222d762c5ee"
 
 tough-cookie@~2.3.3:
   version "2.3.3"
