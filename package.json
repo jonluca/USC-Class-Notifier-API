@@ -16,7 +16,7 @@
     "ejs": "2.6.1",
     "express": "4.16.4",
     "express-rate-limit": "3.4.1",
-    "helmet": "3.16.0",
+    "helmet": "3.18.0",
     "lodash": "latest",
     "log4js": "4.1.0",
     "mongoose": "5.5.3",
