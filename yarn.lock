@@ -193,7 +193,7 @@ async@^1.4.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.6.1:
+async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.2.tgz#18330ea7e6e313887f5d2f2a904bac6fe4dd5381"
   dependencies:
@@ -588,7 +588,7 @@ debug@4.1.1, debug@^4.1.1:
   dependencies:
     ms "^2.1.1"
 
-debug@^3, debug@^3.2.5:
+debug@^3, debug@^3.2.5, debug@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   dependencies:
@@ -964,7 +964,7 @@ fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
 
-fs-extra@^7.0.0:
+fs-extra@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
   dependencies:
@@ -1618,15 +1618,15 @@ lodash@^4.17.2:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-log4js@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/log4js/-/log4js-4.1.0.tgz#57983c6a443546a8c8607e9cb045d2a117c27644"
+log4js@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/log4js/-/log4js-4.2.0.tgz#659a91d9522053b1e1d0ba89adf81c2005b8a993"
   dependencies:
     date-format "^2.0.0"
     debug "^4.1.1"
     flatted "^2.0.0"
     rfdc "^1.1.2"
-    streamroller "^1.0.4"
+    streamroller "^1.0.5"
 
 lowercase-keys@^1.0.0, lowercase-keys@^1.0.1:
   version "1.0.1"
@@ -2814,15 +2814,15 @@ sshpk@^1.7.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
 
-streamroller@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/streamroller/-/streamroller-1.0.4.tgz#d485c7624796d5e2eb34190c79afcbf006afb5e6"
+streamroller@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/streamroller/-/streamroller-1.0.5.tgz#71660c20b06b1a7b204d46085731ad13c10a562d"
   dependencies:
-    async "^2.6.1"
+    async "^2.6.2"
     date-format "^2.0.0"
-    debug "^3.1.0"
-    fs-extra "^7.0.0"
-    lodash "^4.17.10"
+    debug "^3.2.6"
+    fs-extra "^7.0.1"
+    lodash "^4.17.11"
 
 string-width@^1.0.1:
   version "1.0.2"
