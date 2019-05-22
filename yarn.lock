@@ -797,9 +797,9 @@ expect-ct@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/expect-ct/-/expect-ct-0.2.0.tgz#3a54741b6ed34cc7a93305c605f63cd268a54a62"
 
-express-rate-limit@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-3.4.1.tgz#be15f84e257893bb9e6de6d098dd2f84b7e0d0cc"
+express-rate-limit@3.5.3:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-3.5.3.tgz#dd3c321b8b99e2e74388aa86c8d14d5c02a24426"
   dependencies:
     defaults "^1.0.3"
 
