@@ -18,7 +18,7 @@
     "express-rate-limit": "5.0.0",
     "helmet": "3.18.0",
     "lodash": "latest",
-    "log4js": "4.2.0",
+    "log4js": "4.3.1",
     "mongoose": "5.5.15",
     "morgan": "1.9.1",
     "npm-check-updates": "3.1.9",
