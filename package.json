@@ -13,7 +13,7 @@
     "cors": "2.8.5",
     "cron": "1.7.1",
     "debug": "4.1.1",
-    "ejs": "2.6.1",
+    "ejs": "2.6.2",
     "express": "4.16.4",
     "express-rate-limit": "5.0.0",
     "helmet": "3.18.0",
