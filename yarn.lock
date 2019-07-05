@@ -2522,10 +2522,10 @@ npm-bundled@^1.0.1:
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.6.tgz#e7ba9aadcef962bb61248f91721cd932b3fe6bdd"
   integrity sha512-8/JCaftHwbd//k6y2rEWp6k1wxVfpFzB6t1p825+cUb7Ym2XQfhwIC5KwhrvzZRJu+LtDE585zVaS32+CGtf0g==
 
-npm-check-updates@3.1.13:
-  version "3.1.13"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-3.1.13.tgz#6eee6574536de332515f72fb4775e11c34fd00fd"
-  integrity sha512-bRFFgs0IUJvBLLUpmbFLMHPflDQoInS9Lh7yGhbevjt64KuA9jd+bbE7vTdE/j1foZRbuf8S5vmHshjEib4d0w==
+npm-check-updates@3.1.14:
+  version "3.1.14"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-3.1.14.tgz#c5ffe696653a6119804cb2270d0bb397e3326bc4"
+  integrity sha512-xidchuovm+/Zjyv7Yglt500aORB0UtLMVjWVsQ+KVbbDkvkkEdkaoTe8kKoG5odLDWX2lOiILNEdl25Ba36bTQ==
   dependencies:
     bluebird "^3.5.5"
     chalk "^2.4.2"
@@ -2543,9 +2543,12 @@ npm-check-updates@3.1.13:
     progress "^2.0.3"
     prompts "^2.1.0"
     rc-config-loader "^2.0.3"
+    registry-auth-token "^4.0.0"
+    registry-url "^5.1.0"
     requireg "^0.2.2"
     semver "^6.1.1"
     semver-utils "^1.1.4"
+    snyk "^1.124.1"
     spawn-please "^0.3.0"
     update-notifier "^3.0.0"
 
@@ -3176,6 +3179,14 @@ registry-auth-token@^3.0.1, registry-auth-token@^3.4.0:
     rc "^1.1.6"
     safe-buffer "^5.0.1"
 
+registry-auth-token@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/registry-auth-token/-/registry-auth-token-4.0.0.tgz#30e55961eec77379da551ea5c4cf43cbf03522be"
+  integrity sha512-lpQkHxd9UL6tb3k/aHAVfnVtn+Bcs9ob5InuFLLEDqSqeq+AljB8GZW9xY0x7F+xYwEcjKe07nyoxzEYz6yvkw==
+  dependencies:
+    rc "^1.2.8"
+    safe-buffer "^5.0.1"
+
 registry-url@^3.0.3:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-3.1.0.tgz#3d4ef870f73dde1d77f0cf9a381432444e174942"
@@ -3183,7 +3194,7 @@ registry-url@^3.0.3:
   dependencies:
     rc "^1.0.1"
 
-registry-url@^5.0.0:
+registry-url@^5.0.0, registry-url@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-5.1.0.tgz#e98334b50d5434b81136b44ec638d9c2009c5009"
   integrity sha512-8acYXXTI0AkQv6RAOjE3vOaIXZkT9wo4LOFbBKYQEEnnMNBpKqdUrI6S4NT0KPIo/WVvJ5tE/X5LF/TQUf0ekw==
@@ -3646,6 +3657,18 @@ snyk-sbt-plugin@2.5.2:
     tmp "^0.1.0"
     tree-kill "^1.2.1"
 
+snyk-sbt-plugin@2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/snyk-sbt-plugin/-/snyk-sbt-plugin-2.5.5.tgz#b7839bc297f41aadc64b32d61e8dbaa609303967"
+  integrity sha512-oSybTDLw8VF2nOdlbL7GRHafCxsM6ydTH6hKacvpN6mYDbNaohscAWB/FjLIPCCimVorWldEdSdotSCukq2eYg==
+  dependencies:
+    child_process "1.0.2"
+    fs "0.0.1-security"
+    path "0.12.7"
+    semver "^6.1.2"
+    tmp "^0.1.0"
+    tree-kill "^1.2.1"
+
 snyk-tree@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/snyk-tree/-/snyk-tree-1.0.0.tgz#0fb73176dbf32e782f19100294160448f9111cc8"
@@ -3701,6 +3724,53 @@ snyk@1.188.0:
     snyk-resolve "1.0.1"
     snyk-resolve-deps "4.0.3"
     snyk-sbt-plugin "2.5.2"
+    snyk-tree "^1.0.0"
+    snyk-try-require "1.3.1"
+    source-map-support "^0.5.11"
+    strip-ansi "^5.2.0"
+    tempfile "^2.0.0"
+    then-fs "^2.0.0"
+    update-notifier "^2.5.0"
+    uuid "^3.3.2"
+
+snyk@^1.124.1:
+  version "1.192.2"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.192.2.tgz#7fd4cc630301cb7f288d9b1412b2dd346056df05"
+  integrity sha512-4qGp7FE+Kqy3CuvxywnaBOuFY4iADc/poc6oPT00adVz61hP9Q+VnQr5Ztq+V/LCQwTMJqKSk0EuODEGSJbVXA==
+  dependencies:
+    "@snyk/dep-graph" "1.8.1"
+    "@snyk/gemfile" "1.2.0"
+    "@types/agent-base" "^4.2.0"
+    abbrev "^1.1.1"
+    ansi-escapes "^4.1.0"
+    chalk "^2.4.2"
+    configstore "^3.1.2"
+    debug "^3.1.0"
+    diff "^4.0.1"
+    git-url-parse "11.1.2"
+    glob "^7.1.3"
+    inquirer "^6.2.2"
+    lodash "^4.17.11"
+    needle "^2.2.4"
+    opn "^5.5.0"
+    os-name "^3.0.0"
+    proxy-agent "^3.1.0"
+    proxy-from-env "^1.0.0"
+    semver "^6.0.0"
+    snyk-config "^2.2.1"
+    snyk-docker-plugin "1.25.1"
+    snyk-go-plugin "1.10.2"
+    snyk-gradle-plugin "2.12.5"
+    snyk-module "1.9.1"
+    snyk-mvn-plugin "2.3.0"
+    snyk-nodejs-lockfile-parser "1.13.0"
+    snyk-nuget-plugin "1.10.0"
+    snyk-php-plugin "1.6.2"
+    snyk-policy "1.13.5"
+    snyk-python-plugin "1.10.2"
+    snyk-resolve "1.0.1"
+    snyk-resolve-deps "4.0.3"
+    snyk-sbt-plugin "2.5.5"
     snyk-tree "^1.0.0"
     snyk-try-require "1.3.1"
     source-map-support "^0.5.11"
