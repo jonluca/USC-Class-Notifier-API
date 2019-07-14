@@ -1895,10 +1895,10 @@ json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
-json5@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
-  integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
+json5@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.1.0.tgz#e7a0c62c48285c628d20a10b85c89bb807c32850"
+  integrity sha512-8Mh9h6xViijj36g7Dxi+Y4S6hNGV96vcJZr/SrlHh1LR/pEn/8j/+qIBbs44YKl69Lrfctp4QD+AdWLTMqEZAQ==
   dependencies:
     minimist "^1.2.0"
 
@@ -2518,12 +2518,11 @@ npm-bundled@^1.0.1:
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.6.tgz#e7ba9aadcef962bb61248f91721cd932b3fe6bdd"
   integrity sha512-8/JCaftHwbd//k6y2rEWp6k1wxVfpFzB6t1p825+cUb7Ym2XQfhwIC5KwhrvzZRJu+LtDE585zVaS32+CGtf0g==
 
-npm-check-updates@3.1.18:
-  version "3.1.18"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-3.1.18.tgz#54f3529399dd9aa825e0de718c189ced73c4e59f"
-  integrity sha512-e4UGOGdFs9+9uRrZrojueT+fjg4uVZzi8fyDdWIS9+JIl4J4xqODh0vp1TdCnedjn8jTPy1dhUtbjQtRWAhV8w==
+npm-check-updates@3.1.20:
+  version "3.1.20"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-3.1.20.tgz#9dd719bc04af9c273b33b44a7d5368d5e85ae9c2"
+  integrity sha512-mc9BAoOYSTwP/IvoA+ofdkWSipwRvhgC0qop1PvlMZojgzi7N/dykdxOIWrw0OlZPnEKvXkKFEuPk97LrvXE1A==
   dependencies:
-    bluebird "^3.5.5"
     chalk "^2.4.2"
     cint "^8.2.1"
     cli-table "^0.3.1"
@@ -2533,14 +2532,12 @@ npm-check-updates@3.1.18:
     get-stdin "^7.0.0"
     json-parse-helpfulerror "^1.0.3"
     libnpmconfig "^1.2.1"
-    lodash "^4.17.11"
+    lodash "^4.17.13"
     node-alias "^1.0.4"
     pacote "^9.5.1"
     progress "^2.0.3"
     prompts "^2.1.0"
-    rc-config-loader "^2.0.3"
-    registry-auth-token "^4.0.0"
-    registry-url "^5.1.0"
+    rc-config-loader "^2.0.4"
     requireg "^0.2.2"
     semver "^6.2.0"
     semver-utils "^1.1.4"
@@ -3093,14 +3090,14 @@ raw-body@2.4.0, raw-body@^2.2.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-rc-config-loader@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/rc-config-loader/-/rc-config-loader-2.0.3.tgz#5fbe45784c3301b15350ab6507e023c33007928f"
-  integrity sha512-CN9BmvV9Kcl6c4WEZ8w13JFazLYtKnqxxKGKuiCS8yZpUtJFa/nd7PdjVnRBJJ89U3OZfR6DmqOqMvmZ5ZFNMw==
+rc-config-loader@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/rc-config-loader/-/rc-config-loader-2.0.4.tgz#fe23e26a87e2ec07541b29e7f37bfd75807a4c36"
+  integrity sha512-k06UzRbYDWgF4Mc/YrsZsmzSpDLuHoThJxep+vq5H09hiX8rbA5Ue/Ra0dwWm5MQvWYW4YBXgA186inNxuxidQ==
   dependencies:
-    debug "^3.1.0"
+    debug "^4.1.1"
     js-yaml "^3.12.0"
-    json5 "^1.0.1"
+    json5 "^2.1.0"
     object-assign "^4.1.0"
     object-keys "^1.0.12"
     path-exists "^3.0.0"
@@ -3166,14 +3163,6 @@ registry-auth-token@^3.0.1, registry-auth-token@^3.4.0:
     rc "^1.1.6"
     safe-buffer "^5.0.1"
 
-registry-auth-token@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/registry-auth-token/-/registry-auth-token-4.0.0.tgz#30e55961eec77379da551ea5c4cf43cbf03522be"
-  integrity sha512-lpQkHxd9UL6tb3k/aHAVfnVtn+Bcs9ob5InuFLLEDqSqeq+AljB8GZW9xY0x7F+xYwEcjKe07nyoxzEYz6yvkw==
-  dependencies:
-    rc "^1.2.8"
-    safe-buffer "^5.0.1"
-
 registry-url@^3.0.3:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-3.1.0.tgz#3d4ef870f73dde1d77f0cf9a381432444e174942"
@@ -3181,7 +3170,7 @@ registry-url@^3.0.3:
   dependencies:
     rc "^1.0.1"
 
-registry-url@^5.0.0, registry-url@^5.1.0:
+registry-url@^5.0.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-5.1.0.tgz#e98334b50d5434b81136b44ec638d9c2009c5009"
   integrity sha512-8acYXXTI0AkQv6RAOjE3vOaIXZkT9wo4LOFbBKYQEEnnMNBpKqdUrI6S4NT0KPIo/WVvJ5tE/X5LF/TQUf0ekw==
