@@ -42,6 +42,7 @@ let emails = [
   "chennc@usc.edu",
   "chiaviel@usc.edu",
   "chjameso@usc.edu",
+  "creiser@usc.edu",
   "cullenpo@usc.edu",
   "daltona@usc.edu",
   "danielgarcan98@gmail.com",
@@ -53,6 +54,7 @@ let emails = [
   "dtaras1124@gmail.com",
   "ehabashy@usc.edu",
   "eisnerl@usc.edu",
+  "elaineh@usc.edu",
   "ellahenr@usc.edu",
   "eohern@usc.edu",
   "erherrear@usc.edu",
@@ -67,6 +69,7 @@ let emails = [
   "goodj1200@gmail.com",
   "gracea@usc.edu",
   "grava@usc.edu",
+  "graysonadler48@gmail.com",
   "greerber@usc.edu",
   "gtking@usc.edu",
   "hebish@usc.edu",
@@ -124,6 +127,7 @@ let emails = [
   "lcdaniel@usc.edu",
   "lchamorr@usc.edu",
   "lfaltinsky@gmail.com",
+  "lilareinecke5@gmail.com",
   "lleib@usc.edu",
   "lope649@usc.edu",
   "lopezlau@usc.edu",
@@ -138,6 +142,7 @@ let emails = [
   "masonest@usc.edu",
   "maxwell.leiter@gmail.com",
   "mbbenjam@usc.edu",
+  "mdemirji@usc.edu",
   "meerakpa@usc.edu",
   "meizar@usc.edu",
   "mikaelalw@gmail.com",
@@ -176,6 +181,7 @@ let emails = [
   "sabrinachugh@gmail.com",
   "salinaca@usc.edu",
   "sam.ross@live.com",
+  "sarakell@usc.edu",
   "serenahe@usc.edu",
   "sgamez@usc.edu",
   "sharpcar@usc.edu",
@@ -222,14 +228,8 @@ let emails = [
   "zfujita@usc.edu",
   "zhuojunc@usc.edu",
   "zhuyue@usc.edu",
-  "zvogelsa@usc.edu",
-  "elaineh@usc.edu",
-  "graysonadler48@gmail.com",
-  "mdemirji@usc.edu",
-  "rosalinechow2@gmail.com",
-  "lilareinecke5@gmail.com",
-  "Sarakell@usc.edu"
-  ]
+  "zvogelsa@usc.edu"
+]
 
 for (let i = 0; i < emails.length; i++) {
   emails[i] = emails[i].toLowerCase();
