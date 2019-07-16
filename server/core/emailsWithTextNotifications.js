@@ -227,8 +227,9 @@ let emails = [
   "graysonadler48@gmail.com",
   "mdemirji@usc.edu",
   "rosalinechow2@gmail.com",
-  "lilareinecke5@gmail.com"
-]
+  "lilareinecke5@gmail.com",
+  "Sarakell@usc.edu"
+  ]
 
 for (let i = 0; i < emails.length; i++) {
   emails[i] = emails[i].toLowerCase();
