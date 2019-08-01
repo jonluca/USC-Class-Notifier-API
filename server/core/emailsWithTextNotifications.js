@@ -254,7 +254,8 @@ let emails = [
   "rgrode@usc.edu",
   "sophiabordofsky@gmail.com",
   "hshamili@usc.edu",
-  "Step009@usc.edu"
+  "Step009@usc.edu",
+  "wratner@usc.edu"
 ]
 
 for (let i = 0; i < emails.length; i++) {
