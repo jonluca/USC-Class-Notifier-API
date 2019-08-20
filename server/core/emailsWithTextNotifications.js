@@ -93,6 +93,7 @@ let emails = [
   "hillje@usc.edu",
   "hshamili@usc.edu",
   "huangandrew21@gmail.com",
+  "huifengc@usc.edu",
   "huskins@usc.edu",
   "hxian@usc.edu",
   "inasrall@usc.edu",
@@ -136,6 +137,8 @@ let emails = [
   "kevingut@usc.edu",
   "kgladd@usc.edu",
   "khachado@usc.edu",
+  "khgoldbe@usc.edu",
+  "kinderworld1234@gmail.com",
   "kkanter@usc.edu",
   "klooney@usc.edu",
   "kommired@usc.edu",
@@ -224,6 +227,7 @@ let emails = [
   "sam.ross@live.com",
   "sarakell@usc.edu",
   "sbkothar@usc.edu",
+  "scheg@usc.edu",
   "serenahe@usc.edu",
   "sgamez@usc.edu",
   "shanekatz@yahoo.com",
@@ -254,6 +258,7 @@ let emails = [
   "tomas.kinalski@gmail.com",
   "tracywang254@163.com",
   "tramvu@usc.edu",
+  "tribbitt@usc.edu",
   "truman.fritz@usc.edu",
   "tylercullen818@gmail.com",
   "uliapve@gmail.com",
@@ -281,13 +286,7 @@ let emails = [
   "zfujita@usc.edu",
   "zhuojunc@usc.edu",
   "zhuyue@usc.edu",
-  "zvogelsa@usc.edu",
-  "khgoldbe@usc.edu",
-  "kinderworld1234@gmail.com",
-  "huifengc@usc.edu",
-  "Angad20102010@gmail.com",
-  "scheg@usc.edu",
-  "tribbitt@usc.edu"
+  "zvogelsa@usc.edu"
 ]
 
 for (let i = 0; i < emails.length; i++) {
