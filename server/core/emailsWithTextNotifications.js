@@ -1,14 +1,23 @@
 let emails = [
-  "vwestmor@usc.edu",
   "apallare@usc.edu",
-  "Wautters@usc.edu",
-  "Snmontan@usc.edu",
+  "belyaeva@usc.edu",
   "eckroate@usc.edu",
+  "josuerod@usc.edu",
+  "jroesler@usc.edu",
+  "juliawad@usc.edu",
+  "kinickx090@outlook.com",
   "lsharrin@usc.edu",
-  "wang851@usc.edu",
-  "woltersd@usc.edu",
+  "mariampe@usc.edu",
+  "snmontan@usc.edu",
+  "tramanhvu06@gmail.com",
   "vatsalgu@usc.edu",
+  "vwestmor@usc.edu",
+  "wang851@usc.edu",
+  "wautters@usc.edu",
+  "woltersd@usc.edu",
   "yiqinshi@usc.edu",
+  "zhenjial@usc.edu",
+  "zixinwu@usc.edu"
 ]
 
 for (let i = 0; i < emails.length; i++) {
