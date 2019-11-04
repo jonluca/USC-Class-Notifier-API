@@ -1,14 +1,22 @@
 let emails = [
   "apallare@usc.edu",
   "belyaeva@usc.edu",
+  "bullen@usc.edu",
   "eckroate@usc.edu",
+  "flawey@usc.edu",
+  "gjacobson98@gmail.com",
   "josuerod@usc.edu",
   "jroesler@usc.edu",
   "juliawad@usc.edu",
   "kinickx090@outlook.com",
+  "lapanoss@usc.edu",
   "lsharrin@usc.edu",
   "mariampe@usc.edu",
+  "mch@usc.edu",
+  "oentoro@usc.edu",
+  "sarahyao@usc.edu",
   "snmontan@usc.edu",
+  "szaboa@usc.edu",
   "tramanhvu06@gmail.com",
   "vatsalgu@usc.edu",
   "vwestmor@usc.edu",
@@ -17,13 +25,7 @@ let emails = [
   "woltersd@usc.edu",
   "yiqinshi@usc.edu",
   "zhenjial@usc.edu",
-  "zixinwu@usc.edu",
-  "sarahyao@usc.edu",
-  "flawey@usc.edu",
-  "Bullen@usc.edu",
-  "oentoro@usc.edu",
-  "szaboa@usc.edu",
-  "lapanoss@usc.edu",
+  "zixinwu@usc.edu"
 ]
 
 for (let i = 0; i < emails.length; i++) {
