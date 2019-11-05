@@ -23,6 +23,7 @@
     "mongoose": "5.7.1",
     "morgan": "1.9.1",
     "node-ses": "^2.2.1",
+    "nodemailer": "^6.3.1",
     "npm-check-updates": "3.1.24",
     "phone-parser": "0.0.2",
     "random-key": "0.3.2",
