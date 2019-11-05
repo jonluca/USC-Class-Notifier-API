@@ -63,7 +63,6 @@ for (let i = 0; i < emails.length; i++) {
 let dedupe = new Set(emails);
 let finalEmailList = Array.from(dedupe);
 finalEmailList = finalEmailList.sort();
-console.log(finalEmailList)
 
 function emailHasPaid(email) {
   if (!email) {
