@@ -1,6 +1,11 @@
 const config = require('../config/config.js');
-const SparkPost = require('sparkpost');
-const client = new SparkPost(config.sparkpost.secret);
+// Load the AWS SDK for Node.js
+const ses = require('node-ses');
+const client = ses.createClient({
+  key: config.aws.key,
+  secret: config.aws.secret
+});
+
 const logger = require('log4js').getLogger("notification");
 const ejs = require("ejs");
 
@@ -25,18 +30,13 @@ EmailController.sendVerificationEmail = (email, key) => {
       logger.error(err);
       return;
     } // Handle error
-    client.transmissions.send({
-      content: {
-        from: 'schedule-helper@jonlu.ca',
-        subject: 'Verify Email - USC Schedule Helper',
-        html
-      },
-      recipients: [{
-        address: email
-      }]
-    }).then(() => {
-      logger.info(`Sent verification email to ${email} with key ${key}`);
-    }).catch(err => {
+    const from = 'schedule-helper@jonlu.ca'
+    const subject = 'Verify Email - USC Schedule Helper'
+
+    EmailController._sendEmail(from, subject, email, html)
+      .then(() => {
+        logger.info(`Sent verification email to ${email} with key ${key}`);
+      }).catch(err => {
       logger.error(`Whoops! Something went wrong verifying ${email}`);
       logger.error(err);
     });
@@ -66,22 +66,37 @@ EmailController.sendSpotsAvailableEmail = (email, key, section) => {
     if (err) {
       logger.error(err);
     }
-    client.transmissions.send({
-      content: {
-        from: 'no-reply@jonlu.ca',
-        subject: `Spots open for ${section.courseID}`,
-        html: html
-      },
-      recipients: [{
-        address: email
-      }]
-    }).then(() => {
+    const from = 'no-reply@jonlu.ca';
+    const subject = `Spots open for ${section.courseID}`;
+
+    EmailController._sendEmail(from, subject, email, html).then(() => {
       logger.info(`Spots are open for ${section.courseID}. Sent email to ${email}`);
     }).catch(err => {
       logger.error(`Whoops! Something went wrong sending an email saying there are open spots to ${email}`);
       logger.error(err);
     });
   });
+};
+
+EmailController._sendEmail = async (from, subject, address, html) => {
+
+  return new Promise((resolve, reject) => {
+    client.sendEmail({
+      to: address,
+      from,
+      subject,
+      message: html,
+      altText: html
+    }, function(err, data, res) {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(data);
+    });
+
+  });
 
 };
+
 module.exports = EmailController;
