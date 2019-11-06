@@ -5,18 +5,6 @@ const client = ses.createClient({
   key: config.aws.key,
   secret: config.aws.secret
 });
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.purelymail.com',
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: config.purelymail.email,
-    pass: config.purelymail.pass
-  }
-});
-
 
 const logger = require('log4js').getLogger("notification");
 const ejs = require("ejs");
@@ -92,30 +80,20 @@ EmailController.sendSpotsAvailableEmail = (email, key, section) => {
 
 EmailController._sendEmail = async (from, subject, address, html) => {
 
-  // send mail with defined transport object
-  return transporter.sendMail({
-    from,
-    to: address, // list of receivers
-    subject,
-    text:html,
-    html,
+  return new Promise((resolve, reject) => {
+    client.sendEmail({
+      to: address,
+      from,
+      subject,
+      message: html,
+      altText: html
+    }, function(err, data, res) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(data);
+    });
   });
-  
-  // AWS SES code below - reimplement once we are verified
-  // return new Promise((resolve, reject) => {
-  //   client.sendEmail({
-  //     to: address,
-  //     from,
-  //     subject,
-  //     message: html,
-  //     altText: html
-  //   }, function(err, data, res) {
-  //     if (err) {
-  //       return reject(err);
-  //     }
-  //     resolve(data);
-  //   });
-  // });
 
 };
 module.exports = EmailController;
