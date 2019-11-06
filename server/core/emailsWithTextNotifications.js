@@ -18,6 +18,7 @@ let emails = [
   "flawey@usc.edu",
   "gjacobson98@gmail.com",
   "gmatamor@usc.edu",
+  "Apbarron@usc.edu",
   "haozeli@usc.edu",
   "hyungsik@usc.edu",
   "jakeob29@icloud.com",
