@@ -5,6 +5,7 @@ const _ = require('lodash');
 const config = require("../config/config");
 const EmailController = require("./EmailController");
 const TextController = require("./TextController");
+const semester = require("../config/config").semester;
 
 let StudentController = {};
 
@@ -102,6 +103,8 @@ StudentController.addClassToUser = (email, section, callback) => {
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);
     user.markModified('sectionsWatching');
+    // Any time a user adds a new class, update their semester to the current one
+    user.semester = semester;
     user.save();
     return callback(true);
   });
