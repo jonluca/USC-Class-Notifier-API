@@ -399,7 +399,7 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-aws-sdk@^2.563.0:
+aws-sdk@2.574.0:
   version "2.574.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.574.0.tgz#9ec8a8bcfa35483587e66a1fc9dfcf8ec454ae81"
   integrity sha512-EUSZ+c6nav2hoF8ALCGBCVRv/QYFqLbaktqgfbSm7Ewh3/6vPCo7aMTxsQJJ+7ceUKaUNhQY/qqnwd5ZxIrXmQ==
@@ -2791,7 +2791,7 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-ses@^2.2.1:
+node-ses@2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/node-ses/-/node-ses-2.2.1.tgz#41b113b2a4561fc0e9ede1f72705821a172b73b0"
   integrity sha512-+vfOKdvb99LgbEKmL7rTw9GbNZ71fetJ4vseYsoHkfdzRXWsBalepf7LEn5Wsg/swoLM3dzxvWfOigm9KtkYgQ==
@@ -2801,7 +2801,7 @@ node-ses@^2.2.1:
     request "^2.88.0"
     xml2js "^0.4.19"
 
-nodemailer@^6.3.1:
+nodemailer@6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.3.1.tgz#2784beebac6b9f014c424c54dbdcc5c4d1221346"
   integrity sha512-j0BsSyaMlyadEDEypK/F+xlne2K5m6wzPYMXS/yxKI0s7jmT1kBx6GEKRVbZmyYfKOsjkeC/TiMVDJBI/w5gMQ==
