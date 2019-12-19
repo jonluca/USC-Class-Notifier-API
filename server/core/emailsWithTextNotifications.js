@@ -1,3 +1,22 @@
+/*
+
+Venmo API parser
+
+var list = [];
+
+temp1.data.forEach(e =>{
+	const m = e.message;
+	const ms = m.split(/\s+/);
+	for(const word of ms){
+		if(word.indexOf('@') !== -1){
+			list.push(word.toLowerCase())
+		}
+	}
+})
+
+copy(Array.from(new Set(list)))
+*/
+
 let emails = [
   "aaaghaja@usc.edu",
   "abaumgar@usc.edu",
@@ -7,6 +26,7 @@ let emails = [
   "abhayakr@usc.edu",
   "abrisach@usc.edu",
   "acritten@usc.edu",
+  "ahhyunki@usc.edu",
   "aidenle@usc.edu",
   "ajsmith@usc.edu",
   "akamali@usc.edu",
@@ -29,6 +49,7 @@ let emails = [
   "arami@usc.edu",
   "arenmelk@usc.edu",
   "ariannbl@usc.edu",
+  "army-gale22@hotmail.com",
   "asanghai@usc.edu",
   "ashtonas@usc.edu",
   "assraf@usc.edu",
@@ -63,6 +84,7 @@ let emails = [
   "cansari@usc.edu",
   "capan@usc.edu",
   "carabaja@usc.edu",
+  "carolylk@usc.edu",
   "castancj@usc.edu",
   "cbambach@usc.edu",
   "cbaroni@usc.edu",
@@ -84,6 +106,7 @@ let emails = [
   "conormcc@usc.edu",
   "coomer@usc.edu",
   "courtneymoore1800@yahoo.com",
+  "cpbaker775@gmail.com",
   "cpduffy@usc.edu",
   "cpmurray@usc.edu",
   "cpost@usc.edu   for class opening",
@@ -97,6 +120,7 @@ let emails = [
   "dgarciac@usc.edu",
   "dhruvilp@usc.edu",
   "disque@usc.edu",
+  "dkerner@usc.edu",
   "dmanouki@usc.edu",
   "dmvaughn@usc.edu",
   "dolgonkr@usc.edu",
@@ -128,6 +152,7 @@ let emails = [
   "etwright@usc.edu",
   "evelynka@usc.edu",
   "famccann@usc.edu",
+  "fangyufz@usc.edu",
   "fcharlem@usc.edu",
   "fdan@usc.edu",
   "fharting@usc.edu",
@@ -144,6 +169,7 @@ let emails = [
   "gcblanco@usc.edu",
   "gemichae@usc.edu",
   "ghofer@usc.edu",
+  "gianatie@usc.edu",
   "gianouso@usc.edu",
   "gjacobson98@gmail.com",
   "gkhammon@usc.edu",
@@ -173,6 +199,7 @@ let emails = [
   "huangandrew21@gmail.com",
   "huich@usc.edu",
   "huskins@usc.edu",
+  "hwint@usc.edu",
   "hwint@usc.edu,",
   "hyan6778@usc.edu",
   "hyungsik@usc.edu",
@@ -184,8 +211,10 @@ let emails = [
   "irom@usc.edu",
   "ivaish@usc.edu",
   "jack.harris@usc.edu",
+  "jackharris@usc.edu",
   "jacksogh@usc.edu",
   "jacobgro@usc.edu",
+  "jacobmmi@usc.edu",
   "jadhijaz@usc.edu",
   "jainamkj@usc.edu",
   "jakeob29@icloud.com",
@@ -208,6 +237,7 @@ let emails = [
   "joshcha@usc.edu",
   "josuerod@usc.edu",
   "joyceali@usc.edu",
+  "joycejan@usc.edu",
   "jrkeatin@usc.edu",
   "jroesler@usc.edu",
   "jsims@usc.edu",
@@ -223,6 +253,7 @@ let emails = [
   "jveronic@usc.edu",
   "jwhollin@usc.edu",
   "jyvelazq@usc.edu",
+  "kabroder@usc.edu",
   "kaileehi@usc.edu",
   "kallahav@usc.edu",
   "kalturki@usc.edu",
@@ -250,6 +281,7 @@ let emails = [
   "ktwong@usc.edu",
   "kucap@usc.edu",
   "kvaldes@usc.edu",
+  "kvsurana@usc.edu",
   "lapanoss@usc.edu",
   "lauerjon@usc.edu",
   "laylayun@usc.edu",
@@ -257,6 +289,7 @@ let emails = [
   "lee619@usc.edu",
   "lee792@usc.edu",
   "leonhua@usc.edu",
+  "lesliehe@usc.edu",
   "lfaltins@usc.edu",
   "lharper@usc.edu",
   "liangmic@usc.edu",
@@ -306,12 +339,14 @@ let emails = [
   "nbanniga@usc.edu",
   "nbloch@usc.edu",
   "nchatwan@usc.edu",
+  "ncvitani@usc.edu",
   "neconn@usc.edu",
   "neilyang@usc.edu",
   "nickchen@usc.edu",
   "nikoeconn2@gmail.com",
   "nkhalife@usc.edu",
   "nneven@usc.edu",
+  "nobel@usc.edu",
   "nohs@usc.edu",
   "noo@usc.edu",
   "norrell@usc.edu",
@@ -348,6 +383,7 @@ let emails = [
   "rannamra@usc.edu",
   "rasjotsi@usc.edu",
   "rast@usc.edu",
+  "rbowling@usc.edu",
   "rdileo@usc.edu",
   "redingto@usc.edu",
   "reneeye@usc.edu",
@@ -360,6 +396,7 @@ let emails = [
   "rleoni@usc.edu",
   "rleonram@usc.edu",
   "rmagnus@usc.edu",
+  "rmagnus@usc.edu,",
   "rossc@usc.edu",
   "rossmeis@usc.edu",
   "royak@usc.edu",
@@ -395,6 +432,7 @@ let emails = [
   "smarell@usc.edu",
   "smcginn@usc.edu",
   "snmontan@usc.edu",
+  "soltysik@usc.edu",
   "sophiean@usc.edu",
   "sophiean@usc.edu .",
   "ssshi@usc.edu",
@@ -407,6 +445,7 @@ let emails = [
   "suppiger@usc.edu",
   "szaboa@usc.edu",
   "taeeunka@usc.edu",
+  "tangney@usc.edu",
   "tawerbuc@usc.edu",
   "tayl106@usc.edu",
   "taylorwh@usc.edu",
@@ -435,6 +474,7 @@ let emails = [
   "weissz@usc.edu",
   "wendelin@usc.edu",
   "wenku@usc.edu",
+  "wil454@usc.edu",
   "will454@usc.edu",
   "winnieca@usc.edu",
   "witwer@usc.edu",
@@ -455,6 +495,7 @@ let emails = [
   "youchenysc@gmail.com",
   "yuandonx@usc.edu",
   "yucather@usc.edu",
+  "yufawu@usc.edu",
   "yuhuahu@usc.edu",
   "zaback@usc.edu",
   "zapolski@usc.edu",
@@ -462,6 +503,7 @@ let emails = [
   "zhangcry@usc.edu",
   "zhenjial@usc.edu",
   "zixinwu@usc.edu",
+  "zorr@usc.edu",
   "zqaderi@usc.edu"
 ]
 
