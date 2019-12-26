@@ -20,6 +20,9 @@ copy(Array.from(new Set(list)))
 let emails = [
   "aaaghaja@usc.edu",
   "abaumgar@usc.edu",
+	"Azangril@usc.edu",
+	"Jaoyagi@usc.edu",
+	"Gkhammon@usc.edu",
   "abdullak@usc.edu",
   "abenmoha@usc.edu",
   "abhambha@usc.edu",
