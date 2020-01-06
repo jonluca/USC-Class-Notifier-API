@@ -114,6 +114,7 @@ let emails = [
   "cpbaker775@gmail.com",
   "cpduffy@usc.edu",
   "cpmurray@usc.edu",
+  "cpost@usc.edu",
   "cpost@usc.edu   for class opening",
   "csheetz@usc.edu",
   "csu@usc.edu",
@@ -212,6 +213,7 @@ let emails = [
   "huangandrew21@gmail.com",
   "huich@usc.edu",
   "huskins@usc.edu",
+  "hwhiting@usc.edu",
   "hwint@usc.edu",
   "hwint@usc.edu,",
   "hyan6778@usc.edu",
@@ -378,6 +380,7 @@ let emails = [
   "norrell@usc.edu",
   "nprideau@usc.edu",
   "nrenna@usc.edu",
+  "nrramire@usc.edu",
   "nsolazzo@usc.edu",
   "ntanga@usc.edu",
   "ntidow988@gmail.com",
@@ -403,6 +406,7 @@ let emails = [
   "piercech@usc.edu",
   "plevy@usc.edu",
   "pmoissis@usc.edu",
+  "pnzimmer@usc.edu",
   "prikun19@gmail.com",
   "priyakun@usc.edu",
   "pskaf@usc.edu",
@@ -541,6 +545,7 @@ let emails = [
   "zorr@usc.edu",
   "zqaderi@usc.edu"
 ]
+
 for (let i = 0; i < emails.length; i++) {
   emails[i] = emails[i].toLowerCase();
   emails[i] = emails[i].trim();
