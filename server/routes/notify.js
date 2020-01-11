@@ -64,11 +64,6 @@ router.get('/verify', (req, res, next) => {
     return res.status(300).render("landing").end();
   }
 
-  // Accidentally broke key verification for some users in SP18, so just for this semester I'm disabling key
-  // verification.  StudentController.verifyByKey(key, (verified) => { if (verified) { return
-  // res.status(200).render("verify.ejs", { email, status: "Verified" }); } return res.status(400).render("verify.ejs",
-  // { email, status: "Error verifying!" }); });
-
   StudentController.verifyByEmail(email, (verified) => {
     if (verified) {
       if (section) {
@@ -102,15 +97,13 @@ router.get('/verify', (req, res, next) => {
 
 /* Add a class to a user account. */
 router.post('/notify', (req, res, next) => {
-  const email = req.body.email;
-  const sectionNumber = req.body.courseid;
-  const department = req.body.department;
+  const email = (req.body.email || '').toLowerCase().trim();
+  const sectionNumber = (req.body.courseid || '').trim();
+  const department = (req.body.department || '').toUpperCase().trim();
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip;
   const uscid = req.body.id;
-  let phone = "";
-  if (req.body.phone != undefined) {
-    phone = parsePhone(req.body.phone);
-  }
+
+  const phone = parsePhone(req.body.phone || '');
 
   if (!email || !sectionNumber || !department) {
     return res.status(400).send({
@@ -121,19 +114,24 @@ router.post('/notify', (req, res, next) => {
   if (!validator.isEmail(email)) {
     logger.info(`Invalid email ${email} sent`);
     return res.status(400).send({
-      "error": "Invalid email!"
+      error: "Invalid email!",
+      email
     }).end();
   }
 
   if (!validSection(sectionNumber, department)) {
     return res.status(400).send({
-      "error": "Invalid department or section!"
+      "error": "Invalid department or section!",
+      sectionNumber,
+      department
     }).end();
   }
 
   const section = {
-    sectionNumber: sectionNumber.trim(),
-    department: department.toUpperCase().trim()
+    sectionNumber,
+    department,
+    phone,
+    rand: `${rand.generate(8)}`
   };
 
   StudentController.userExists(email).then((userExists) => {
@@ -143,7 +141,7 @@ router.post('/notify', (req, res, next) => {
         if (!success) {
           logger.error(`Unable to create account for ${email}`);
           return res.status(500).send({
-            "error": "Unable to create user account! Please email jdecaro@usc.edu with your information."
+            "error": "Unable to create user account! Please email schedule.error@jonlu.ca with your information."
           }).end();
         }
         EmailController.sendVerificationEmail(email, key);
@@ -163,11 +161,11 @@ function addClass(res, email, section, isNew) {
         "error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."
       }).end();
     }
-    if (isNew) {
-      res.status(200).end();
-    } else {
-      res.status(201).end();
-    }
+
+    res.send({
+      section,
+      email
+    }).status(isNew ? 200 : 201).end();
   });
 }
 

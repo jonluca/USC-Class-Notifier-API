@@ -84,7 +84,7 @@ StudentController.userExists = async (email) => {
   return await student.findOne({email});
 };
 
-StudentController.addClassToUser = (email, section, callback) => {
+StudentController.addClassToUser = (email, section, phone, callback) => {
   student.findOne({email}, (err, user) => {
     if (err) {
       logger.error(`Error checking if user ${email} exists`);
@@ -103,8 +103,7 @@ StudentController.addClassToUser = (email, section, callback) => {
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);
     user.markModified('sectionsWatching');
-    // Any time a user adds a new class, update their semester to the current one
-    user.semester = semester;
+
     user.save();
     return callback(true);
   });

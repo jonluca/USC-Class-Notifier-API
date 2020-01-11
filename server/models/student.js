@@ -15,6 +15,18 @@ const section = {
     type: Boolean,
     default: false
   },
+  phone: {
+    type: String,
+    default: ''
+  },
+  rand: {
+    type: String,
+    default: ''
+  },
+  semester: {
+    type: String,
+    default: semester
+  },
   date: {
     type: Date,
     default: new Date().toISOString()
@@ -45,10 +57,6 @@ const student = new mongoose.Schema({
   },
   ip: String,
   uscID: String,
-  semester: {
-    type: String,
-    default: semester
-  },
   date: {
     type: Date,
     default: new Date().toISOString()
