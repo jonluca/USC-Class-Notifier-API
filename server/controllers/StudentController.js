@@ -5,6 +5,7 @@ const _ = require('lodash');
 const config = require("../config/config");
 const EmailController = require("./EmailController");
 const TextController = require("./TextController");
+const PaidIdController = require("./PaidIdController");
 const semester = require("../config/config").semester;
 
 let StudentController = {};
@@ -17,7 +18,6 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   s.phone = phone;
   s.uscID = uscid;
   s.ip = ip;
-  s.paidForTextNotifications = emailHasPaidForText(email);
 
   s.save((err, user) => {
     if (err) {
@@ -109,12 +109,20 @@ StudentController.addClassToUser = (email, section, phone, callback) => {
   });
 };
 
-StudentController.notifyUser = async (user, section) => {
-  EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section);
-  if (user.paidForTextNotifications || emailHasPaidForText(user.email)) {
-    logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
-    TextController.sendMessage(user.phone, `There are now spots available for section ${section.sectionNumber} in class ${section.courseID}`);
+StudentController.notifyUser = async (user, section, count) => {
+  EmailController.sendSpotsAvailableEmail('jdecaro@usc.edu', user.verificationKey, section, count);
+  try {
+    if (emailHasPaidForText(user.email) || await PaidIdController.isIdPaid(section.rand)) {
+      logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
+      const personText = count == 1 ? 'person' : 'people';
+      const verbText = count == 1 ? 'is' : 'are';
+      const otherPeople = count > 0 ? `${count || '0'} other ${personText} ${verbText} watching this section.` : '';
+      TextController.sendMessage(user.phone, `Spots available for section ${section.sectionNumber} in class ${section.courseID}. ${otherPeople}`);
+    }
+  } catch (e) {
+    logger.error(`Error checking if paid or sending text message for ${user.email} for ${section}- ${e} `);
   }
+
 };
 
 StudentController.removeUser = (email, key, callback) => {
@@ -129,13 +137,12 @@ StudentController.removeUser = (email, key, callback) => {
 
 StudentController.getAllWatchedDepartments = async () => {
   let students = await student.find({
-    validAccount: true,
-    semester: config.semester
+    validAccount: true
   });
   let departments = new Set();
   students.forEach(obj => {
     obj.sectionsWatching.forEach(section => {
-      if (!section.notified && section.department) {
+      if (!section.notified && section.department && section.semester === semester) {
         departments.add(section.department);
       }
     });
@@ -148,15 +155,30 @@ StudentController.getStudentsByDepartment = async (department) => {
   const query = {
     "sectionsWatching": {
       $elemMatch: {
-        department: department,
-        notified: false
+        department,
+        notified: false,
+        semester
       }
     },
-    validAccount: true,
-    deleted: false, // removed - add in next semester to limit queries
-    semester: config.semester
+    validAccount: true
   };
   return await student.find(query);
+};
+
+StudentController.getNumberOfStudentsWatchingSection = async (sectionNumber, department) => {
+  //Search for users that are being notified for that department
+  const query = {
+    "sectionsWatching": {
+      $elemMatch: {
+        department,
+        sectionNumber,
+        notified: false,
+        semester
+      }
+    },
+    validAccount: true
+  };
+  return await student.count(query);
 };
 
 StudentController.validateAccounts = () => {
@@ -169,14 +191,4 @@ StudentController.validateAccounts = () => {
   });
 };
 
-StudentController.markAccountsAsPaid = () => {
-  let emails = emailHasPaidForText.emails;
-  for (let email of emails) {
-    student.update({email: email.toLowerCase()}, {paidForTextNotifications: true}, function (err, res) {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
-};
 module.exports = StudentController;

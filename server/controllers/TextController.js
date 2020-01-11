@@ -10,11 +10,12 @@ const logger = require('log4js').getLogger("notification");
 let TextController = {};
 
 TextController.sendMessage = (number, message) => {
+  return;
   if (number !== undefined && number !== "") {
     client.messages.create({
       body: message,
       to: number,
-      from: '+16283333615'
+      from: config.fromPhoneNumber
     }, (err, message) => {
       if (err) {
         logger.error(`Error sending text to: ${number} with error: ${err}`);
