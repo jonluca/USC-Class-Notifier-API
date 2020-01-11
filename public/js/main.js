@@ -1,26 +1,35 @@
+function addId() {
+  $.ajax({
+    method: 'POST',
+    url: "admin/addId",
+    type: 'json',
+    data: {
+      id: $("#addIdValue").val()
+    },
+    success: function (data, textStatus, jqXHR) {
+      console.log(data);
+      console.log(jqXHR.status);
+      if (jqXHR.status === 200) {
+        $("#addID").after("<div>Added ids!</div>");
+        $("#addIdValue").val('');
+      }
+    },
+    error: function (data, status) {
+      $("#addID").after("<div>Error!</div>");
+      $("#addIdValue").val('');
+    }
+  });
+}
+
 $(document).ready(function () {
   $("#addID").click(e => {
-    $.ajax({
-      method: 'POST',
-      url: "admin/addId",
-      type: 'json',
-      data: {
-        id: $("#addIdValue").val()
-      },
-      success: function (data, textStatus, jqXHR) {
-        console.log(data);
-        console.log(jqXHR.status);
-        if (jqXHR.status === 200) {
-          $("#addID").after("<div>Added ids!</div>");
-        }
-      },
-      error: function (data, status) {
-        $("#addID").after("<div>Error!</div>");
-
-      }
-    });
+    addId();
   });
-
+  $("#addIdValue").on('keypress', function (e) {
+    if (e.which == 13) {
+      addId();
+    }
+  });
   $.ajax({
     method: 'GET',
     url: "admin/ids",
