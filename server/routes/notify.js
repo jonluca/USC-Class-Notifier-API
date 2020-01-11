@@ -92,6 +92,9 @@ router.get('/verify', (req, res, next) => {
 /* Add a class to a user account. */
 router.post('/notify', (req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
 
   const email = (req.body.email || '').toLowerCase().trim();
   const sectionNumber = (req.body.courseid || '').trim();
