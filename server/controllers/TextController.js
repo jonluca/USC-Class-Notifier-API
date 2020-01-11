@@ -10,7 +10,6 @@ const logger = require('log4js').getLogger("notification");
 let TextController = {};
 
 TextController.sendMessage = (number, message) => {
-  return;
   if (number !== undefined && number !== "") {
     client.messages.create({
       body: message,

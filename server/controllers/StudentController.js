@@ -110,7 +110,7 @@ StudentController.addClassToUser = (email, section, callback) => {
 };
 
 StudentController.notifyUser = async (user, section, count) => {
-  EmailController.sendSpotsAvailableEmail('jdecaro@usc.edu', user.verificationKey, section, count);
+  EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
   try {
     if (emailHasPaidForText(user.email) || await PaidIdController.isIdPaid(section.rand)) {
       logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
