@@ -159,13 +159,15 @@ function addClass(res, email, section, isNew) {
       return res.status(500).send({
         "error": "Unable to add class to email! Please email jdecaro@usc.edu with your information.",
         email,
-        section
+        section,
+        phone: section.phone
       }).end();
     }
 
     res.send({
       section,
-      email
+      email,
+      phone: section.phone
     }).status(isNew ? 200 : 201).end();
   });
 }
