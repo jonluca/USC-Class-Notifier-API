@@ -51,10 +51,6 @@ const student = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  paidForTextNotifications: {
-    type: Boolean,
-    default: false
-  },
   ip: String,
   uscID: String,
   date: {
@@ -63,9 +59,9 @@ const student = new mongoose.Schema({
   }
 });
 
-student.methods.isAlreadyWatching = function isAlreadyWatching(section) {
-  for (let sec of this.sectionsWatching) {
-    if (sec.sectionNumber === section.sectionNumber) {
+student.methods.isAlreadyWatching = function isAlreadyWatching(sectionToWatch) {
+  for (const section of this.sectionsWatching) {
+    if (section.sectionNumber === sectionToWatch.sectionNumber) {
       return true;
     }
   }
@@ -76,7 +72,12 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
   for (let sec of this.sectionsWatching) {
     if (sec.sectionNumber === section.sectionNumber) {
       sec.notified = false;
-      this.save();
+      this.save((err, user) => {
+        if (err) {
+          logger.error(`Error marking section as not notified user ${this.email}: ${err}`);
+        }
+        logger.info(`Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`);
+      });
     }
   }
 };

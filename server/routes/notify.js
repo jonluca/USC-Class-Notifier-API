@@ -14,7 +14,6 @@ function parsePhone(number) {
     return "";
   }
   let phone = number.trim();
-  let parsedPhone = "";
   if (phone.startsWith("+1")) {
     phone = phone.slice(2);
   }
@@ -23,23 +22,18 @@ function parsePhone(number) {
     phone = phone.slice(1);
   }
   try {
-    parsedPhone = phoneParser(phone, 'xxxxxxxxxx');
+    return phoneParser(phone, 'xxxxxxxxxx');
   } catch (e) {
     logger.error(`Error parsing phone number ${number}`);
+    return '';
   }
-  return parsedPhone;
 }
 
 function validSection(section, department) {
   if (!section || !department) {
     return false;
   }
-  if (section === "" || department === "") {
-    return false;
-  }
-
   return ValidDepartments.includes(department.toUpperCase());
-
 }
 
 /* GET home page. */
@@ -107,7 +101,10 @@ router.post('/notify', (req, res, next) => {
 
   if (!email || !sectionNumber || !department) {
     return res.status(400).send({
-      "error": "Invalid email, section, or department!!"
+      "error": "Invalid email, section, or department!!",
+      email,
+      sectionNumber,
+      department
     }).end();
   }
 
@@ -115,7 +112,9 @@ router.post('/notify', (req, res, next) => {
     logger.info(`Invalid email ${email} sent`);
     return res.status(400).send({
       error: "Invalid email!",
-      email
+      email,
+      sectionNumber,
+      department
     }).end();
   }
 
@@ -131,7 +130,7 @@ router.post('/notify', (req, res, next) => {
     sectionNumber,
     department,
     phone,
-    rand: `${rand.generate(8)}`
+    rand: `${rand.generateDigits(8)}`
   };
 
   StudentController.userExists(email).then((userExists) => {
@@ -158,7 +157,9 @@ function addClass(res, email, section, isNew) {
     if (!result) {
       logger.error(`Unable to add class to account for ${email}`);
       return res.status(500).send({
-        "error": "Unable to add class to email! Please email jdecaro@usc.edu with your information."
+        "error": "Unable to add class to email! Please email jdecaro@usc.edu with your information.",
+        email,
+        section
       }).end();
     }
 

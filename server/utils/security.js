@@ -1,4 +1,3 @@
-const helmet = require('helmet');
 const RateLimit = require('express-rate-limit');
 const fs = require('fs');
 const path = require('path');
@@ -9,7 +8,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/acces
 });
 const limiter = new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 30 // limit each IP to 30 requests per windowMs
 });
 
 module.exports = function (app) {

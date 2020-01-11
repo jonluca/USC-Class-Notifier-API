@@ -24,8 +24,6 @@ async function refresh() {
 }
 
 function refreshDepartments(departments) {
-  // On every refresh make sure we mark all accounts that have paid as paid
-  StudentController.markAccountsAsPaid();
   /*If data was invalid/uniterable, return (fail silently)*/
   if (!departments) {
     return;
@@ -84,13 +82,13 @@ function retryRefreshWithoutHardPull(department) {
 
 async function parseCourses(body) {
   try {
-    let departmentInfo = JSON.parse(body);
+    const departmentInfo = JSON.parse(body);
     /*Object key checks for returned JSON - the Schedule of Classes API is a bit finicky and not very reliable*/
     if (departmentInfo && departmentInfo.Dept_Info && departmentInfo.Dept_Info.abbreviation) {
 
       const departmentName = departmentInfo.Dept_Info.abbreviation;
-      let students = await StudentController.getStudentsByDepartment(departmentName);
-      let courses = new ClassController(departmentInfo);
+      const students = await StudentController.getStudentsByDepartment(departmentName);
+      const courses = new ClassController(departmentInfo);
       for (const student of students) {
         await checkAvailability(student, courses);
       }
@@ -111,7 +109,8 @@ async function checkAvailability(student, courses) {
       let course = courses.getSection(section.sectionNumber);
       /*If the course has available spots, notify them*/
       if (course && course.available > 0 && !section.notified) {
-        await StudentController.notifyUser(student, course);
+        const count = await StudentController.getNumberOfStudentsWatchingSection(section.sectionNumber, section.department);
+        await StudentController.notifyUser(student, course, count);
         section.notified = true;
         studentWasNotified = true;
       }
@@ -120,7 +119,7 @@ async function checkAvailability(student, courses) {
       student.markModified('sectionsWatching');
       await student.save(function (err) {
         if (err) {
-          console.log(err);
+          logger.error(err);
         }
       });
     }
