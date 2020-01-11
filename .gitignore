@@ -7,3 +7,4 @@ logs
 *.log
 node_modules/
 server/config/config.js
+db/*
