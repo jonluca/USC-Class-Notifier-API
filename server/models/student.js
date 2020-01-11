@@ -1,5 +1,6 @@
 const db = require('../core/mongo');
 const mongoose = require('mongoose');
+const logger = require('log4js').getLogger("notification");
 
 //Update every semester to only query the current reg
 const semester = require("../config/config").semester;
