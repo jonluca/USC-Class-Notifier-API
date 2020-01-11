@@ -9,7 +9,6 @@ const paidId = new mongoose.Schema({
     default: semester
   },
   paidId: String,
-  email: String,
   date: {
     type: Date,
     default: new Date().toISOString()

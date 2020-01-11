@@ -1,26 +1,18 @@
 //Twilio variables
 const paidId = require('../models/paidIds');
-const logger = require('log4js').getLogger("notification");
 
 const PaidIdController = {};
 
-PaidIdController.addId = (id, callback) => {
+PaidIdController.addId = async (id) => {
   const p = new paidId();
-  p.id = id;
+  p.paidId = id;
 
-  p.save((err, paidIdEntry) => {
-    if (err) {
-      logger.error(`Error saving paid id ${id}: ${err}`);
-      return callback(false);
-    }
-    logger.info(`Succesfully created paid id ${id}`);
-    return callback(paidIdEntry);
-  });
+  return await p.save();
 };
 
 PaidIdController.isIdPaid = async (id) => {
   return await paidId.findOne({
-    id
+    paidId: id
   });
 };
 

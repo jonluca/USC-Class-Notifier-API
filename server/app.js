@@ -4,7 +4,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const notify = require('./routes/notify');
 const admin = require('./routes/admin');
+const account = require("./config/config").account;
 const app = express();
+const basicAuth = require('express-basic-auth');
+
 // Add security headers and options
 require('./utils/security')(app);
 
@@ -18,8 +21,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', notify);
-app.use('/admin', admin);
-
+const username = account.user;
+const password = account.pass;
+const users = {};
+users[username] = password;
+app.use('/admin', basicAuth({
+  users,
+  challenge: true,
+  realm: 'soc'
+}), admin);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   const err = new Error('Not Found');

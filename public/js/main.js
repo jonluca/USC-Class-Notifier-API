@@ -1,11 +1,33 @@
 $(document).ready(function () {
+  $("#addID").click(e => {
+    $.ajax({
+      method: 'POST',
+      url: "admin/addId",
+      type: 'json',
+      data: {
+        id: $("#addIdValue").val()
+      },
+      success: function (data, textStatus, jqXHR) {
+        console.log(data);
+        console.log(jqXHR.status);
+        if (jqXHR.status === 200) {
+          $("#addID").after("<div>Added ids!</div>");
+        }
+      },
+      error: function (data, status) {
+        $("#addID").after("<div>Error!</div>");
+
+      }
+    });
+  });
+
   $.ajax({
     method: 'GET',
-    url: "admin/users",
+    url: "admin/ids",
     type: 'json',
     success: function (data, textStatus, jqXHR) {
-      //Handle data and status code here
-      let options = {
+      let allRows = '';
+      const options = {
         weekday: 'long',
         year: 'numeric',
         month: 'short',
@@ -13,23 +35,14 @@ $(document).ready(function () {
         hour: '2-digit',
         minute: '2-digit'
       };
-      for (let person of data) {
-        for (let course of person.sectionsWatching) {
-          let time = new Date(course.date);
-          let timeMS = time.getTime() / 1000;
-          let row = `<tr>`;
-          row += `<td>${person.email}</td>`;
-          row += `<td>${person.phone}</td>`;
-          row += `<td>${course.department}</td>`;
-          row += `<td>${person.uscID}</td>`;
-          row += `<td>${course.date.toLocaleString('en-us', options)}</td>`;
-          row += `<td>${course.notified}</td>`;
-          row += `<td>${person.validAccount}</td>`;
-          row += `<td>${person.semester}</td>`;
-          row += `<td>${timeMS}</td></tr>`;
-          $('#data tr:last').after(row);
-        }
+      for (const id of data) {
+        let row = `<tr>`;
+        row += `<td>${id.paidId}</td>`;
+        row += `<td>${id.date.toLocaleString('en-us', options)}</td>`;
+        row += `<td>${id.semester}</td>`;
+        allRows += row;
       }
+      $('#data tr:last').after(allRows);
     }
   });
 });

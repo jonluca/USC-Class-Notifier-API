@@ -8,7 +8,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/acces
 });
 const limiter = new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 30 // limit each IP to 30 requests per windowMs
+  max: 100 // limit each IP to 30 requests per windowMs
 });
 
 module.exports = function (app) {
