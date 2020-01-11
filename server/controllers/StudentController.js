@@ -84,7 +84,7 @@ StudentController.userExists = async (email) => {
   return await student.findOne({email});
 };
 
-StudentController.addClassToUser = (email, section, phone, callback) => {
+StudentController.addClassToUser = (email, section, callback) => {
   student.findOne({email}, (err, user) => {
     if (err) {
       logger.error(`Error checking if user ${email} exists`);
