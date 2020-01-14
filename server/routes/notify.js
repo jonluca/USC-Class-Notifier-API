@@ -168,12 +168,13 @@ function addClass(res, email, section, isNew) {
         phone: section.phone
       }).end();
     }
+    const status = isNew ? 200 : 201;
 
-    res.send({
+    res.status(status).send({
       section,
       email,
       phone: section.phone
-    }).status(isNew ? 200 : 201).end();
+    }).end();
   });
 }
 
