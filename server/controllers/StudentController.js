@@ -1,6 +1,5 @@
 const student = require('../models/student');
 const logger = require('log4js').getLogger("notification");
-const emailHasPaidForText = require('../core/emailsWithTextNotifications');
 const _ = require('lodash');
 const config = require("../config/config");
 const EmailController = require("./EmailController");
@@ -112,7 +111,7 @@ StudentController.addClassToUser = (email, section, callback) => {
 StudentController.notifyUser = async (user, section, count) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
   try {
-    if (emailHasPaidForText(user.email) || await PaidIdController.isIdPaid(section.rand)) {
+    if (await PaidIdController.isIdPaid(section.rand)) {
       logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
       const personText = count == 1 ? 'person' : 'people';
       const verbText = count == 1 ? 'is' : 'are';
