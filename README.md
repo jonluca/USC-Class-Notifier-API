@@ -13,14 +13,14 @@ There are only three end-points to soc. This service is open to any developers, 
 
 | Endpoint | Parameters |
 | -------- | -------- |
-| https://jonlu.ca/soc/notify | POST: `email, courseid, department, phone` |
+| https://jldc.me/soc/notify | POST: `email, courseid, department, phone` |
 
 A sample AJAX POST request looks like:
 
 ```
 $.ajax({
     method: 'POST',
-    url: "https://jonlu.ca/soc/notify",
+    url: "https://jldc.me/soc/notify",
     type: 'json',
     data: {
         email: email,
@@ -68,14 +68,14 @@ To manually remove a user from being notified of a section, you can use the `rem
 
 | Endpoint | Parameters |
 | -------- | -------- |
-| https://jonlu.ca/soc/remove | POST: `email, key` |
+| https://jldc.me/soc/remove | POST: `email, key` |
 
 A sample AJAX POST request looks like:
 
 ```
 $.ajax({
     method: 'POST',
-    url: "https://jonlu.ca/soc/notify",
+    url: "https://jldc.me/soc/notify",
     type: 'json',
     data: {
         email: email,

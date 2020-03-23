@@ -145,7 +145,7 @@ router.post('/notify', (req, res, next) => {
         if (!success) {
           logger.error(`Unable to create account for ${email}`);
           return res.status(500).send({
-            "error": "Unable to create user account! Please email schedule.error@jonlu.ca with your information."
+            "error": "Unable to create user account! Please email schedule.error@jldc.me with your information."
           }).end();
         }
         EmailController.sendVerificationEmail(email, key);

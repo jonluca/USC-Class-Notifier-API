@@ -31,7 +31,7 @@ function refreshDepartments(departments) {
   //Headers so they know who's pulling their information
   const headers = {
     'DNT': '1',
-    'User-Agent': 'https://jonlu.ca/soc/ Class Refresher',
+    'User-Agent': 'https://jldc.me/soc/ Class Refresher',
     'Cache-Control': 'max-age=0'
   };
 
@@ -61,7 +61,7 @@ function retryRefreshWithoutHardPull(department) {
   }
   const headers = {
     'DNT': '1',
-    'User-Agent': 'http://jonlu.ca/soc',
+    'User-Agent': 'http://jldc.me/soc',
     'Cache-Control': 'max-age=0'
   };
   let options = {

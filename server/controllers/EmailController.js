@@ -15,7 +15,7 @@ let EmailController = {};
 
 EmailController.sendVerificationEmail = (email, key) => {
 
-  const url = `https://jonlu.ca/soc/verify?email=${email}&key=${key}`;
+  const url = `https://jldc.me/soc/verify?email=${email}&key=${key}`;
   const text = "Hello! <br> <br> Please verify your account by clicking the following link!";
   let templateData = {
     url,
@@ -30,7 +30,7 @@ EmailController.sendVerificationEmail = (email, key) => {
       logger.error(err);
       return;
     } // Handle error
-    const from = 'schedule-helper@jonlu.ca';
+    const from = 'schedule-helper@jldc.me';
     const subject = 'Verify Email - USC Schedule Helper';
 
     EmailController._sendEmail(from, subject, email, html)
@@ -45,7 +45,7 @@ EmailController.sendVerificationEmail = (email, key) => {
 };
 
 EmailController.sendSpotsAvailableEmail = (email, key, section, count) => {
-  const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${email}&key=${key}&section=${section.sectionNumber}`;
+  const watchAgainUrl = `https://jldc.me/soc/verify?email=${email}&key=${key}&section=${section.sectionNumber}`;
   const personText = count == 1 ? 'person' : 'people';
   const verbText = count == 1 ? 'is' : 'are';
   const otherPeople = count > 0 ? `${count || '0'} other ${personText} ${verbText} watching this section.` : '';
@@ -66,7 +66,7 @@ EmailController.sendSpotsAvailableEmail = (email, key, section, count) => {
     if (err) {
       logger.error(err);
     }
-    const from = 'no-reply@jonlu.ca';
+    const from = 'no-reply@jldc.me';
     const subject = `${section.available} spot${section.available > 1 ? 's' : ''} open for ${section.courseID}`;
 
     EmailController._sendEmail(from, subject, email, html).then(() => {
