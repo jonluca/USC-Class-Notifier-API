@@ -108,10 +108,10 @@ StudentController.addClassToUser = (email, section, callback) => {
   });
 };
 
-StudentController.notifyUser = async (user, section, count) => {
+StudentController.notifyUser = async (user, section, count, paidId) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
   try {
-    if (await PaidIdController.isIdPaid(section.rand)) {
+    if (await PaidIdController.isIdPaid(paidId)) {
       logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
       const personText = count == 1 ? 'person' : 'people';
       const verbText = count == 1 ? 'is' : 'are';
