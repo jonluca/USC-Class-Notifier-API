@@ -87,24 +87,25 @@ StudentController.addClassToUser = (email, section, callback) => {
   student.findOne({email}, (err, user) => {
     if (err) {
       logger.error(`Error checking if user ${email} exists`);
-      return callback(false);
+      return callback(null);
     }
     if (!user) {
       logger.error(`User ${email} not found when attempting to add class!`);
-      return callback(false);
+      return callback(null);
     }
     // If they're already watching this section
     if (user.isAlreadyWatching(section)) {
       user.markSectionAsNotNotified(section);
       logger.info(`Marked section ${section.department} - ${section.sectionNumber} for ${user.email} as not notified`);
-      return callback(true);
+      section.rand = user.getRandForSection(section);
+      return callback(section);
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);
     user.markModified('sectionsWatching');
 
     user.save();
-    return callback(true);
+    return callback(section);
   });
 };
 

@@ -171,7 +171,7 @@ function addClass(res, email, section, isNew) {
     const status = isNew ? 200 : 201;
 
     res.status(status).send({
-      section,
+      section: result,
       email,
       phone: section.phone
     }).end();

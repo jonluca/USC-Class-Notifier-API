@@ -68,6 +68,14 @@ student.methods.isAlreadyWatching = function isAlreadyWatching(sectionToWatch) {
   }
   return false;
 };
+student.methods.getRandForSection = function isAlreadyWatching(sectionToWatch) {
+  for (const section of this.sectionsWatching) {
+    if (section.sectionNumber === sectionToWatch.sectionNumber) {
+      return section.rand;
+    }
+  }
+  return false;
+};
 
 student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(section) {
   for (let sec of this.sectionsWatching) {
