@@ -50,7 +50,7 @@ EmailController.sendSpotsAvailableEmail = (email, key, section, count) => {
   const verbText = count == 1 ? 'is' : 'are';
   const otherPeople = count > 0 ? `${count || '0'} other ${personText} ${verbText} watching this section.` : '';
 
-  let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName}.<br> <br> `;
+  let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName} - Section ${section.sectionNumber}.<br> <br> `;
   text += `There ${section.available > 1 ? 'are' : 'is'} now ${section.available} spot${section.available > 1 ? 's' : ''} available. ${otherPeople} <br> <br> You will not receive this email again.<br>`;
   text += ` <br> Please note this service will not work if the class is not actually full (i.e. if spots haven't been "released" yet). 
  <b>This is true for most GE's and GESM! It will continue sending notifications if the spots have not been released, until the class is actually full. </b> 
