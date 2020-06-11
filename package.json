@@ -33,7 +33,7 @@
     "sparkpost": "2.1.4",
     "supports-color": "7.1.0",
     "twilio": "3.39.5",
-    "validator": "12.2.0"
+    "validator": "13.1.1"
   },
   "snyk": true
 }
