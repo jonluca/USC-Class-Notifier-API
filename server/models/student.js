@@ -81,6 +81,9 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
   for (let sec of this.sectionsWatching) {
     if (sec.sectionNumber === section.sectionNumber) {
       sec.notified = false;
+      if(sec.phone !== section.phone){
+        sec.phone = section.phone;
+      }
       this.save((err, user) => {
         if (err) {
           logger.error(`Error marking section as not notified user ${this.email}: ${err}`);

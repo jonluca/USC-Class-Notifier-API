@@ -98,6 +98,7 @@ StudentController.addClassToUser = (email, section, callback) => {
       user.markSectionAsNotNotified(section);
       logger.info(`Marked section ${section.department} - ${section.sectionNumber} for ${user.email} as not notified`);
       section.rand = user.getRandForSection(section);
+
       return callback(section);
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
