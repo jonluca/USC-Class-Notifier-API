@@ -159,8 +159,8 @@ router.post('/notify', (req, res, next) => {
 });
 
 function addClass(res, email, section, isNew) {
-  StudentController.addClassToUser(email, section, (result) => {
-    if (!result) {
+  StudentController.addClassToUser(email, section, (user) => {
+    if (!user) {
       logger.error(`Unable to add class to account for ${email}`);
       return res.status(500).send({
         "error": "Unable to add class to email! Please email jdecaro@usc.edu with your information.",
@@ -170,11 +170,21 @@ function addClass(res, email, section, isNew) {
       }).end();
     }
     const status = isNew ? 200 : 201;
-    res.status(status).send({
-      section: result,
+    for(const sec of user.sectionsWatching){
+      if(sec.sectionNumber === section.sectionNumber){
+        return res.status(status).send({
+          section: sec,
+          email,
+          phone: section.phone
+        }).end();
+      }
+    }
+    return res.status(status).send({
+      section,
       email,
       phone: section.phone
     }).end();
+
   });
 }
 
