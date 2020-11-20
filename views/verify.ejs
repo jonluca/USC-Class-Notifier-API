@@ -39,7 +39,7 @@
     <h1 class="text-center info"><%= email %></h1>
     <h1 class="text-center info"><%= status %></h1>
     <br>
-    <% if(typeof user !== 'undefined' && user) { %>
+    <% if(typeof user !== 'undefined' && user && user.sectionsWatching && user.sectionsWatching.length) { %>
             <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it should update here.</p>
             <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the columen "Unique Venmo ID for text notifs"</p>
             <table class="blueTable">
