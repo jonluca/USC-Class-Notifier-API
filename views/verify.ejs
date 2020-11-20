@@ -56,6 +56,7 @@
             <tbody>
             <% user.sectionsWatching.map((section)=>{ %>
                 <%  const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
+                <%  const paid = !!paidIds[section.paid]; %>
                 <tr>
                     <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5'%>"><%= section.notified %></td>
                     <td><%= section.semester %></td>
@@ -64,7 +65,7 @@
                     <td><%= section.phone %></td>
                     <td><a href="<%= watchAgainUrl %>">Get notified for this section</a></td>
                     <td><%= section.rand %></td>
-                    <td style="background: <%= section.paid ? '#e3ffee' : '#ffd5d5'%>"><%= String(section.paid) %></td>
+                    <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5'%>"><%= String(paid) %></td>
                 </tr>
             <% }) %>
             </tbody>

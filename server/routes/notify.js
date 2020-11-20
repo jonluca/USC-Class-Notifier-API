@@ -57,8 +57,9 @@ router.get('/verify', (req, res, next) => {
   }
   StudentController.verifyByEmail(email, key, async (user) => {
     if (user) {
+      const paidIds = {};
       for (const section of user.sectionsWatching) {
-        section.paid = !!(await PaidIdController.isIdPaid(section.rand));
+        paidIds[section.rand] = !!(await PaidIdController.isIdPaid(section.rand));
       }
       if (section) {
         StudentController.addClassToUser(email, {sectionNumber: section}, (result) => {
@@ -66,21 +67,24 @@ router.get('/verify', (req, res, next) => {
             logger.error(`Unable to reverify class to account for ${email}`);
             return res.status(400).render("verify.ejs", {
               email,
+              paidIds,
               user,
               status: "Error adding class to watchlist! Contact JonLuca about this error."
             });
           }
           return res.status(200).render("verify.ejs", {
             email,
+            paidIds,
             user,
             status: `Watching section ${section}!`
-          }, (err, html) =>{
+          }, (err, html) => {
             logger.error(err);
           });
         });
       } else {
         return res.status(200).render("verify.ejs", {
           email,
+          paidIds: [],
           user,
           status: "Verified"
         });
@@ -88,6 +92,7 @@ router.get('/verify', (req, res, next) => {
     } else {
       return res.status(400).render("verify.ejs", {
         email,
+        paidIds: [],
         user: null,
         status: "Error verifying!"
       });
