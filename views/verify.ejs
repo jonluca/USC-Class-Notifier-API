@@ -39,7 +39,7 @@
     <h1 class="text-center info"><%= email %></h1>
     <h1 class="text-center info"><%= status %></h1>
     <br>
-    <% if(user) { %>
+    <% if(typeof user !== 'undefined' && user) { %>
             <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it should update here.</p>
             <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the columen "Unique Venmo ID for text notifs"</p>
             <table class="blueTable">
@@ -49,17 +49,20 @@
             <td>Department</td>
             <td>Class Code</td>
             <td>Phone</td>
+            <td>Keep Watching</td>
             <td>Unique Venmo ID for text notifs</td>
             <td>Venmo ID paid</td>
             </thead>
             <tbody>
             <% user.sectionsWatching.map((section)=>{ %>
+                <%  const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
                 <tr>
                     <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5'%>"><%= section.notified %></td>
                     <td><%= section.semester %></td>
                     <td><%= section.department %></td>
                     <td><%= section.sectionNumber %></td>
                     <td><%= section.phone %></td>
+                    <td><a href="<%= watchAgainUrl %>">Get notified for this section</a></td>
                     <td><%= section.rand %></td>
                     <td style="background: <%= section.paid ? '#e3ffee' : '#ffd5d5'%>"><%= String(section.paid) %></td>
                 </tr>
