@@ -85,7 +85,7 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
         }
         logger.info(`Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`);
         if(callback){
-          callback(user)
+          callback(this)
         }
       });
     }
