@@ -95,6 +95,7 @@ StudentController.addClassToUser = (email, section, callback) => {
         section.rand = user.getRandForSection(section);
         return callback(user);
       });
+      return
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);
