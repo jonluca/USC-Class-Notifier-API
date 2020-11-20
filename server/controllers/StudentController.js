@@ -90,10 +90,11 @@ StudentController.addClassToUser = (email, section, callback) => {
     }
     // If they're already watching this section
     if (user.isAlreadyWatching(section)) {
-      user.markSectionAsNotNotified(section);
-      logger.info(`Marked section ${section.department} - ${section.sectionNumber} for ${user.email} as not notified`);
-      section.rand = user.getRandForSection(section);
-      return callback(user);
+      user.markSectionAsNotNotified(section, user => {
+        logger.info(`Marked section ${section.department} - ${section.sectionNumber} for ${user.email} as not notified`);
+        section.rand = user.getRandForSection(section);
+        return callback(user);
+      });
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);

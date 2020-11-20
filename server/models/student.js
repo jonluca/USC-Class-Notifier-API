@@ -72,7 +72,7 @@ student.methods.getRandForSection = function isAlreadyWatching(sectionToWatch) {
   }
   return false;
 };
-student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(section) {
+student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(section, callback) {
   for (let sec of this.sectionsWatching) {
     if (sec.sectionNumber === section.sectionNumber) {
       sec.notified = false;
@@ -84,6 +84,9 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
           logger.error(`Error marking section as not notified user ${this.email}: ${err}`);
         }
         logger.info(`Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`);
+        if(callback){
+          callback(user)
+        }
       });
     }
   }
