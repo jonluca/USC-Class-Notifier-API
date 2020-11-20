@@ -77,8 +77,6 @@ router.get('/verify', (req, res, next) => {
             paidIds,
             user,
             status: `Watching section ${section}!`
-          }, (err, html) => {
-            logger.error(err);
           });
         });
       } else {
