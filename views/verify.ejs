@@ -39,13 +39,39 @@
     <h1 class="text-center info"><%= email %></h1>
     <h1 class="text-center info"><%= status %></h1>
     <br>
-    <p class="text-center info subtext">This service is still in <b>beta</b>. There is no guarantee
+    <% if(user) { %>
+            <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it should update here.</p>
+            <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the columen "Unique Venmo ID for text notifs"</p>
+            <table class="blueTable">
+            <thead>
+            <td>Semester</td>
+            <td>Department</td>
+            <td>Class Code</td>
+            <td>Phone</td>
+            <td>Unique Venmo ID for text notifs</td>
+            <td>Venmo ID paid?</td>
+            </thead>
+            <tbody>
+            <% user.sectionsWatching.map((section)=>{ %>
+                <tr>
+                    <td><%= section.semester %></td>
+                    <td><%= section.department %></td>
+                    <td><%= section.sectionNumber %></td>
+                    <td><%= section.phone %></td>
+                    <td><%= section.rand %></td>
+                    <td><%= String(section.paid) %></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+    <p class="text-center info subtext">There is no guarantee
         that it'll work - please still check the class you'd like periodically to see if spots open up. This
         service is provided without warranty or support.
 
         <br>If you registered for a class that is not full, and
         still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
-                href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any questions.</p>
+                href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any issues.</p>
 </div>
 <footer class="text-center" id="footer">
     <p>&copy;
@@ -64,7 +90,6 @@
   }
 
   gtag('js', new Date());
-
   gtag('config', 'UA-90475221-1');
 </script>
 </body>

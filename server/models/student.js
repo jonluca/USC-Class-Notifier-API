@@ -1,10 +1,8 @@
 const db = require('../core/mongo');
 const mongoose = require('mongoose');
 const logger = require('log4js').getLogger("notification");
-
 //Update every semester to only query the current reg
 const semester = require("../config/config").semester;
-
 const section = {
   sectionNumber: {
     type: String
@@ -33,7 +31,6 @@ const section = {
     default: new Date().toISOString()
   }
 };
-
 //Main schema. One entry per section per user
 const student = new mongoose.Schema({
   email: {
@@ -59,7 +56,6 @@ const student = new mongoose.Schema({
     default: new Date().toISOString()
   }
 });
-
 student.methods.isAlreadyWatching = function isAlreadyWatching(sectionToWatch) {
   for (const section of this.sectionsWatching) {
     if (section.sectionNumber === sectionToWatch.sectionNumber) {
@@ -76,12 +72,11 @@ student.methods.getRandForSection = function isAlreadyWatching(sectionToWatch) {
   }
   return false;
 };
-
 student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(section) {
   for (let sec of this.sectionsWatching) {
     if (sec.sectionNumber === section.sectionNumber) {
       sec.notified = false;
-      if(sec.phone !== section.phone){
+      if (sec.phone !== section.phone) {
         sec.phone = section.phone;
       }
       this.save((err, user) => {
@@ -93,5 +88,4 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
     }
   }
 };
-
 module.exports = db.model('students', student);

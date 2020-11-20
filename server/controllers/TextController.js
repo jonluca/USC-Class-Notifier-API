@@ -4,11 +4,8 @@ const twilio = require('twilio');
 const accountSid = config.twilio.sid;
 const authToken = config.twilio.auth;
 const client = new twilio(accountSid, authToken);
-
 const logger = require('log4js').getLogger("notification");
-
 let TextController = {};
-
 TextController.sendMessage = (number, message) => {
   if (number !== undefined && number !== "") {
     client.messages.create({
@@ -24,5 +21,4 @@ TextController.sendMessage = (number, message) => {
     });
   }
 };
-
 module.exports = TextController;

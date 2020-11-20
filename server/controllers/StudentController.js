@@ -6,9 +6,7 @@ const EmailController = require("./EmailController");
 const TextController = require("./TextController");
 const PaidIdController = require("./PaidIdController");
 const semester = require("../config/config").semester;
-
 let StudentController = {};
-
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   // Create new user from their request
   let s = new student();
@@ -17,7 +15,6 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   s.phone = phone;
   s.uscID = uscid;
   s.ip = ip;
-
   s.save((err, user) => {
     if (err) {
       logger.error(`Error saving user ${email}: ${err}`);
@@ -27,7 +24,6 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
     return callback(user);
   });
 };
-
 StudentController.createRandomDataForTesting = (num) => {
   const departments = require('../core/ValidDepartments');
   for (let i = 0; i < num; i++) {
@@ -58,17 +54,18 @@ StudentController.verifyByKey = (key, callback) => {
     return callback(true);
   });
 };
-
-StudentController.verifyByEmail = (email, callback) => {
-  student.findOneAndUpdate({email: email}, {validAccount: true}, (err, doc) => {
+StudentController.verifyByEmail = (email, key, callback) => {
+  student.findOneAndUpdate({
+    email: email,
+    verificationKey: key
+  }, {validAccount: true}, (err, doc) => {
     if (err || !doc) {
       return callback(false);
     }
     logger.info(`Verified by email ${doc.email}`);
-    return callback(true);
+    return callback(doc);
   });
 };
-
 StudentController.isVerified = (email, callback) => {
   student.findOne({email}, (err, user) => {
     if (err || !user) {
@@ -78,11 +75,9 @@ StudentController.isVerified = (email, callback) => {
     return callback(user.validAccount);
   });
 };
-
 StudentController.userExists = async (email) => {
   return await student.findOne({email});
 };
-
 StudentController.addClassToUser = (email, section, callback) => {
   student.findOne({email}, (err, user) => {
     if (err) {
@@ -98,18 +93,15 @@ StudentController.addClassToUser = (email, section, callback) => {
       user.markSectionAsNotNotified(section);
       logger.info(`Marked section ${section.department} - ${section.sectionNumber} for ${user.email} as not notified`);
       section.rand = user.getRandForSection(section);
-
-      return callback(section);
+      return callback(user);
     }
     logger.info(`User ${email} is now watching ${section.department} - ${section.sectionNumber}`);
     user.sectionsWatching.push(section);
     user.markModified('sectionsWatching');
-
     user.save();
-    return callback(section);
+    return callback(user);
   });
 };
-
 StudentController.notifyUser = async (user, section, count, paidId) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
   try {
@@ -123,9 +115,7 @@ StudentController.notifyUser = async (user, section, count, paidId) => {
   } catch (e) {
     logger.error(`Error checking if paid or sending text message for ${user.email} for ${section}- ${e} `);
   }
-
 };
-
 StudentController.removeUser = (email, key, callback) => {
   student.findOneAndUpdate({verificationKey: key}, {deleted: true}, (err, doc) => {
     if (err || !doc) {
@@ -135,7 +125,6 @@ StudentController.removeUser = (email, key, callback) => {
     return callback(true);
   });
 };
-
 StudentController.getAllWatchedDepartments = async () => {
   let students = await student.find({
     validAccount: true
@@ -150,7 +139,6 @@ StudentController.getAllWatchedDepartments = async () => {
   });
   return departments;
 };
-
 StudentController.getStudentsByDepartment = async (department) => {
   //Search for users that are being notified for that department
   const query = {
@@ -165,7 +153,6 @@ StudentController.getStudentsByDepartment = async (department) => {
   };
   return await student.find(query);
 };
-
 StudentController.getNumberOfStudentsWatchingSection = async (sectionNumber, department) => {
   //Search for users that are being notified for that department
   const query = {
@@ -181,7 +168,6 @@ StudentController.getNumberOfStudentsWatchingSection = async (sectionNumber, dep
   };
   return await student.count(query);
 };
-
 StudentController.validateAccounts = () => {
   student.update({}, {validAccount: true}, {multi: true}, function (err, res) {
     if (err) {
@@ -191,5 +177,4 @@ StudentController.validateAccounts = () => {
     console.log("Modified " + res.nModified + " accounts.");
   });
 };
-
 module.exports = StudentController;

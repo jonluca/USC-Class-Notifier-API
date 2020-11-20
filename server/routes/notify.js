@@ -3,6 +3,7 @@ const router = express.Router();
 const logger = require('log4js').getLogger("notification");
 const StudentController = require("../controllers/StudentController");
 const EmailController = require('../controllers/EmailController');
+const PaidIdController = require('../controllers/PaidIdController');
 const phoneParser = require('phone-parser');
 const validator = require('validator');
 const rand = require("random-key");
@@ -42,24 +43,23 @@ router.get('/refresh', (req, res, next) => {
   logger.info("Manual Refresh Requested");
   manualRefresh();
 });
-
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('landing');
 });
-
 /* Verify user account. */
 router.get('/verify', (req, res, next) => {
   const email = req.query.email;
   const key = req.query.key;
   const section = req.query.section;
-
   if (!email || !key) {
     return res.status(300).render("landing").end();
   }
-
-  StudentController.verifyByEmail(email, (verified) => {
-    if (verified) {
+  StudentController.verifyByEmail(email, key, async (user) => {
+    if (user) {
+      for (const section of user.sectionsWatching) {
+        section.paid = !!(await PaidIdController.isIdPaid(section.rand));
+      }
       if (section) {
         StudentController.addClassToUser(email, {sectionNumber: section}, (result) => {
           if (!result) {
@@ -71,12 +71,14 @@ router.get('/verify', (req, res, next) => {
           }
           return res.status(200).render("verify.ejs", {
             email,
+            user,
             status: `Watching section ${section}!`
           });
         });
       } else {
         return res.status(200).render("verify.ejs", {
           email,
+          user,
           status: "Verified"
         });
       }
@@ -88,22 +90,18 @@ router.get('/verify', (req, res, next) => {
     }
   });
 });
-
 /* Add a class to a user account. */
 router.post('/notify', (req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
-
   const email = (req.body.email || '').toLowerCase().trim();
   const sectionNumber = (req.body.courseid || '').trim();
   const department = (req.body.department || '').toUpperCase().trim();
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip;
   const uscid = req.body.id;
-
   const phone = parsePhone(req.body.phone || '');
-
   if (!email || !sectionNumber || !department) {
     return res.status(400).send({
       "error": "Invalid email, section, or department!!",
@@ -112,7 +110,6 @@ router.post('/notify', (req, res, next) => {
       department
     }).end();
   }
-
   if (!validator.isEmail(email)) {
     logger.info(`Invalid email ${email} sent`);
     return res.status(400).send({
@@ -122,7 +119,6 @@ router.post('/notify', (req, res, next) => {
       department
     }).end();
   }
-
   if (!validSection(sectionNumber, department)) {
     return res.status(400).send({
       "error": "Invalid department or section!",
@@ -130,14 +126,12 @@ router.post('/notify', (req, res, next) => {
       department
     }).end();
   }
-
   const section = {
     sectionNumber,
     department,
     phone,
     rand: `${rand.generateDigits(8)}`
   };
-
   StudentController.userExists(email).then((userExists) => {
     if (!userExists) {
       const key = rand.generate(32);
@@ -169,7 +163,6 @@ function addClass(res, email, section, isNew) {
       }).end();
     }
     const status = isNew ? 200 : 201;
-
     res.status(status).send({
       section: result,
       email,

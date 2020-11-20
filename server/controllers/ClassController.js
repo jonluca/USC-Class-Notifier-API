@@ -2,13 +2,10 @@ class ClassController {
   constructor(data) {
     if (data && data.OfferedCourses && data.OfferedCourses.course) {
       this.courseData = data.OfferedCourses.course;
-
       /*Population section data*/
       this.sections = {};
-
       for (const course of this.courseData) {
         let sectionData = course.CourseData.SectionData;
-
         /*
         * The USC API either returns an array of sections OR an object, if it's only a single section
         * ...
@@ -16,18 +13,14 @@ class ClassController {
         * I know.
         *
         * */
-
         if (Array.isArray(sectionData)) {
           for (const section of sectionData) {
             this.addSectionDetails(section, course);
-
           }
         } else {
           this.addSectionDetails(sectionData, course);
-
         }
       }
-
     }
   }
 
@@ -45,9 +38,8 @@ class ClassController {
     this.sections[section.id].courseID = course.PublishedCourseID;
     this.sections[section.id].courseName = course.CourseData.title;
     this.sections[section.id].sectionNumber = section.id;
-
     // For GEs and GSEMs, they woun't have courseID in th emain object because it's from a bunch of different departments
-    if(typeof(this.sections[section.id].courseID) != "string"){
+    if (typeof (this.sections[section.id].courseID) != "string") {
       this.sections[section.id].courseID = course.CourseData.prefix + "-" + course.CourseData.number;
     }
   }
