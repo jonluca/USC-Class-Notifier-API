@@ -44,22 +44,24 @@
             <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the columen "Unique Venmo ID for text notifs"</p>
             <table class="blueTable">
             <thead>
+            <td>Notified</td>
             <td>Semester</td>
             <td>Department</td>
             <td>Class Code</td>
             <td>Phone</td>
             <td>Unique Venmo ID for text notifs</td>
-            <td>Venmo ID paid?</td>
+            <td>Venmo ID paid</td>
             </thead>
             <tbody>
             <% user.sectionsWatching.map((section)=>{ %>
                 <tr>
+                    <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5'%>"><%= section.notified %></td>
                     <td><%= section.semester %></td>
                     <td><%= section.department %></td>
                     <td><%= section.sectionNumber %></td>
                     <td><%= section.phone %></td>
                     <td><%= section.rand %></td>
-                    <td><%= String(section.paid) %></td>
+                    <td style="background: <%= section.paid ? '#e3ffee' : '#ffd5d5'%>"><%= String(section.paid) %></td>
                 </tr>
             <% }) %>
             </tbody>

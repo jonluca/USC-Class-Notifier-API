@@ -189,7 +189,7 @@ table.blueTable {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
-  margin-bottom: 14px;
+  margin: 14px 0px;
 }
 table.blueTable td, table.blueTable th {
   border: 1px solid #AAAAAA;
@@ -199,7 +199,7 @@ table.blueTable tbody td {
   font-size: 13px;
 }
 table.blueTable tr:nth-child(even) {
-  background: #D0E4F5;
+  background: #d8d8d8;
 }
 table.blueTable thead {
   background: #cacaca;
