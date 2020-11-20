@@ -66,6 +66,7 @@ router.get('/verify', (req, res, next) => {
             logger.error(`Unable to reverify class to account for ${email}`);
             return res.status(400).render("verify.ejs", {
               email,
+              user,
               status: "Error adding class to watchlist! Contact JonLuca about this error."
             });
           }
@@ -85,6 +86,7 @@ router.get('/verify', (req, res, next) => {
     } else {
       return res.status(400).render("verify.ejs", {
         email,
+        user: null,
         status: "Error verifying!"
       });
     }
