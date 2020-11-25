@@ -40,9 +40,13 @@
     <h1 class="text-center info"><%= status %></h1>
     <br>
     <% if(typeof user !== 'undefined' && user && user.sectionsWatching && user.sectionsWatching.length) { %>
-            <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it should update here.</p>
-            <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the columen "Unique Venmo ID for text notifs"</p>
-            <table class="blueTable">
+        <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the
+            columen "Unique Venmo ID for text notifs"</p>
+        <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number
+            attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it
+            should update here, or you can set it for all classes with the button below.</p>
+        <button id="set-button">Click here to set phone number for all classes</button>
+        <table class="blueTable">
             <thead>
             <td>Notified</td>
             <td>Semester</td>
@@ -55,17 +59,17 @@
             </thead>
             <tbody>
             <% user.sectionsWatching.map((section)=>{ %>
-                <%  const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
-                <%  const paid = !!paidIds[section.rand];%>
+                <% const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
+                <% const paid = !!paidIds[section.rand]; %>
                 <tr>
-                    <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5'%>"><%= section.notified %></td>
+                    <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5' %>"><%= section.notified %></td>
                     <td><%= section.semester %></td>
                     <td><%= section.department %></td>
                     <td><%= section.sectionNumber %></td>
                     <td><%= section.phone %></td>
                     <td><a href="<%= watchAgainUrl %>">Get notified for this section</a></td>
                     <td><%= section.rand %></td>
-                    <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5'%>"><%= String(paid) %></td>
+                    <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5' %>"><%= String(paid) %></td>
                 </tr>
             <% }) %>
             </tbody>
@@ -88,6 +92,7 @@
 </footer>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90475221-1"></script>
+
 <script>
   window.dataLayer = window.dataLayer || [];
 
@@ -97,6 +102,36 @@
 
   gtag('js', new Date());
   gtag('config', 'UA-90475221-1');
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+  $("#set-button").click(() => {
+    const phone = prompt("What is the phone number that should be added to all classes (no dashes or parentheses, numbers only)");
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get('key')
+    const email = params.get('email')
+    if (!email || !key || !phone) {
+      alert("Missing phone or email or key")
+      return;
+    }
+    $.ajax({
+      method: 'POST',
+      url: "/soc/update-phone",
+      type: 'json',
+      data: {
+        email: email,
+        key: key,
+        phone: phone
+      },
+      success: function (data, textStatus, jqXHR) {
+        alert('success')
+        //Handle data and status code here
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert('error')
+      }
+    });
+  })
 </script>
 </body>
 </html>

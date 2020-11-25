@@ -19,7 +19,7 @@ function parsePhone(number) {
     phone = phone.slice(2);
   }
   // Try to fix common error of doing 1xxxxxxxxxxx
-  if (phone.length === 11 && phone.startsWith(1)) {
+  if (phone.length === 11 && phone.startsWith("1")) {
     phone = phone.slice(1);
   }
   try {
@@ -97,6 +97,24 @@ router.get('/verify', (req, res, next) => {
     }
   });
 });
+router.post('/update-phone', (req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  const email = (req.body.email || '').toLowerCase().trim();
+  const phone = parsePhone(req.body.phone || '');
+  const key = (req.body.key || '').trim();
+  if(!email || !phone || !key){
+    return res.status(500).end();
+  }
+  StudentController.updatePhoneNumber(email, key, phone, (success) => {
+    if (success) {
+      return res.status(200).end();
+    }
+    return res.status(500).end();
+  });
+});
 /* Add a class to a user account. */
 router.post('/notify', (req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
@@ -170,8 +188,8 @@ function addClass(res, email, section, isNew) {
       }).end();
     }
     const status = isNew ? 200 : 201;
-    for(const sec of user.sectionsWatching){
-      if(sec.sectionNumber === section.sectionNumber){
+    for (const sec of user.sectionsWatching) {
+      if (sec.sectionNumber === section.sectionNumber) {
         return res.status(status).send({
           section: sec,
           email,
@@ -184,7 +202,6 @@ function addClass(res, email, section, isNew) {
       email,
       phone: section.phone
     }).end();
-
   });
 }
 

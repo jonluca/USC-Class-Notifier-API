@@ -91,4 +91,23 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
     }
   }
 };
+
+student.methods.updatePhoneNumber = function updatePhoneNumber(phone, callback) {
+  for (let sec of this.sectionsWatching) {
+    sec.phone = phone;
+  }
+  this.markModified('sectionsWatching');
+
+  this.save((err, user) => {
+    if (err) {
+      logger.error(`Error updating phone number ${this.email}: ${err}`);
+      callback(null);
+      return;
+    }
+    logger.info(`Succesfully updated phone number for user ${this.email} - phone ${phone}`);
+    if(callback){
+      callback(this)
+    }
+  });
+};
 module.exports = db.model('students', student);

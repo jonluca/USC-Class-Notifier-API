@@ -24,6 +24,23 @@ StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
     return callback(user);
   });
 };
+StudentController.updatePhoneNumber = (email, key, phone, callback) => {
+  // Create new user from their request
+  student.findOne({
+    email,
+    verificationKey: key
+  }, (err, doc) => {
+    if (!doc) {
+      callback(false);
+      return;
+    }
+
+    doc.updatePhoneNumber(phone, (success) => {
+      callback(success)
+    })
+
+  });
+};
 StudentController.createRandomDataForTesting = (num) => {
   const departments = require('../core/ValidDepartments');
   for (let i = 0; i < num; i++) {
@@ -104,7 +121,6 @@ StudentController.addClassToUser = (email, section, callback) => {
     return callback(user);
   });
 };
-
 StudentController.notifyUser = async (user, section, count, paidId) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
   try {
