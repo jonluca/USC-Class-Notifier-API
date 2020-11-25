@@ -79,17 +79,17 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
       if (section.phone && sec.phone !== section.phone) {
         sec.phone = section.phone;
       }
-      this.save((err, user) => {
-        if (err) {
-          logger.error(`Error marking section as not notified user ${this.email}: ${err}`);
-        }
-        logger.info(`Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`);
-        if(callback){
-          callback(this)
-        }
-      });
     }
   }
+  this.save((err, user) => {
+    if (err) {
+      logger.error(`Error marking section as not notified user ${this.email}: ${err}`);
+    }
+    logger.info(`Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`);
+    if(callback){
+      callback(this)
+    }
+  });
 };
 
 student.methods.updatePhoneNumber = function updatePhoneNumber(phone, callback) {
