@@ -56,7 +56,7 @@
             <tbody>
             <% user.sectionsWatching.map((section)=>{ %>
                 <%  const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
-                <%  const paid = !!paidIds[section.paid]; %>
+                <%  const paid = !!paidIds[section.rand];%>
                 <tr>
                     <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5'%>"><%= section.notified %></td>
                     <td><%= section.semester %></td>

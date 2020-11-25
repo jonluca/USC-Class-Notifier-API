@@ -82,7 +82,7 @@ router.get('/verify', (req, res, next) => {
       } else {
         return res.status(200).render("verify.ejs", {
           email,
-          paidIds: [],
+          paidIds,
           user,
           status: "Verified"
         });

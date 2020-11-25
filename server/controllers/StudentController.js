@@ -104,6 +104,7 @@ StudentController.addClassToUser = (email, section, callback) => {
     return callback(user);
   });
 };
+
 StudentController.notifyUser = async (user, section, count, paidId) => {
   EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
   try {

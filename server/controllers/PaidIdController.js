@@ -7,8 +7,9 @@ PaidIdController.addId = async (id) => {
   return await p.save();
 };
 PaidIdController.isIdPaid = async (id) => {
-  return await paidId.findOne({
+  const doc = await paidId.findOne({
     paidId: id
   });
+  return !!doc
 };
 module.exports = PaidIdController;
