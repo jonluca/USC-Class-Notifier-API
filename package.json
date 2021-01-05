@@ -23,7 +23,7 @@
     "log4js": "6.3.0",
     "mongoose": "5.9.21",
     "morgan": "1.10.0",
-    "node-ses": "3.0.2",
+    "node-ses": "3.0.3",
     "nodemailer": "6.4.10",
     "npm-check-updates": "7.0.1",
     "phone-parser": "0.0.2",
