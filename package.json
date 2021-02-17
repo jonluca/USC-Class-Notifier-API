@@ -21,7 +21,7 @@
     "helmet": "3.23.3",
     "lodash": "latest",
     "log4js": "6.3.0",
-    "mongoose": "5.9.21",
+    "mongoose": "5.11.17",
     "morgan": "1.10.0",
     "node-ses": "3.0.2",
     "nodemailer": "6.4.10",
