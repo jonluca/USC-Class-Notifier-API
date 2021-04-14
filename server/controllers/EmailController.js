@@ -71,7 +71,7 @@ EmailController.sendSpotsAvailableEmail = (email, key, section, count) => {
     EmailController._sendEmail(from, subject, email, html)
       .then(() => {
         logger.info(
-          `Spots are open for ${section.courseID}. Sent email to ${email}`
+          `Spots are open for ${section.courseName} - ${section.courseID} (${section.sectionNumber}). Sent email to ${email}`
         );
       })
       .catch((err) => {
