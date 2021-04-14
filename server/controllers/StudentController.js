@@ -119,21 +119,21 @@ StudentController.addClassToUser = (email, section, callback) => {
     return callback(user);
   });
 };
-StudentController.notifyUser = async (user, section, count, paidId) => {
-  EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, section, count);
+StudentController.notifyUser = async (user, course, count, paidId, section) => {
+  EmailController.sendSpotsAvailableEmail(user.email, user.verificationKey, course, count);
   try {
     if (await PaidIdController.isIdPaid(paidId)) {
-      logger.info(`Sent text message to ${user.email} for ${section.courseName} - ${section.sectionNumber}`);
+      logger.info(`Sent text message to ${user.email} for ${course.courseName} - ${course.sectionNumber}`);
       const personText = count == 1 ? 'person' : 'people';
       const verbText = count == 1 ? 'is' : 'are';
       const otherPeople = count > 0 ? `${count || '0'} other ${personText} ${verbText} watching this section.` : '';
       if (!section.phone) {
-        logger.info(`Section phone invalid, falling back to user.phone: ${user.phone} for ${user.email} - ${paidId}`);
+        logger.info(`Section phone invalid, falling back to user.phone: ${user.phone} for ${user.email} - paidId${paidId}`);
       }
-      TextController.sendMessage(section.phone || user.phone, `Spots available for section ${section.sectionNumber} in class ${section.courseID}. ${otherPeople}`);
+      TextController.sendMessage(section.phone || user.phone, `Spots available for section ${course.sectionNumber} in class ${course.courseID}. ${otherPeople}`);
     }
   } catch (e) {
-    logger.error(`Error checking if paid or sending text message for ${user.email} for ${section}- ${e} `);
+    logger.error(`Error checking if paid or sending text message for ${user.email} for ${course}- ${e} `);
   }
 };
 StudentController.removeUser = (email, key, callback) => {

@@ -103,7 +103,7 @@ async function checkAvailability(student, courses) {
       /*If the course has available spots, notify them*/
       if (course && course.available > 0 && !section.notified) {
         const count = await StudentController.getNumberOfStudentsWatchingSection(section.sectionNumber, section.department);
-        await StudentController.notifyUser(student, course, count, section.rand);
+        await StudentController.notifyUser(student, course, count, section.rand, section);
         section.notified = true;
         studentWasNotified = true;
       }
