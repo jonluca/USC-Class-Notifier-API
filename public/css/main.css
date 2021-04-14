@@ -37,14 +37,16 @@ a:hover {
   padding-bottom: 50px;
 }
 
-.larger-text{
+.larger-text {
   font-size: 20px;
 }
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 900;
-  src: local('Lato Black'), local('Lato-Black'), url(http://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPHA.ttf) format('truetype');
+  src: local("Lato Black"), local("Lato-Black"),
+    url(http://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPHA.ttf)
+      format("truetype");
 }
 
 *,
@@ -83,7 +85,11 @@ body .verified {
 body .verified .inner {
   background: #fff;
   background-image: 8121991;
-  background-image: -webkit-radial-gradient(center center, #fff 0%, #e6f9ee 100%);
+  background-image: -webkit-radial-gradient(
+    center center,
+    #fff 0%,
+    #e6f9ee 100%
+  );
   background-image: -moz-radial-gradient(center center, #fff 0%, #e6f9ee 100%);
   background-image: -o-radial-gradient(center center, #fff 0%, #e6f9ee 100%);
   background-image: radial-gradient(center center, #fff 0%, #e6f9ee 100%);
@@ -139,7 +145,11 @@ body .notverified {
 body .notverified .inner {
   background: #fff;
   background-image: 8121991;
-  background-image: -webkit-radial-gradient(center center, #fff 0%, #f9d0c4 100%);
+  background-image: -webkit-radial-gradient(
+    center center,
+    #fff 0%,
+    #f9d0c4 100%
+  );
   background-image: -moz-radial-gradient(center center, #fff 0%, #f9d0c4 100%);
   background-image: -o-radial-gradient(center center, #fff 0%, #f9d0c4 100%);
   background-image: radial-gradient(center center, #fff 0%, #f9d0c4 100%);
@@ -185,14 +195,15 @@ body .notverified .inner p span {
 
 table.blueTable {
   border: 1px solid #cacaca;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   width: 100%;
   text-align: left;
   border-collapse: collapse;
   margin: 14px 0px;
 }
-table.blueTable td, table.blueTable th {
-  border: 1px solid #AAAAAA;
+table.blueTable td,
+table.blueTable th {
+  border: 1px solid #aaaaaa;
   padding: 3px 2px;
 }
 table.blueTable tbody td {
@@ -208,8 +219,8 @@ table.blueTable thead {
 table.blueTable thead th {
   font-size: 15px;
   font-weight: bold;
-  color: #FFFFFF;
-  border-left: 2px solid #D0E4F5;
+  color: #ffffff;
+  border-left: 2px solid #d0e4f5;
 }
 table.blueTable thead th:first-child {
   border-left: none;
@@ -218,11 +229,16 @@ table.blueTable thead th:first-child {
 table.blueTable tfoot {
   font-size: 14px;
   font-weight: bold;
-  color: #FFFFFF;
-  background: #D0E4F5;
-  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  color: #ffffff;
+  background: #d0e4f5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #d0e4f5 100%);
+  background: -webkit-linear-gradient(
+    top,
+    #dcebf7 0%,
+    #d4e6f6 66%,
+    #d0e4f5 100%
+  );
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #d0e4f5 100%);
   border-top: 2px solid #444444;
 }
 table.blueTable tfoot td {
@@ -231,10 +247,10 @@ table.blueTable tfoot td {
 table.blueTable tfoot .links {
   text-align: right;
 }
-table.blueTable tfoot .links a{
+table.blueTable tfoot .links a {
   display: inline-block;
   background: #27ae60;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 2px 8px;
   border-radius: 5px;
 }

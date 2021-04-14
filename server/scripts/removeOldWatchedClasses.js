@@ -1,4 +1,4 @@
-const students = require('../models/student');
+const students = require("../models/student");
 const semester = require("../config/config").semester;
 
 async function run() {
@@ -6,14 +6,14 @@ async function run() {
   for (const student of allStudents) {
     let newSectionsWatching = [];
     for (const section of student.sectionsWatching) {
-      if (section.date > new Date('2020-10-01')) {
+      if (section.date > new Date("2020-10-01")) {
         section.semester = semester;
         newSectionsWatching.push(section);
       }
     }
     student.sectionsWatching = newSectionsWatching;
     // delete student.semester;
-    student.markModified('sectionsWatching');
+    student.markModified("sectionsWatching");
     await student.save(function (err) {
       if (err) {
         console.log(err);
@@ -23,5 +23,5 @@ async function run() {
 }
 
 run().then(() => {
-  console.log('done');
+  console.log("done");
 });

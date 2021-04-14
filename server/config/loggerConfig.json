@@ -14,23 +14,15 @@
   },
   "categories": {
     "default": {
-      "appenders": [
-        "console"
-      ],
+      "appenders": ["console"],
       "level": "all"
     },
     "department": {
-      "appenders": [
-        "department",
-        "console"
-      ],
+      "appenders": ["department", "console"],
       "level": "all"
     },
     "notification": {
-      "appenders": [
-        "notification",
-        "console"
-      ],
+      "appenders": ["notification", "console"],
       "level": "all"
     }
   }

@@ -1,21 +1,21 @@
 #canvasContainer {
-    max-height: 80%;
+  max-height: 80%;
 }
 
 .charts {
-    float: none;
-    margin: 0 auto;
-    max-width: 50%;
+  float: none;
+  margin: 0 auto;
+  max-width: 50%;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 #attackstudents {
-    display: block;
+  display: block;
 }
 
 #bombStudents {
-    display: none;
+  display: none;
 }

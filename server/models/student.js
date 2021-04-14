@@ -1,60 +1,60 @@
-const db = require('../core/mongo');
-const mongoose = require('mongoose');
-const logger = require('log4js').getLogger("notification");
+const db = require("../core/mongo");
+const mongoose = require("mongoose");
+const logger = require("log4js").getLogger("notification");
 //Update every semester to only query the current reg
 const semester = require("../config/config").semester;
 const section = {
   sectionNumber: {
-    type: String
+    type: String,
   },
   department: {
-    type: String
+    type: String,
   },
   notified: {
     type: Boolean,
-    default: false
+    default: false,
   },
   phone: {
     type: String,
-    default: ''
+    default: "",
   },
   rand: {
     type: String,
-    default: ''
+    default: "",
   },
   semester: {
     type: String,
-    default: semester
+    default: semester,
   },
   date: {
     type: Date,
-    default: new Date().toISOString()
-  }
+    default: new Date().toISOString(),
+  },
 };
 //Main schema. One entry per section per user
 const student = new mongoose.Schema({
   email: {
     type: String,
     lowercase: true,
-    required: true
+    required: true,
   },
   sectionsWatching: [section],
   verificationKey: String,
   phone: String,
   validAccount: {
     type: Boolean,
-    default: false
+    default: false,
   },
   deleted: {
     type: Boolean,
-    default: false
+    default: false,
   },
   ip: String,
   uscID: String,
   date: {
     type: Date,
-    default: new Date().toISOString()
-  }
+    default: new Date().toISOString(),
+  },
 });
 student.methods.isAlreadyWatching = function isAlreadyWatching(sectionToWatch) {
   for (const section of this.sectionsWatching) {
@@ -72,7 +72,10 @@ student.methods.getRandForSection = function isAlreadyWatching(sectionToWatch) {
   }
   return false;
 };
-student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(section, callback) {
+student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(
+  section,
+  callback
+) {
   for (let sec of this.sectionsWatching) {
     if (sec.sectionNumber === section.sectionNumber) {
       sec.notified = false;
@@ -83,20 +86,27 @@ student.methods.markSectionAsNotNotified = function markSectionAsNotNotified(sec
   }
   this.save((err, user) => {
     if (err) {
-      logger.error(`Error marking section as not notified user ${this.email}: ${err}`);
+      logger.error(
+        `Error marking section as not notified user ${this.email}: ${err}`
+      );
     }
-    logger.info(`Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`);
-    if(callback){
-      callback(this)
+    logger.info(
+      `Succesfully marked section as not notified for user ${this.email} - section ${section.sectionNumber}`
+    );
+    if (callback) {
+      callback(this);
     }
   });
 };
 
-student.methods.updatePhoneNumber = function updatePhoneNumber(phone, callback) {
+student.methods.updatePhoneNumber = function updatePhoneNumber(
+  phone,
+  callback
+) {
   for (let sec of this.sectionsWatching) {
     sec.phone = phone;
   }
-  this.markModified('sectionsWatching');
+  this.markModified("sectionsWatching");
 
   this.save((err, user) => {
     if (err) {
@@ -104,10 +114,12 @@ student.methods.updatePhoneNumber = function updatePhoneNumber(phone, callback) 
       callback(null);
       return;
     }
-    logger.info(`Succesfully updated phone number for user ${this.email} - phone ${phone}`);
-    if(callback){
-      callback(this)
+    logger.info(
+      `Succesfully updated phone number for user ${this.email} - phone ${phone}`
+    );
+    if (callback) {
+      callback(this);
     }
   });
 };
-module.exports = db.model('students', student);
+module.exports = db.model("students", student);
