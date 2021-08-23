@@ -67,7 +67,7 @@
                     <td><%= section.department %></td>
                     <td><%= section.sectionNumber %></td>
                     <td><%= section.phone %></td>
-                    <td><a href="<%= watchAgainUrl %>">Get notified for this section</a></td>
+                    <td><% if(section.notified) { %><a href="<%= watchAgainUrl %>">Get notified for this section</a><% } %></td>
                     <td><%= section.rand %></td>
                     <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5' %>"><%= String(paid) %></td>
                 </tr>
