@@ -67,7 +67,7 @@
                     <td><%= section.department %></td>
                     <td><%= section.sectionNumber %></td>
                     <td><%= section.phone %></td>
-                    <td><% if(section.notified) { %><a href="<%= watchAgainUrl %>">Get notified for this section</a><% } %></td>
+                    <td><% if(section.notified) { %><a href="<%= watchAgainUrl %>">Re-enable notifications for this section</a><% } %></td>
                     <td><%= section.rand %></td>
                     <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5' %>"><%= String(paid) %></td>
                 </tr>
@@ -82,14 +82,13 @@
         <br>If you registered for a class that is not full, and
         still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
                 href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any issues.</p>
+
+        <p>&copy;
+            <% var d = new Date(); %>
+            <%= d.getFullYear() %> JonLuca De Caro - <a href="https://github.com/jonluca/USC-Class-Notifier-API">View this
+                project on
+                GitHub!</a></p>
 </div>
-<footer class="text-center" id="footer">
-    <p>&copy;
-        <% var d = new Date(); %>
-        <%= d.getFullYear() %> JonLuca De Caro - <a href="https://github.com/jonluca/USC-Class-Notifier-API">View this
-            project on
-            GitHub!</a></p>
-</footer>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90475221-1"></script>
 
