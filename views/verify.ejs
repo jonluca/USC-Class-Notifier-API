@@ -75,9 +75,26 @@
             </tbody>
         </table>
     <% } %>
-    <p class="text-center info subtext">There is no guarantee
-        that it'll work - please still check the class you'd like periodically to see if spots open up. This
-        service is provided without warranty or support.
+    <p class="text-center info faq">FAQ: The class I'm in is full or I keep getting notifications</p>
+        <p class="text-center info subtext faq-off" id="faq-text">
+
+    Hi,
+
+The way the app works is that it refreshes class data every 5 minutes. Unfortunately, if spots open up and a student registers for it in a 5 minute time frame, my service will never know a spot was open. It's only once a spot is open for more than 5 minutes that it'll notify you.
+
+Additionally, the service relies on USCs class API - this is the service that provides the information of class information, and it is not run by me. Sometimes their service is laggy, or doesn't update perfectly. In these cases I don't have any control over the information. 
+
+This is why the service is marked as beta and says that it is not guaranteed to work. For crucial classes, for instance those needed to graduate, I recommend also manually checking it once a day. 
+
+Also a few notes - if a class hasn't opened up spots yet, it won't work, as it won't know if the spots haven't been released or if they're full yet, and will just continuously spam you with emails.
+
+If you haven't received text messages but have paid for them, make sure I have liked your Venmo payment and that the body of the Venmo payment is only your email address, and that email address matches the email you signed up for notifications with. 
+
+If you would like a refund, feel free to reply back to this email and I'll Venmo you the dollar back.
+
+As a reminder, this is just a service I, a student at USC, made in my spare time. It's not a company, or an "official" thing - it's just a CS students side project, so please keep that in mind!
+</p>
+    <p class="text-center info subtext">
 
         <br>If you registered for a class that is not full, and
         still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
@@ -104,6 +121,9 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
+$(".faq").click(()=>{
+    $("#faq-text").toggleClass("faq-off")
+})
   $("#set-button").click(() => {
     const phone = prompt("What is the phone number that should be added to all classes (no dashes or parentheses, numbers only)");
     const params = new URLSearchParams(window.location.search);
