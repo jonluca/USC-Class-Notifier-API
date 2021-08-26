@@ -16,12 +16,12 @@ html {
   cursor: pointer;
   margin: 25px 0;
   font-size: 19px;
-  text-align: justify;
 }
 #faq-text {
   margin: 16px auto;
   max-height: 100%;
   transition: max-height 0.25s ease-in;
+  text-align: justify;
 }
 .faq-off {
   display: none;
