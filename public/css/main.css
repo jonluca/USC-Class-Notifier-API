@@ -13,9 +13,12 @@ html {
 
 .faq{
   text-decoration: underline;
+  cursor: pointer;
 }
 #faq-text{
-  margin:  16px 0;
+  margin:  16px auto;
+    transition: height 1s ease;
+    height:  100%;
 }
 .faq-off {
   display:  none;
