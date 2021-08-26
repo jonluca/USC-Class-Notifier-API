@@ -14,6 +14,8 @@ html {
 .faq{
   text-decoration: underline;
   cursor: pointer;
+      margin: 25px 0;
+    font-size: 19px;
 }
 #faq-text{
   margin:  16px auto;
