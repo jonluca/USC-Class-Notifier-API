@@ -11,22 +11,23 @@ html {
   margin: 0 auto;
 }
 
-.faq{
+.faq {
   text-decoration: underline;
   cursor: pointer;
-      margin: 25px 0;
-    font-size: 19px;
+  margin: 25px 0;
+  font-size: 19px;
+  text-align: justify;
 }
-#faq-text{
-  margin:  16px auto;
+#faq-text {
+  margin: 16px auto;
   max-height: 100%;
-    transition: max-height 0.25s ease-in;
+  transition: max-height 0.25s ease-in;
 }
 .faq-off {
-  display:  none;
-    max-height: 0;
-        overflow: hidden;
-    transition: max-height 0.25s ease-in;
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-in;
 }
 
 a {
