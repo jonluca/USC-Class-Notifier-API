@@ -1,159 +1,150 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>USC Schedule Helper</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            padding-top: 50px;
-            padding-bottom: 20px;
-        }
-    </style>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-<div class="container">
-    <% if(status && status == "Verified") { %>
-        <div class='verified'>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>USC Schedule Helper</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+         body {
+         padding-top: 50px;
+         padding-bottom: 20px;
+         }
+      </style>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/main.css">
+   </head>
+   <body>
+      <div class="container">
+         <% if(status && status == "Verified") { %>
+         <div class='verified'>
             <div class='inner'>
-                <p>
-                    ✔
-                    <span>Verified</span>
-                </p>
+               <p>
+                  ✔
+                  <span>Verified</span>
+               </p>
             </div>
-        </div>
-    <% }else if(status && status == "Error verifying!") { %>
-        <div class='notverified'>
+         </div>
+         <% }else if(status && status == "Error verifying!") { %>
+         <div class='notverified'>
             <div class='inner'>
-                <p>
-                    ✗
-                    <span>Error</span>
-                </p>
+               <p>
+                  ✗
+                  <span>Error</span>
+               </p>
             </div>
-        </div>
-    <% } %>
-    <h1 class="text-center info"><%= email %></h1>
-    <h1 class="text-center info"><%= status %></h1>
-    <br>
-    <% if(typeof user !== 'undefined' && user && user.sectionsWatching && user.sectionsWatching.length) { %>
-        <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the
-            column "Unique Venmo ID for text notifs". <b>Make sure the message contents is just the 8 digits.</b> and <b>do not mark it as payment for a good/service</b></p>
-        <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number
+         </div>
+         <% } %>
+         <h1 class="text-center info"><%= email %></h1>
+         <h1 class="text-center info"><%= status %></h1>
+         <br>
+         <% if(typeof user !== 'undefined' && user && user.sectionsWatching && user.sectionsWatching.length) { %>
+         <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the
+            column "Unique Venmo ID for text notifs". <b>Make sure the message contents is just the 8 digits.</b> and <b>do not mark it as payment for a good/service</b>
+         </p>
+         <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number
             attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it
-            should update here, or you can set it for all classes with the button below.</p>
-        <button id="set-button">Click here to set phone number for all classes</button>
-
-        <p class="text-center info faq">FAQ: The class I'm in is full or I keep getting notifications</p>
-        <p class="text-center info subtext faq-off" id="faq-text">
-
-    Hi,
-
-The way the app works is that it refreshes class data every 5 minutes. Unfortunately, if spots open up and a student registers for it in a 5 minute time frame, my service will never know a spot was open. It's only once a spot is open for more than 5 minutes that it'll notify you.
-
-Additionally, the service relies on USCs class API - this is the service that provides the information of class information, and it is not run by me. Sometimes their service is laggy, or doesn't update perfectly. In these cases I don't have any control over the information. 
-
-This is why the service is marked as beta and says that it is not guaranteed to work. For crucial classes, for instance those needed to graduate, I recommend also manually checking it once a day. 
-
-Also a few notes - if a class hasn't opened up spots yet, it won't work, as it won't know if the spots haven't been released or if they're full yet, and will just continuously spam you with emails.
-
-If you haven't received text messages but have paid for them, make sure I have liked your Venmo payment and that the body of the Venmo payment is only your email address, and that email address matches the email you signed up for notifications with. 
-
-If you would like a refund, feel free to reply back to this email and I'll Venmo you the dollar back.
-
-As a reminder, this is just a service I, a student at USC, made in my spare time. It's not a company, or an "official" thing - it's just a CS students side project, so please keep that in mind!
-</p>
-        <table class="blueTable">
+            should update here, or you can set it for all classes with the button below.
+         </p>
+         <button id="set-button">Click here to set phone number for all classes</button>
+         <p class="text-center info faq">FAQ: The class I'm in is full or I keep getting notifications</p>
+         <p class="text-center info subtext faq-off" id="faq-text">
+            Hi,
+            The way the app works is that it refreshes class data every 5 minutes. Unfortunately, if spots open up and a student registers for it in a 5 minute time frame, my service will never know a spot was open. It's only once a spot is open for more than 5 minutes that it'll notify you.
+            Additionally, the service relies on USCs class API - this is the service that provides the information of class information, and it is not run by me. Sometimes their service is laggy, or doesn't update perfectly. In these cases I don't have any control over the information. 
+            This is why the service is marked as beta and says that it is not guaranteed to work. For crucial classes, for instance those needed to graduate, I recommend also manually checking it once a day. 
+            Also a few notes - if a class hasn't opened up spots yet, it won't work, as it won't know if the spots haven't been released or if they're full yet, and will just continuously spam you with emails.
+            If you haven't received text messages but have paid for them, make sure I have liked your Venmo payment and that the body of the Venmo payment is only your email address, and that email address matches the email you signed up for notifications with. 
+            If you would like a refund, feel free to reply back to this email and I'll Venmo you the dollar back.
+            As a reminder, this is just a service I, a student at USC, made in my spare time. It's not a company, or an "official" thing - it's just a CS students side project, so please keep that in mind!
+         </p>
+         <table class="blueTable">
             <thead>
-            <td>Notified</td>
-            <td>Semester</td>
-            <td>Department</td>
-            <td>Class Code</td>
-            <td>Phone</td>
-            <td>Keep Watching</td>
-            <td>Unique Venmo ID for text notifs</td>
-            <td>Venmo ID paid</td>
+               <td>Notified</td>
+               <td>Semester</td>
+               <td>Department</td>
+               <td>Class Code</td>
+               <td>Phone</td>
+               <td>Keep Watching</td>
+               <td>Unique Venmo ID for text notifs</td>
+               <td>Venmo ID paid</td>
             </thead>
             <tbody>
-            <% user.sectionsWatching.map((section)=>{ %>
-                <% const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
-                <% const paid = !!paidIds[section.rand]; %>
-                <tr>
-                    <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5' %>"><%= section.notified %></td>
-                    <td><%= section.semester %></td>
-                    <td><%= section.department %></td>
-                    <td><%= section.sectionNumber %></td>
-                    <td><%= section.phone %></td>
-                    <td><% if(section.notified) { %><a href="<%= watchAgainUrl %>">Re-enable notifications for this section</a><% } %></td>
-                    <td><%= section.rand %></td>
-                    <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5' %>"><%= String(paid) %></td>
-                </tr>
-            <% }) %>
+               <% user.sectionsWatching.map((section)=>{ %>
+               <% const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
+               <% const paid = !!paidIds[section.rand]; %>
+               <tr>
+                  <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5' %>"><%= section.notified %></td>
+                  <td><%= section.semester %></td>
+                  <td><%= section.department %></td>
+                  <td><%= section.sectionNumber %></td>
+                  <td><%= section.phone %></td>
+                  <td><% if(section.notified) { %><a href="<%= watchAgainUrl %>">Re-enable notifications for this section</a><% } %></td>
+                  <td><%= section.rand %></td>
+                  <td style="background: <%= paid ? '#e3ffee' : '#ffd5d5' %>"><%= String(paid) %></td>
+               </tr>
+               <% }) %>
             </tbody>
-        </table>
-    <% } %>
-    
-    <p class="text-center info subtext">
-
-        <br>If you registered for a class that is not full, and
-        still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
-                href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any issues.</p>
-
-        <p>&copy;
+         </table>
+         <% } %>
+         <p class="text-center info subtext">
+            <br>If you registered for a class that is not full, and
+            still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
+               href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> if you have any issues.
+         </p>
+         <p>&copy;
             <% var d = new Date(); %>
             <%= d.getFullYear() %> JonLuca De Caro - <a href="https://github.com/jonluca/USC-Class-Notifier-API">View this
-                project on
-                GitHub!</a></p>
-</div>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-90475221-1"></script>
-
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-
-  gtag('js', new Date());
-  gtag('config', 'UA-90475221-1');
-</script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-$(".faq").click(()=>{
-    $("#faq-text").toggleClass("faq-off")
-})
-  $("#set-button").click(() => {
-    const phone = prompt("What is the phone number that should be added to all classes (no dashes or parentheses, numbers only)");
-    const params = new URLSearchParams(window.location.search);
-    const key = params.get('key')
-    const email = params.get('email')
-    if (!email || !key || !phone) {
-      alert("Missing phone or email or key")
-      return;
-    }
-    $.ajax({
-      method: 'POST',
-      url: "/soc/update-phone",
-      type: 'json',
-      data: {
-        email: email,
-        key: key,
-        phone: phone
-      },
-      success: function (data, textStatus, jqXHR) {
-        alert('success')
-        window.reload();
-        //Handle data and status code here
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        alert('error')
-      }
-    });
-  })
-</script>
-</body>
+            project on
+            GitHub!</a>
+         </p>
+      </div>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90475221-1"></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         
+         function gtag() {
+           dataLayer.push(arguments);
+         }
+         
+         gtag('js', new Date());
+         gtag('config', 'UA-90475221-1');
+      </script>
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script>
+         $(".faq").click(()=>{
+             $("#faq-text").toggleClass("faq-off")
+         })
+           $("#set-button").click(() => {
+             const phone = prompt("What is the phone number that should be added to all classes (no dashes or parentheses, numbers only)");
+             const params = new URLSearchParams(window.location.search);
+             const key = params.get('key')
+             const email = params.get('email')
+             if (!email || !key || !phone) {
+               alert("Missing phone or email or key")
+               return;
+             }
+             $.ajax({
+               method: 'POST',
+               url: "/soc/update-phone",
+               type: 'json',
+               data: {
+                 email: email,
+                 key: key,
+                 phone: phone
+               },
+               success: function (data, textStatus, jqXHR) {
+                 alert('success')
+                 window.reload();
+                 //Handle data and status code here
+               },
+               error: function (jqXHR, textStatus, errorThrown) {
+                 alert('error')
+               }
+             });
+           })
+      </script>
+   </body>
 </html>
