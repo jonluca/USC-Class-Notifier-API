@@ -17,15 +17,16 @@ html {
 }
 #faq-text{
   margin:  16px auto;
-    transition: height 1s ease;
-    height:  100%;
+  max-height: 100%;
+    transition: max-height 0.25s ease-in;
 }
 .faq-off {
   display:  none;
-
-  height: 0px;
-  transition: height 1s ease;
+    max-height: 0;
+        overflow: hidden;
+    transition: max-height 0.25s ease-in;
 }
+
 a {
   color: #1f8043;
 }
