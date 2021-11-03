@@ -33,7 +33,7 @@
     "sparkpost": "2.1.4",
     "supports-color": "8.1.1",
     "twilio": "3.60.0",
-    "validator": "13.5.2"
+    "validator": "13.7.0"
   },
   "devDependencies": {
     "prettier": "^2.2.1"
