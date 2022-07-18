@@ -61,7 +61,7 @@
          </p>
          <table class="blueTable">
             <thead>
-               <td>Notified</td>
+               <td>Enabled (receiving notifications)</td>
                <td>Semester</td>
                <td>Department</td>
                <td>Class Code</td>
@@ -75,7 +75,7 @@
                <% const watchAgainUrl = `https://jonlu.ca/soc/verify?email=${user.email}&key=${user.verificationKey}&section=${section.sectionNumber}`; %>
                <% const paid = !!paidIds[section.rand]; %>
                <tr>
-                  <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5' %>"><%= section.notified %></td>
+                  <td style="background: <%= section.notified ? '#e3ffee' : '#ffd5d5' %>"><%= !section.notified %></td>
                   <td><%= section.semester %></td>
                   <td><%= section.department %></td>
                   <td><%= section.sectionNumber %></td>
