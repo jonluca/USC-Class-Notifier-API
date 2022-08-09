@@ -101,12 +101,16 @@ EmailController.sendNowWatchingEmail = (email, key, section) => {
     }
     const from = "no-reply@jonlu.ca";
     const subject = `Watching ${headerTitle}`;
-    EmailController._sendEmail(from, subject, email, html).catch((err) => {
-      logger.error(
-        `Whoops! Something went wrong sending an email saying they are now watching section ${section.sectionNumber} to ${email}`
-      );
-      logger.error(err);
-    });
+    EmailController._sendEmail(from, subject, email, html)
+      .then(() => {
+        logger.info(`Sent email to ${email}: Watching ${headerTitle}`);
+      })
+      .catch((err) => {
+        logger.error(
+          `Whoops! Something went wrong sending an email saying they are now watching section ${section.sectionNumber} to ${email}`
+        );
+        logger.error(err);
+      });
   });
 };
 EmailController._sendEmail = async (from, subject, address, html) => {
