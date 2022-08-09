@@ -7,7 +7,7 @@ const client = new twilio(accountSid, authToken);
 const logger = require("log4js").getLogger("notification");
 let TextController = {};
 TextController.sendMessage = (number, message) => {
-  if (number !== undefined && number !== "") {
+  if (number) {
     client.messages.create(
       {
         body: message,

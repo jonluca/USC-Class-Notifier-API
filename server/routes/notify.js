@@ -127,13 +127,22 @@ router.post("/notify", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type");
-  const email = (req.body.email || "").toLowerCase().trim();
-  const sectionNumber = (req.body.courseid || "").trim();
-  const department = (req.body.department || "").toUpperCase().trim();
+  const {
+    department: department1,
+    phone: phone1,
+    email: email1,
+    id,
+    courseid,
+    semester,
+    fullCourseId,
+  } = req.body;
+  const email = (email1 || "").toLowerCase().trim();
+  const sectionNumber = (courseid || "").trim();
+  const department = (department1 || "").toUpperCase().trim();
   const ip =
     req.headers["x-forwarded-for"] || req.connection.remoteAddress || req.ip;
-  const uscid = req.body.id;
-  const phone = parsePhone(req.body.phone || "");
+  const uscid = id;
+  const phone = parsePhone(phone1 || "");
   if (!email || !sectionNumber || !department) {
     return res
       .status(400)
@@ -173,6 +182,12 @@ router.post("/notify", (req, res, next) => {
     phone,
     rand: `${rand.generateDigits(8)}`,
   };
+  if (semester) {
+    section.semester = semester;
+  }
+  if (fullCourseId) {
+    section.fullCourseId = fullCourseId;
+  }
   StudentController.userExists(email).then((userExists) => {
     if (!userExists) {
       const key = rand.generate(32);
@@ -196,7 +211,7 @@ router.post("/notify", (req, res, next) => {
   });
 });
 
-function addClass(res, email, section, isNew) {
+function addClass(res, email, section, isNewUser) {
   StudentController.addClassToUser(email, section, (user) => {
     if (!user) {
       logger.error(`Unable to add class to account for ${email}`);
@@ -211,23 +226,20 @@ function addClass(res, email, section, isNew) {
         })
         .end();
     }
-    const status = isNew ? 200 : 201;
-    for (const sec of user.sectionsWatching) {
-      if (sec.sectionNumber === section.sectionNumber) {
-        return res
-          .status(status)
-          .send({
-            section: sec,
-            email,
-            phone: section.phone,
-          })
-          .end();
-      }
+    const status = isNewUser ? 200 : 201;
+    const sec =
+      user.sectionsWatching.find(
+        (s) => s.sectionNumber === section.sectionNumber
+      ) || section;
+
+    if (!isNewUser) {
+      EmailController.sendNowWatchingEmail(email, user.verificationKey, sec);
     }
+
     return res
       .status(status)
       .send({
-        section,
+        section: sec,
         email,
         phone: section.phone,
       })

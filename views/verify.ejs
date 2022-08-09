@@ -41,30 +41,21 @@
          <br>
          <% if(typeof user !== 'undefined' && user && user.sectionsWatching && user.sectionsWatching.length) { %>
          <p class="text-center info subtext">If you want text notifications, venmo @JonLuca the 8 digit code below in the
-            column "Unique Venmo ID for text notifs". <b>Make sure the message contents is just the 8 digits.</b> and <b>do not mark it as payment for a good/service</b>
-         </p>
+            column "Unique Venmo ID for text notifs".<br/> <b>Make sure the message contents is just the 8 digits.</b> and <b>do not mark it as payment for a good/service</b><br/>
+         </p><br/><br/>
          <p class="text-center info subtext">Note: if you see an entry below that you does not have a phone number
             attached, you can go back to web reg and submit the "Notify Me" form again with a valid phone number and it
             should update here, or you can set it for all classes with the button below.
          </p>
          <button id="set-button">Click here to set phone number for all classes</button>
-         <p class="text-center info faq">FAQ: The class I'm in is full or I keep getting notifications</p>
-         <p class="text-center info subtext faq-off" id="faq-text">
-            Hi,<br><br>
-            The way the app works is that it refreshes class data every 5 minutes. Unfortunately, if spots open up and a student registers for it in a 5 minute time frame, my service will never know a spot was open. It's only once a spot is open for more than 5 minutes that it'll notify you.<br><br>
-            Additionally, the service relies on USCs class API - this is the service that provides the information of class information, and it is not run by me. Sometimes their service is laggy, or doesn't update perfectly. In these cases I don't have any control over the information. <br><br>
-            This is why the service is marked as beta and says that it is not guaranteed to work. For crucial classes, for instance those needed to graduate, I recommend also manually checking it once a day. <br><br>
-            Also a few notes - if a class hasn't opened up spots yet, it won't work, as it won't know if the spots haven't been released or if they're full yet, and will just continuously spam you with emails.<br><br>
-            If you haven't received text messages but have paid for them, make sure I have liked your Venmo payment and that the body of the Venmo payment is only your email address, and that email address matches the email you signed up for notifications with. <br><br>
-            If you would like a refund, feel free to reply back to this email and I'll Venmo you the dollar back.<br><br>
-            As a reminder, this is just a service I, a student at USC, made in my spare time. It's not a company, or an "official" thing - it's just a CS students side project, so please keep that in mind!<br><br>
-         </p>
+
          <table class="blueTable">
             <thead>
                <td>Enabled (receiving notifications)</td>
                <td>Semester</td>
                <td>Department</td>
-               <td>Class Code</td>
+               <td>Class Name</td>
+               <td>Section ID</td>
                <td>Phone</td>
                <td>Keep Watching</td>
                <td>Unique Venmo ID for text notifs</td>
@@ -78,6 +69,7 @@
                   <td style="background: <%= !section.notified ? '#e3ffee' : '#ffd5d5' %>"><%= !section.notified %></td>
                   <td><%= section.semester %></td>
                   <td><%= section.department %></td>
+                  <td><%= section.fullCourseId || section.department %></td>
                   <td><%= section.sectionNumber %></td>
                   <td><%= section.phone %></td>
                   <td><% if(section.notified) { %><a href="<%= watchAgainUrl %>">Re-enable notifications for this section</a><% } %></td>
@@ -88,6 +80,19 @@
             </tbody>
          </table>
          <% } %>
+            <p class="text-center info faq">FAQ: I keep getting notifications but the class has no open spots</p>
+            <p class="text-center info subtext" id="faq-text">
+               The way the app works is that it refreshes class data every 5 minutes. Unfortunately, if spots open up and a student registers for it in a 5 minute time frame, my service will never know a spot was open. It's only once a spot is open for more than 5 minutes that it'll notify you.<br><br>
+               Additionally, the service relies on USCs class API - this is the service that provides the information of class information, and it is not run by me. Sometimes their service is laggy, or doesn't update perfectly. In these cases I don't have any control over the information. <br><br>
+               This is why the service is marked as beta and says that it is not guaranteed to work. For crucial classes, for instance those needed to graduate, I recommend also manually checking it once a day. <br><br>
+               Also a few notes - if a class hasn't opened up spots yet, it won't work, as it won't know if the spots haven't been released or if they're full yet, and will just continuously spam you with emails.<br><br>
+               If you haven't received text messages but have paid for them, make sure I have liked your Venmo payment and that the body of the Venmo payment is only your email address, and that email address matches the email you signed up for notifications with. <br><br>
+               As a reminder, this is just a service I, a student at USC, made in my spare time. It's not a company, or an "official" thing - it's just a CS students side project, so please keep that in mind!<br><br>
+            </p>
+            <p class="text-center info faq">FAQ: Do I need to pay again if I got a text message</p>
+            <p class="text-center info subtext" id="faq-text">
+               No - every $1 is good for unlimited text messages for 1 section of 1 class for that semester. So if you're watching CSCI-103 section 123, and you get a text message, you don't need to pay again to watch CSCI-103 section 123. <br><br>If you want to watch section 124, you would need to pay another $1.
+            </p>
          <p class="text-center info subtext">
             <br>If you registered for a class that is not full, and
             still has spots that just have not been opened yet, this will <i>not work.</i> Please contact <a
@@ -112,6 +117,8 @@
          gtag('js', new Date());
          gtag('config', 'UA-90475221-1');
       </script>
+
+
       <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
       <script>
          $(".faq").click(()=>{

@@ -3,39 +3,37 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "aws-sdk": "2.886.0",
-    "body-parser": "1.19.0",
-    "cookie-parser": "1.4.5",
+    "aws-sdk": "2.1190.0",
+    "body-parser": "1.20.0",
+    "cookie-parser": "1.4.6",
     "cors": "2.8.5",
-    "cron": "1.8.2",
-    "debug": "4.3.1",
-    "ejs": "3.1.6",
-    "express": "4.17.1",
-    "express-basic-auth": "^1.2.0",
-    "express-rate-limit": "5.2.6",
-    "helmet": "4.4.1",
+    "cron": "2.1.0",
+    "debug": "4.3.4",
+    "ejs": "3.1.8",
+    "express": "4.18.1",
+    "express-basic-auth": "^1.2.1",
+    "express-rate-limit": "6.5.1",
+    "helmet": "5.1.1",
     "lodash": "latest",
-    "log4js": "6.3.0",
-    "mongoose": "5.12.3",
+    "log4js": "6.6.1",
+    "mongoose": "6.5.1",
     "morgan": "1.10.0",
     "node-ses": "3.0.3",
-    "nodemailer": "6.5.0",
-    "npm-check-updates": "11.4.1",
+    "nodemailer": "6.7.7",
+    "npm-check-updates": "16.0.5",
     "phone-parser": "0.0.2",
     "random-key": "0.3.2",
     "serve-favicon": "2.5.0",
-    "snyk": "1.538.0",
+    "snyk": "1.984.0",
     "sparkpost": "2.1.4",
-    "supports-color": "8.1.1",
-    "twilio": "3.60.0",
-    "validator": "13.5.2"
+    "supports-color": "9.2.2",
+    "twilio": "3.80.0",
+    "validator": "13.7.0"
   },
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "prettier": "^2.7.1"
   }
 }

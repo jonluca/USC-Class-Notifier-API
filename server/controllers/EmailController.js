@@ -46,14 +46,13 @@ EmailController.sendSpotsAvailableEmail = (email, key, section, count) => {
       ? `${count || "0"} other ${personText} ${verbText} watching this section.`
       : "";
   let text = `Hello! <br> <br> You are receiving this email because you requested to be notified when spots opened up for ${section.courseID}, ${section.courseName} - Section ${section.sectionNumber}.<br> <br> `;
+  let suffix = section.available > 1 ? "s" : "";
   text += `There ${section.available > 1 ? "are" : "is"} now ${
     section.available
-  } spot${
-    section.available > 1 ? "s" : ""
-  } available. ${otherPeople} <br> <br> You will not receive this email again.<br>`;
+  } spot${suffix} available. ${otherPeople} <br> <br> You will not be notified again unless you click the button.<br>`;
   text += ` <br> Please note this service will not work if the class is not actually full (i.e. if spots haven't been "released" yet). 
  <b>This is true for most GE's and GESM! It will continue sending notifications if the spots have not been released, until the class is actually full. </b> 
- <br> <p style="font-size:10px"><a href="mailto:jdecaro@usc.edu">Made with ♥ in Los Angeles</a></p>`;
+ <br>`;
   const templateData = {
     url: watchAgainUrl,
     text: text,
@@ -80,6 +79,34 @@ EmailController.sendSpotsAvailableEmail = (email, key, section, count) => {
         );
         logger.error(err);
       });
+  });
+};
+
+EmailController.sendNowWatchingEmail = (email, key, section) => {
+  const viewInfo = `https://jonlu.ca/soc/verify?email=${email}&key=${key}&section=${section.sectionNumber}`;
+  let fullCourseId = section.fullCourseId;
+  let fallbackName = `${section.department} - ${section.sectionNumber}`;
+  let headerTitle = fullCourseId || fallbackName;
+  let text = `Hello!<br>You are now watching ${headerTitle}.<br/> <br/> You can view all your watched sections, view the IDs to venmo for text notifications, and update your phone number at the link below. 
+ <br>`;
+  const templateData = {
+    url: viewInfo,
+    text: text,
+    preheader: `Watching ${headerTitle}`,
+    button_text: "View All Watched Sections",
+  };
+  ejs.renderFile(template, templateData, (err, html) => {
+    if (err) {
+      logger.error(err);
+    }
+    const from = "no-reply@jonlu.ca";
+    const subject = `Watching ${headerTitle}`;
+    EmailController._sendEmail(from, subject, email, html).catch((err) => {
+      logger.error(
+        `Whoops! Something went wrong sending an email saying they are now watching section ${section.sectionNumber} to ${email}`
+      );
+      logger.error(err);
+    });
   });
 };
 EmailController._sendEmail = async (from, subject, address, html) => {

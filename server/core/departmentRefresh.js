@@ -2,14 +2,14 @@ const cron = require("cron");
 const logger = require("log4js").getLogger("department");
 const request = require("request");
 /*---CONFIG---*/
-const config = require("../config/config");
 const ONE_SECOND_MS = 1000;
 const timeout = 5 * 60 * ONE_SECOND_MS;
 /*---CONTROLLERS---*/
 const StudentController = require("../controllers/StudentController");
 const ClassController = require("../controllers/ClassController");
+const { getSemester } = require("../utils/semester");
 /*
- Cron job that runs every 15 minutes. Pulls newest classes
+ Cron job that runs every 5 minutes. Pulls newest classes
  Time interval changed to 1 hour during non-registration time
  */
 cron
@@ -28,6 +28,7 @@ function refreshDepartments(departments) {
   if (!departments) {
     return;
   }
+  const semester = getSemester();
   //Headers so they know who's pulling their information
   const headers = {
     DNT: "1",
@@ -35,12 +36,12 @@ function refreshDepartments(departments) {
     "Cache-Control": "max-age=0",
   };
   let options = {
-    url: `http://web-app.usc.edu/web/soc/api/classes/${config.semester}?refresh=Mary4adAL1ttleLamp`,
+    url: `http://web-app.usc.edu/web/soc/api/classes/${semester}?refresh=Mary4adAL1ttleLamp`,
     headers,
     timeout: timeout,
   };
   for (const department of departments) {
-    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}?refresh=Mary4adAL1ttleLamp`;
+    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${semester}?refresh=Mary4adAL1ttleLamp`;
     request(options, (error, response, body) => {
       if (!error && response.statusCode === 200) {
         parseCourses(body);
@@ -61,7 +62,7 @@ function retryRefreshWithoutHardPull(department) {
     "Cache-Control": "max-age=0",
   };
   let options = {
-    url: `http://web-app.usc.edu/web/soc/api/classes/${department}/${config.semester}`,
+    url: `http://web-app.usc.edu/web/soc/api/classes/${department}/${getSemester()}`,
     headers,
     timeout,
   };
@@ -112,10 +113,11 @@ async function checkAvailability(student, courses) {
       let course = courses.getSection(section.sectionNumber);
       /*If the course has available spots, notify them*/
       if (course && course.available > 0 && !section.notified) {
-        const count = await StudentController.getNumberOfStudentsWatchingSection(
-          section.sectionNumber,
-          section.department
-        );
+        const count =
+          await StudentController.getNumberOfStudentsWatchingSection(
+            section.sectionNumber,
+            section.department
+          );
         await StudentController.notifyUser(
           student,
           course,

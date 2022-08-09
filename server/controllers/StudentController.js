@@ -1,11 +1,10 @@
 const student = require("../models/student");
 const logger = require("log4js").getLogger("notification");
 const _ = require("lodash");
-const config = require("../config/config");
 const EmailController = require("./EmailController");
 const TextController = require("./TextController");
 const PaidIdController = require("./PaidIdController");
-const semester = require("../config/config").semester;
+const { getSemester } = require("../utils/semester");
 let StudentController = {};
 StudentController.createUser = (email, key, phone, uscid, ip, callback) => {
   // Create new user from their request
@@ -192,6 +191,7 @@ StudentController.getAllWatchedDepartments = async () => {
     validAccount: true,
   });
   let departments = new Set();
+  const semester = getSemester();
   students.forEach((obj) => {
     obj.sectionsWatching.forEach((section) => {
       if (
@@ -212,7 +212,7 @@ StudentController.getStudentsByDepartment = async (department) => {
       $elemMatch: {
         department,
         notified: false,
-        semester,
+        semester: getSemester(),
       },
     },
     validAccount: true,
@@ -230,7 +230,7 @@ StudentController.getNumberOfStudentsWatchingSection = async (
         department,
         sectionNumber,
         notified: false,
-        semester,
+        semester: getSemester(),
       },
     },
     validAccount: true,

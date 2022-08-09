@@ -8,7 +8,7 @@ const accessLogStream = fs.createWriteStream(
     flags: "a",
   }
 );
-const limiter = new RateLimit({
+const limiter = RateLimit.rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 30 requests per windowMs
 });

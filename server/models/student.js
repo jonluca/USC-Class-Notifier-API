@@ -1,8 +1,8 @@
 const db = require("../core/mongo");
 const mongoose = require("mongoose");
+const { getSemester } = require("../utils/semester");
 const logger = require("log4js").getLogger("notification");
 //Update every semester to only query the current reg
-const semester = require("../config/config").semester;
 const section = {
   sectionNumber: {
     type: String,
@@ -22,9 +22,14 @@ const section = {
     type: String,
     default: "",
   },
+  fullCourseId: {
+    type: String,
+  },
   semester: {
     type: String,
-    default: semester,
+    default: () => {
+      return getSemester();
+    },
   },
   date: {
     type: Date,

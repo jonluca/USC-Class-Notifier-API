@@ -1,5 +1,5 @@
 const students = require("../models/student");
-const semester = require("../config/config").semester;
+const { getSemester } = require("../utils/semester");
 
 async function run() {
   const allStudents = await students.find({});
@@ -7,7 +7,7 @@ async function run() {
     let newSectionsWatching = [];
     for (const section of student.sectionsWatching) {
       if (section.date > new Date("2020-10-01")) {
-        section.semester = semester;
+        section.semester = getSemester();
         newSectionsWatching.push(section);
       }
     }

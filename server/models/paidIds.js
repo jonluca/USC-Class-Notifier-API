@@ -1,11 +1,13 @@
 const db = require("../core/mongo");
 const mongoose = require("mongoose");
-const semester = require("../config/config").semester;
+const { getSemester } = require("../utils/semester");
 //Main schema. One entry per section per user
 const paidId = new mongoose.Schema({
   semester: {
     type: String,
-    default: semester,
+    default: () => {
+      return getSemester();
+    },
   },
   paidId: String,
   date: {
