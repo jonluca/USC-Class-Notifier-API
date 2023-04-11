@@ -23,7 +23,7 @@ async function refresh() {
   refreshDepartments(await StudentController.getAllWatchedDepartments());
 }
 
-function refreshDepartments(departments) {
+function refreshDepartments(departments, withoutHardRefresh) {
   /*If data was invalid/uniterable, return (fail silently)*/
   if (!departments) {
     return;
@@ -35,53 +35,38 @@ function refreshDepartments(departments) {
     "User-Agent": "https://jldc.me/soc/ Class Refresher",
     "Cache-Control": "max-age=0",
   };
+  const suffix = withoutHardRefresh ? "" : "?refresh=Mary4adAL1ttleLamp";
   let options = {
-    url: `http://web-app.usc.edu/web/soc/api/classes/${semester}?refresh=Mary4adAL1ttleLamp`,
     headers,
     timeout: timeout,
   };
   for (const department of departments) {
-    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${semester}?refresh=Mary4adAL1ttleLamp`;
+    options.url = `http://web-app.usc.edu/web/soc/api/classes/${department}/${semester}${suffix}`;
     request(options, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        parseCourses(body);
-      } else {
-        retryRefreshWithoutHardPull(department);
-      }
-    });
-  }
-}
+      let isValid = !error && response.statusCode === 200;
+      if (isValid)
+        try {
+          const parsed = JSON.parse(body);
+          if (!parsed.error) {
+            return parseCourses(parsed);
+          }
+        } catch (e) {
+          // error parsing body
+        }
 
-function retryRefreshWithoutHardPull(department) {
-  if (!department) {
-    return;
-  }
-  const headers = {
-    DNT: "1",
-    "User-Agent": "http://jldc.me/soc",
-    "Cache-Control": "max-age=0",
-  };
-  let options = {
-    url: `http://web-app.usc.edu/web/soc/api/classes/${department}/${getSemester()}`,
-    headers,
-    timeout,
-  };
-  setTimeout(() => {
-    request(options, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        parseCourses(body);
-      } else {
+      if (withoutHardRefresh) {
         logger.warn(
           `Error refreshing department ${department} even without the database refresh key`
         );
+      } else {
+        refreshDepartments(department, true);
       }
     });
-  }, 30 * ONE_SECOND_MS);
+  }
 }
 
-async function parseCourses(body) {
+async function parseCourses(departmentInfo) {
   try {
-    const departmentInfo = JSON.parse(body);
     /*Object key checks for returned JSON - the Schedule of Classes API is a bit finicky and not very reliable*/
     if (
       departmentInfo &&
