@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const logger = require("log4js").getLogger("notification");
-mongoose.connect("mongodb://localhost/admin", {
+mongoose.connect("mongodb://127.0.0.1/admin", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

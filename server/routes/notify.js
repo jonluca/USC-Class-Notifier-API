@@ -42,6 +42,10 @@ router.get("/refresh", (req, res, next) => {
   logger.info("Manual Refresh Requested");
   manualRefresh();
 });
+
+router.get("/texts-enabled", (req, res, next) => {
+  res.send({enabled: true}).end()
+});
 /* GET home page. */
 router.get("/", (req, res, next) => {
   res.render("landing");
