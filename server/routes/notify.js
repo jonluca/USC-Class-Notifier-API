@@ -62,7 +62,7 @@ router.get("/verify", (req, res, next) => {
   const email = req.query.email;
   const key = req.query.key;
   const section = req.query.section;
-  if (!email) {
+  if (!email || !key) {
     return res.status(300).render("landing").end();
   }
   const semester = getSemester();

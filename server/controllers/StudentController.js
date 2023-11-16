@@ -83,7 +83,7 @@ StudentController.verifyByEmail = (email, key, callback) => {
   student.findOneAndUpdate(
     {
       email: email,
-      // verificationKey: key,
+      verificationKey: key,
     },
     { validAccount: true },
     (err, doc) => {
