@@ -273,3 +273,7 @@ table.blueTable tfoot .links a {
   padding: 2px 8px;
   border-radius: 5px;
 }
+
+.hidden {
+  display: none;
+}

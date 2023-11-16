@@ -8,6 +8,7 @@ const phoneParser = require("phone-parser");
 const validator = require("validator");
 const rand = require("random-key");
 const manualRefresh = require("../core/departmentRefresh");
+const { getSemester } = require("../utils/semester");
 
 function parsePhone(number) {
   if (!number) {
@@ -44,20 +45,28 @@ router.get("/refresh", (req, res, next) => {
 });
 
 router.get("/texts-enabled", (req, res, next) => {
-  res.send({enabled: true}).end()
+  res.send({ enabled: true }).end();
 });
 /* GET home page. */
 router.get("/", (req, res, next) => {
   res.render("landing");
+});
+router.get("/privacy", (req, res, next) => {
+  res.render("privacy");
+});
+router.get("/terms", (req, res, next) => {
+  res.render("terms");
 });
 /* Verify user account. */
 router.get("/verify", (req, res, next) => {
   const email = req.query.email;
   const key = req.query.key;
   const section = req.query.section;
-  if (!email || !key) {
+  if (!email) {
     return res.status(300).render("landing").end();
   }
+  const semester = getSemester();
+
   StudentController.verifyByEmail(email, key, async (user) => {
     if (user) {
       const paidIds = {};
@@ -79,6 +88,7 @@ router.get("/verify", (req, res, next) => {
                 user,
                 status:
                   "Error adding class to watchlist! Contact JonLuca about this error.",
+                semester,
               });
             }
             return res.status(200).render("verify.ejs", {
@@ -86,6 +96,7 @@ router.get("/verify", (req, res, next) => {
               paidIds,
               user,
               status: `Watching section ${section}!`,
+              semester,
             });
           }
         );
@@ -95,6 +106,7 @@ router.get("/verify", (req, res, next) => {
           paidIds,
           user,
           status: "Verified",
+          semester,
         });
       }
     } else {
@@ -103,6 +115,7 @@ router.get("/verify", (req, res, next) => {
         paidIds: [],
         user: null,
         status: "Error verifying!",
+        semester,
       });
     }
   });
