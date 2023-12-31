@@ -20,7 +20,6 @@ cron
 
 async function refresh() {
   logger.info("Hard Class Refresh Starting");
-  await StudentController.fixStudents();
   refreshDepartments(await StudentController.getAllWatchedDepartments());
 }
 
