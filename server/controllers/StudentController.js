@@ -203,7 +203,7 @@ StudentController.getAllWatchedDepartments = async () => {
       }
     });
   });
-  return departments;
+  return Array.from(departments);
 };
 StudentController.getStudentsByDepartment = async (department) => {
   //Search for users that are being notified for that department

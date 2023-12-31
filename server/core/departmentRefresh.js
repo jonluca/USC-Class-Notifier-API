@@ -59,7 +59,7 @@ function refreshDepartments(departments, withoutHardRefresh) {
           `Error refreshing department ${department} even without the database refresh key`
         );
       } else {
-        refreshDepartments(department, true);
+        refreshDepartments([department], true);
       }
     });
   }
