@@ -205,6 +205,27 @@ StudentController.getAllWatchedDepartments = async () => {
   });
   return Array.from(departments);
 };
+StudentController.fixStudents = async () => {
+  let students = await student.find({
+    validAccount: true,
+  });
+  let departments = new Set();
+  const semester = getSemester();
+  for (const student of students) {
+    let didChange = false;
+    student.sectionsWatching.forEach((section) => {
+      if (section.date > new Date("2023-09-15")) {
+        section.semester = semester;
+        didChange = true;
+      }
+    });
+    if (didChange) {
+      student.markModified("sectionsWatching");
+      await student.save();
+    }
+  }
+  return Array.from(departments);
+};
 StudentController.getStudentsByDepartment = async (department) => {
   //Search for users that are being notified for that department
   const query = {
