@@ -229,7 +229,7 @@ router.post("/notify", (req, res, next) => {
 });
 
 function addClass(res, email, section, isNewUser) {
-  StudentController.addClassToUser(email, section, (user) => {
+  StudentController.addClassToUser(email, section, async (user) => {
     if (!user) {
       logger.error(`Unable to add class to account for ${email}`);
       return res
@@ -252,13 +252,14 @@ function addClass(res, email, section, isNewUser) {
     if (!isNewUser) {
       EmailController.sendNowWatchingEmail(email, user.verificationKey, sec);
     }
-
+    const isPaidAlready = await PaidIdController.isIdPaid(sec.rand);
     return res
       .status(status)
       .send({
         section: sec,
         email,
         phone: section.phone,
+        isPaidAlready,
       })
       .end();
   });

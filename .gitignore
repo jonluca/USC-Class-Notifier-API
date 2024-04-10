@@ -9,3 +9,4 @@ node_modules/
 server/config/config.js
 db/*
 db2/*
+db*

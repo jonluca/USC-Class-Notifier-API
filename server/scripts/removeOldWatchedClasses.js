@@ -6,10 +6,8 @@ async function run() {
   for (const student of allStudents) {
     let newSectionsWatching = [];
     for (const section of student.sectionsWatching) {
-      if (section.date > new Date("2020-10-01")) {
-        section.semester = getSemester();
-        newSectionsWatching.push(section);
-      }
+      section.semester = getSemester();
+      newSectionsWatching.push(section);
     }
     student.sectionsWatching = newSectionsWatching;
     // delete student.semester;
