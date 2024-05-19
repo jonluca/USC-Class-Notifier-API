@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["DOM", "ESNext", "ESNext.AsyncIterable", "DOM.Iterable"],
+    "allowJs": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "Bundler",
+    "jsxImportSource": "@emotion/react",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noUncheckedIndexedAccess": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "~/pub/*": ["./public/*"]
+    },
+    "rootDir": "."
+  },
+  "include": [
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.d.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "*.js",
+    "*.config.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "scripts/**/*.ts", "youtube-server/**/*.ts"]
+}

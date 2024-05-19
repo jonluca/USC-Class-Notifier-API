@@ -1,0 +1,7 @@
+client/cypress/plugins/index.js
+.lintstagedrc.js
+public/js/*
+ui/out/**/*
+electron/build/**/*
+public/*.js
+public/*.map

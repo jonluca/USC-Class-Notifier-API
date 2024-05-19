@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  // output          = "./generated/client"
+  previewFeatures = ["fullTextSearch", "fullTextIndex", "relationJoins", "nativeDistinct", "tracing", "omitApi"]
+}
+
+/// Always after the prisma-client-js generator
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+// Next auth
+model Student {
+  id        String    @id @default(cuid())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  email            String
+  verificationKey  String
+  phone            String?
+  validAccount     Boolean            @default(false)
+  deleted          Boolean            @default(false)
+  uscID            String?
+  Section          Section[]
+  NotificationSent NotificationSent[]
+
+  @@unique([email])
+  @@unique([verificationKey])
+  @@index([email])
+  @@index([deleted])
+  @@index([phone])
+  @@index([email, verificationKey])
+}
+
+model Section {
+  id        String    @id @default(cuid())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  sectionNumber String
+  semester      String
+  department    String
+  fullCourseId  String?
+
+  lastNotified DateTime?
+  notified     Boolean   @default(false)
+
+  paidId        String
+  isPaid        Boolean @default(false)
+  phoneOverride String? // If set, will override the phone number for this section
+
+  studentId        String
+  student          Student            @relation(fields: [studentId], references: [id])
+  NotificationSent NotificationSent[]
+
+  @@unique([semester, paidId])
+  @@unique([semester, studentId, sectionNumber])
+  @@index([sectionNumber])
+  @@index([semester])
+  @@index([fullCourseId])
+  @@index([department])
+  @@index([studentId])
+  @@index([paidId])
+}
+
+model NotificationSent {
+  id        String    @id @default(cuid())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  sectionId String
+  section   Section @relation(fields: [sectionId], references: [id])
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  @@index([sectionId])
+  @@index([studentId])
+}
+
+model ClassInfo {
+  id        String    @id @default(cuid())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  department   String
+  section      String
+  courseNumber String
+  courseTitle  String
+  semester     String
+  instructor   String?
+
+  @@unique([section, semester])
+  @@index([department])
+  @@index([courseNumber])
+  @@index([semester])
+}
