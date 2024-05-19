@@ -12,11 +12,11 @@ import { ZodError } from "zod";
 import type { PrismaClientType } from "~/server/db";
 import { prisma } from "~/server/db";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
-import { PinoLogger } from "~/server/config/logger";
 import type { IncomingMessage, ServerResponse } from "http";
 import { transformer } from "~/server/api/transformer";
 import type { Student } from "@prisma/client";
 import { getCookie, getCookies } from "~/server/utils/cookie";
+import logger from "~/server/logger";
 
 /**
  * 1. CONTEXT
@@ -33,7 +33,6 @@ export interface CreateContextOptions {
 
 export interface InnerTrpcContext extends CreateContextOptions {
   prisma: PrismaClientType;
-  logger?: PinoLogger;
   user?: Student | null;
 }
 /**
@@ -118,13 +117,11 @@ export const createTRPCRouter = t.router;
 
 const loggerMiddleware = t.middleware(async ({ path, next, ctx, type }) => {
   const start = Date.now();
-  const { req } = ctx;
-  const logger = PinoLogger.logger({ path, req });
   let result: Awaited<ReturnType<typeof next>> | undefined = undefined;
   let error: any;
   try {
     result = await next({
-      ctx: { ...ctx, logger },
+      ctx: { ...ctx },
     });
   } catch (e) {
     error = e;
@@ -132,19 +129,11 @@ const loggerMiddleware = t.middleware(async ({ path, next, ctx, type }) => {
     const durationInMs = Date.now() - start;
 
     if (result?.ok) {
-      logger.info({ durationInMs }, `[${type}]: ${path} - ${durationInMs}ms - OK`);
+      logger.info(`[${type}]: ${path} - ${durationInMs}ms - OK`);
     } else {
       const errors = [error, result?.error].filter(Boolean);
       for (const e of errors) {
-        logger.error(
-          {
-            durationInMs,
-            error_code: e.code,
-            error_message: e.message,
-            error_stack: e.stack,
-          },
-          `[${type}] ${path} - ${durationInMs}ms - ${e.code} ${e.message}`,
-        );
+        logger.error(`[${type}] ${path} - ${durationInMs}ms - ${e.code} ${e.message}`);
       }
     }
   }

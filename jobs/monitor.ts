@@ -21,5 +21,5 @@ const classInfoJob = new SimpleIntervalJob(
   },
 );
 
-scheduler.addSimpleIntervalJob(job);
+// scheduler.addSimpleIntervalJob(job);
 scheduler.addSimpleIntervalJob(classInfoJob);

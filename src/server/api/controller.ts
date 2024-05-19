@@ -150,45 +150,45 @@ export const runRefresh = async () => {
   );
 };
 
-export const createClassInfo = async () => {
-  await refreshDepartment("CSCI");
+const createDepartmentInfo = async (department: string, semester: string) => {
+  const data = await refreshDepartment(department, true, semester);
+  if (!data) {
+    return;
+  }
+  if (!(data && data.Dept_Info && data.Dept_Info.abbreviation)) {
+    logger.error("Courses error: " + JSON.stringify(data));
+    return;
+  }
 
+  const departmentInfo = new Department(data);
+  const sectionNumbers = departmentInfo.getSectionNumbers();
+  for (const sectionNumber of sectionNumbers) {
+    const course = departmentInfo.getSection(sectionNumber);
+    if (course) {
+      const sectionInfo = {
+        department,
+        section: sectionNumber,
+        courseNumber: course.courseID,
+        courseTitle: course.courseName,
+        semester,
+        instructor: course.instructor ? `${course.instructor.first_name} ${course.instructor.last_name}` : null,
+      };
+      await prisma.classInfo.upsert({
+        where: {
+          section_semester: { section: sectionNumber, semester },
+        },
+        create: sectionInfo,
+        update: sectionInfo,
+      });
+    }
+  }
+};
+export const createClassInfo = async () => {
   await pMap(
     validDepartments,
     async (department) => {
-      const currentSemester = getSemester();
-
-      const data = await refreshDepartment(department, true, currentSemester);
-      if (!data) {
-        return;
-      }
-      if (!(data && data.Dept_Info && data.Dept_Info.abbreviation)) {
-        logger.error("Courses error: " + JSON.stringify(data));
-        return;
-      }
-
-      const departmentInfo = new Department(data);
-      const sectionNumbers = departmentInfo.getSectionNumbers();
-      for (const sectionNumber of sectionNumbers) {
-        const course = departmentInfo.getSection(sectionNumber);
-        if (course) {
-          const sectionInfo = {
-            department,
-            section: sectionNumber,
-            courseNumber: course.courseID,
-            courseTitle: course.courseName,
-            semester: currentSemester,
-            instructor: course.instructor ? `${course.instructor.first_name} ${course.instructor.last_name}` : null,
-          };
-          await prisma.classInfo.upsert({
-            where: {
-              section_semester: { section: sectionNumber, semester: currentSemester },
-            },
-            create: sectionInfo,
-            update: sectionInfo,
-          });
-        }
-      }
+      await createDepartmentInfo(department, getSemester());
+      console.log(`Finished ${department}`);
     },
     {
       concurrency: 5,
