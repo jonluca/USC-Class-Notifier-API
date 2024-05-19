@@ -2,15 +2,16 @@ import { Button, Row, Section, Text } from "@react-email/components";
 import * as React from "react";
 import EmailBase from "./components/EmailBase";
 import { baseDomain } from "~/constants";
-import type { Section as WatchedSection } from "@prisma/client";
+import type { WatchedSection, ClassInfo } from "@prisma/client";
 
 export interface NowWatchingEmailProps {
   key: string;
   email: string;
   sectionEntry: WatchedSection;
+  classInfo: ClassInfo | null;
 }
-const NowWatchingEmail = ({ sectionEntry, key }: NowWatchingEmailProps) => {
-  const headerTitle = sectionEntry.fullCourseId || `${sectionEntry.department} - ${sectionEntry.sectionNumber}`;
+const NowWatchingEmail = ({ classInfo, sectionEntry, key }: NowWatchingEmailProps) => {
+  const headerTitle = classInfo?.courseNumber;
   const previewText = `Watching ${headerTitle}!`;
 
   return (
@@ -38,15 +39,14 @@ const NowWatchingEmail = ({ sectionEntry, key }: NowWatchingEmailProps) => {
 NowWatchingEmail.PreviewProps = {
   sectionEntry: {
     id: "123",
-    fullCourseId: "CSCI-201",
-    department: "CSCI",
-    sectionNumber: "12345",
+    section: "12345",
     semester: "20243",
     notified: false,
     paidId: "12345678",
   },
   key: "asdf",
   email: "jdecaro@usc.edu",
+  classInfo: null,
 } as NowWatchingEmailProps;
 
 export default NowWatchingEmail;

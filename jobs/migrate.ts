@@ -120,10 +120,8 @@ const updatePrisma = async () => {
       .filter((s) => s.department)
       .map((section) => {
         return {
-          sectionNumber: section.sectionNumber!.trim(),
+          section: section.sectionNumber!.trim(),
           semester: section.semester,
-          department: section.department!.trim(),
-          fullCourseId: section.fullCourseId?.replace(/:/g, "")?.trim(),
           notified: section.notified,
           phoneOverride: section.phone,
           paidId: section.rand,
@@ -132,7 +130,7 @@ const updatePrisma = async () => {
         };
       });
     if (toCreate.length) {
-      const created = await prisma.section.createMany({
+      const created = await prisma.watchedSection.createMany({
         data: toCreate,
         skipDuplicates: true,
       });
@@ -142,14 +140,14 @@ const updatePrisma = async () => {
   for (const student of doubleEmails.flat()) {
     await processStudent(student);
   }
-  await pMap(toParse, processStudent, { concurrency: 30, stopOnError: false });
+  await pMap(toParse, processStudent, { concurrency: 50, stopOnError: false });
   console.log(`Finished parsing ${toParse.length} students`);
   console.log(`Found ${doubleEmails.length} students with multiple entries`);
 
   const paidIds = await paidIdModel.find({});
   const ids = uniq(paidIds.map((id) => id.paidId)).filter(Boolean) as string[];
   for (const c of chunk(ids, 250)) {
-    await prisma.section.updateMany({
+    await prisma.watchedSection.updateMany({
       where: {
         paidId: {
           in: c,
@@ -162,22 +160,11 @@ const updatePrisma = async () => {
   }
   console.log(`Updated ${ids.length} sections with paid status`);
 };
+updatePrisma();
 const fixDepartmentsAndNames = async () => {
-  let skip = 0;
-  while (true) {
-    const sections = await prisma.section.findMany({
-      skip,
-      take: 1000,
-      select: {
-        id: true,
-        sectionNumber: true,
-        department: true,
-        fullCourseId: true,
-      },
-    });
-    if (!sections.length) {
-      break;
-    }
-    skip += 1000;
-  }
+  const skip = 0;
+  await prisma.$queryRawUnsafe(`UPDATE "WatchedSection" ws
+SET "classInfoId" = ci.id
+FROM "ClassInfo" ci
+WHERE ws.section = ci.section AND ws.semester = ci.semester;`);
 };

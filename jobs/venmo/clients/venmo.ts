@@ -129,7 +129,7 @@ export class VenmoClient extends BaseService {
     }
   };
   private submitPaidIds = async (ids: string[]) => {
-    await prisma.section.updateMany({
+    await prisma.watchedSection.updateMany({
       where: {
         paidId: {
           in: ids,

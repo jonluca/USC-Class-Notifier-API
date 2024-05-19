@@ -50,7 +50,7 @@ export const userRouter = {
     if (!user) {
       throw new Error("User not found");
     }
-    return ctx.prisma.section.findMany({
+    return ctx.prisma.watchedSection.findMany({
       where: {
         studentId: user.id,
       },
@@ -90,15 +90,15 @@ export const userRouter = {
         });
       }
       // now check if this student is already watching this section
-      const section = await ctx.prisma.section.findFirst({
+      const section = await ctx.prisma.watchedSection.findFirst({
         where: {
-          sectionNumber: input.sectionNumber,
+          section: input.sectionNumber,
           studentId: student.id,
         },
       });
       if (section) {
         if (section.notified) {
-          await ctx.prisma.section.update({
+          await ctx.prisma.watchedSection.update({
             where: {
               id: section.id,
             },
@@ -112,7 +112,7 @@ export const userRouter = {
 
       // generate 20 random 8 digit numbers
       const randoms = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100000000)).map(String);
-      const sections = await ctx.prisma.section.findMany({
+      const sections = await ctx.prisma.watchedSection.findMany({
         where: {
           paidId: {
             in: randoms,
@@ -127,15 +127,20 @@ export const userRouter = {
         throw new Error("Please try again later. We are currently at capacity.");
       }
 
-      return ctx.prisma.section.create({
+      const semester = input.semester || getSemester();
+      return ctx.prisma.watchedSection.create({
         data: {
-          sectionNumber: input.sectionNumber,
+          section: input.sectionNumber,
           studentId: student.id,
-          department: input.department,
           phoneOverride: input.phone,
-          semester: input.semester || getSemester(),
-          fullCourseId: input.fullCourseId,
+          semester,
           paidId,
+          ClassInfo: {
+            connect: {
+              semester,
+              section: input.sectionNumber,
+            },
+          },
         },
       });
     }),
@@ -147,7 +152,7 @@ export const userRouter = {
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const section = await ctx.prisma.section.findUnique({
+      const section = await ctx.prisma.watchedSection.findUnique({
         where: {
           id: input.id,
         },
@@ -155,7 +160,7 @@ export const userRouter = {
       if (!section) {
         throw new Error("Section not found");
       }
-      await ctx.prisma.section.update({
+      await ctx.prisma.watchedSection.update({
         where: {
           id: section.id,
         },
@@ -165,7 +170,7 @@ export const userRouter = {
       });
     }),
   setAccountLevelPhoneToAllSections: publicProcedureWithUser.mutation(async ({ ctx, input }) => {
-    await ctx.prisma.section.updateMany({
+    await ctx.prisma.watchedSection.updateMany({
       where: {
         studentId: ctx.user.id,
       },
@@ -182,7 +187,7 @@ export const userRouter = {
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const section = await ctx.prisma.section.findUnique({
+      const section = await ctx.prisma.watchedSection.findUnique({
         where: {
           id: input.id,
         },
@@ -190,7 +195,7 @@ export const userRouter = {
       if (!section) {
         throw new Error("Section not found");
       }
-      await ctx.prisma.section.update({
+      await ctx.prisma.watchedSection.update({
         where: {
           id: section.id,
         },

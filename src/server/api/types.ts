@@ -40,7 +40,7 @@ export enum Abbreviation {
 }
 
 export interface OfferedCourses {
-  course: Course[];
+  course: Course[] | Course;
 }
 
 export interface Course {
@@ -152,4 +152,23 @@ export enum Type {
   Lec = "Lec",
   LecLab = "Lec-Lab",
   Qz = "Qz",
+}
+
+export type DepartmentUnion = DepartmentElement[] | DepartmentElement;
+
+export interface DepartmentList {
+  department: DepartmentUnion;
+}
+
+export interface DepartmentElement {
+  code: string;
+  name: string;
+  type: Type;
+  department?: DepartmentUnion;
+}
+
+export enum Type {
+  C = "C",
+  N = "N",
+  Y = "Y",
 }

@@ -30,7 +30,7 @@ model Student {
   validAccount     Boolean            @default(false)
   deleted          Boolean            @default(false)
   uscID            String?
-  Section          Section[]
+  WatchedSection   WatchedSection[]
   NotificationSent NotificationSent[]
 
   @@unique([email])
@@ -41,15 +41,13 @@ model Student {
   @@index([email, verificationKey])
 }
 
-model Section {
+model WatchedSection {
   id        String    @id @default(cuid())
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
-  sectionNumber String
-  semester      String
-  department    String
-  fullCourseId  String?
+  section  String
+  semester String
 
   lastNotified DateTime?
   notified     Boolean   @default(false)
@@ -62,12 +60,19 @@ model Section {
   student          Student            @relation(fields: [studentId], references: [id])
   NotificationSent NotificationSent[]
 
+  classInfoId String?
+  ClassInfo   ClassInfo? @relation(fields: [classInfoId], references: [id], onDelete: SetNull)
+
   @@unique([semester, paidId])
-  @@unique([semester, studentId, sectionNumber])
-  @@index([sectionNumber])
+  @@unique([semester, studentId, section])
+  @@index([semester, notified, section])
+  @@index([section])
   @@index([semester])
-  @@index([fullCourseId])
-  @@index([department])
+  @@index([notified])
+  @@index([isPaid])
+  @@index([phoneOverride])
+  @@index([classInfoId])
+  @@index([createdAt])
   @@index([studentId])
   @@index([paidId])
 }
@@ -78,7 +83,7 @@ model NotificationSent {
   updatedAt DateTime? @updatedAt
 
   sectionId String
-  section   Section @relation(fields: [sectionId], references: [id])
+  section   WatchedSection @relation(fields: [sectionId], references: [id])
 
   studentId String
   student   Student @relation(fields: [studentId], references: [id])
@@ -92,14 +97,22 @@ model ClassInfo {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
-  department   String
-  section      String
-  courseNumber String
-  courseTitle  String
-  semester     String
-  instructor   String?
+  department         String
+  section            String
+  courseNumber       String
+  courseTitle        String
+  semester           String
+  instructor         String?
+  type               String?
+  units              String?
+  day                String?
+  session            String?
+  location           String?
+  isDistanceLearning Boolean          @default(false)
+  Section            WatchedSection[]
 
   @@unique([section, semester])
+  @@index([section, semester])
   @@index([department])
   @@index([courseNumber])
   @@index([semester])

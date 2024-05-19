@@ -1,14 +1,13 @@
 import { prisma } from "~/server/db";
 import logger from "~/server/logger";
 import { Agent, fetch } from "undici";
-import type { DepartmentInfo, DepartmentResponse } from "~/server/api/types";
+import type { DepartmentElement, DepartmentInfo, DepartmentList, DepartmentResponse } from "~/server/api/types";
 import { Department } from "~/server/api/DepartmentInfo";
 import pMap from "p-map";
 import { groupBy } from "lodash-es";
 import { spotsAvailableEmail } from "~/emails/processors/spotsAvailableEmail";
 import { sendMessage } from "~/server/Twilio";
 import { getSemester } from "~/utils/semester";
-import { validDepartments } from "~/utils/validDepartments";
 
 const ONE_SECOND_MS = 1000;
 const timeout = 5 * 60 * ONE_SECOND_MS;
@@ -25,9 +24,9 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
     const department = new Department(departmentInfo);
     const departmentsSectionNumbers = department.getSectionNumbersWithAvailability();
 
-    const watchedSections = await prisma.section.findMany({
+    const watchedSections = await prisma.watchedSection.findMany({
       where: {
-        sectionNumber: { in: departmentsSectionNumbers },
+        section: { in: departmentsSectionNumbers },
         semester,
         // notified: false,
         student: {
@@ -36,7 +35,7 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
       },
       select: {
         id: true,
-        sectionNumber: true,
+        section: true,
         student: { select: { id: true, email: true, phone: true, verificationKey: true } },
         isPaid: true,
       },
@@ -71,7 +70,7 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
           });
         }
 
-        await prisma.section.updateMany({
+        await prisma.watchedSection.updateMany({
           where: {
             id: {
               in: sections.map((s) => s.id),
@@ -94,9 +93,45 @@ const refreshDepartment = async (
   withoutHardRefresh: boolean = false,
   semester = getSemester(),
 ): Promise<null | DepartmentInfo> => {
-  const suffix = withoutHardRefresh ? "" : "?refresh=Mary4adAL1ttleLamp";
+  try {
+    const suffix = withoutHardRefresh ? "" : "?refresh=Mary4adAL1ttleLamp";
 
-  const body = await fetch(`http://web-app.usc.edu/web/soc/api/classes/${department}/${semester}${suffix}`, {
+    const body = await fetch(`http://web-app.usc.edu/web/soc/api/classes/${department}/${semester}${suffix}`, {
+      headers: {
+        DNT: "1",
+        "User-Agent": "https://jldc.me/soc/ Class Refresher",
+        "Cache-Control": "max-age=0",
+      },
+      dispatcher: new Agent({
+        bodyTimeout: timeout,
+        headersTimeout: timeout,
+      }),
+    });
+    const isValid = body.status === 200;
+    if (!isValid) {
+      if (withoutHardRefresh) {
+        logger.error(`Failed to refresh department ${department} without hard refresh`);
+        return null;
+      }
+      return refreshDepartment(department, true, semester);
+    }
+    const text = await body.text();
+    const data = JSON.parse(text) as DepartmentResponse;
+    if (data && "error" in data) {
+      console.error(data.error);
+      return null;
+    }
+    return data;
+  } catch (e) {
+    if (withoutHardRefresh) {
+      return null;
+    }
+    return refreshDepartment(department, true, semester);
+  }
+};
+
+const getListOfDepartments = async (semester = getSemester()): Promise<null | DepartmentList> => {
+  const body = await fetch(`https://web-app.usc.edu/web/soc/api/depts/${semester}`, {
     headers: {
       DNT: "1",
       "User-Agent": "https://jldc.me/soc/ Class Refresher",
@@ -109,13 +144,9 @@ const refreshDepartment = async (
   });
   const isValid = body.status === 200;
   if (!isValid) {
-    if (withoutHardRefresh) {
-      logger.error(`Failed to refresh department ${department} without hard refresh`);
-      return null;
-    }
-    return refreshDepartment(department, true, semester);
+    return null;
   }
-  const data = (await body.json()) as DepartmentResponse;
+  const data = (await body.json()) as DepartmentList;
   if (data && "error" in data) {
     console.error(data.error);
     return null;
@@ -124,9 +155,13 @@ const refreshDepartment = async (
 };
 
 const checkForAvailabilityForDepartment = async (department: string) => {
-  const data = await refreshDepartment(department);
-  if (data) {
-    await parseCourses(data);
+  try {
+    const data = await refreshDepartment(department);
+    if (data) {
+      await parseCourses(data);
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
@@ -165,13 +200,25 @@ const createDepartmentInfo = async (department: string, semester: string) => {
   for (const sectionNumber of sectionNumbers) {
     const course = departmentInfo.getSection(sectionNumber);
     if (course) {
+      const instructor =
+        typeof course.instructor === "string"
+          ? course.instructor
+          : typeof course.instructor === "object"
+            ? [course.instructor.first_name, course.instructor.last_name].filter(Boolean).join(" ")
+            : null;
       const sectionInfo = {
         department,
         section: sectionNumber,
         courseNumber: course.courseID,
         courseTitle: course.courseName,
         semester,
-        instructor: course.instructor ? `${course.instructor.first_name} ${course.instructor.last_name}` : null,
+        instructor: instructor || null,
+        isDistanceLearning: course.isDistanceLearning,
+        location: typeof course.location === "string" ? course.location : null,
+        session: course.session,
+        type: course.type,
+        units: course.units,
+        day: course.day,
       };
       await prisma.classInfo.upsert({
         where: {
@@ -184,15 +231,53 @@ const createDepartmentInfo = async (department: string, semester: string) => {
   }
 };
 export const createClassInfo = async () => {
-  await pMap(
-    validDepartments,
-    async (department) => {
-      await createDepartmentInfo(department, getSemester());
-      console.log(`Finished ${department}`);
-    },
-    {
-      concurrency: 5,
-      stopOnError: false,
-    },
-  );
+  // get the class list from 2009 until now
+  const start = 2009;
+  const end = new Date().getFullYear();
+  const semesters = [];
+  for (let i = start; i <= end; i++) {
+    semesters.push({ semester: `${i}1` });
+    semesters.push({ semester: `${i}2` });
+    semesters.push({ semester: `${i}3` });
+  }
+  for (const { semester } of semesters) {
+    const departments = await getListOfDepartments(semester);
+    if (!departments) {
+      continue;
+    }
+    const departmentCodes = new Set<string>();
+    // eslint-disable-next-line no-inner-declarations
+    function parseDepartments(dept: DepartmentElement | DepartmentList) {
+      if (Array.isArray(dept.department)) {
+        for (const department of dept.department) {
+          departmentCodes.add(department.code);
+          if (department.department) {
+            parseDepartments(department);
+          }
+        }
+      } else {
+        if (dept.department) {
+          departmentCodes.add(dept.department.code);
+        }
+      }
+    }
+    parseDepartments(departments);
+    console.log(`Found ${departmentCodes.size} departments for ${semester}`);
+
+    await pMap(
+      [...departmentCodes],
+      async (department) => {
+        try {
+          await createDepartmentInfo(department, semester);
+          console.log(`Finished ${semester} - ${department}`);
+        } catch (e: any) {
+          console.error(`Error creating class info for ${department} in ${semester}: ${e.message}`);
+        }
+      },
+      {
+        concurrency: 25,
+        stopOnError: false,
+      },
+    );
+  }
 };

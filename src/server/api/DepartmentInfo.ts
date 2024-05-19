@@ -5,7 +5,13 @@ export interface SectionEntry {
   courseID: string;
   courseName: string;
   sectionNumber: string;
-  instructor?: Instructor;
+  type: string | undefined;
+  units: string | undefined;
+  day: string | undefined;
+  session: string | undefined;
+  location: string | undefined;
+  instructor?: Instructor | string;
+  isDistanceLearning: boolean;
 }
 export class Department {
   courseData: Course[];
@@ -13,7 +19,8 @@ export class Department {
 
   constructor(data: DepartmentInfo) {
     if (data && data.OfferedCourses && data.OfferedCourses.course) {
-      this.courseData = data.OfferedCourses.course;
+      const courseData = data.OfferedCourses.course;
+      this.courseData = Array.isArray(courseData) ? courseData : [courseData];
       this.sections = {};
       for (const course of this.courseData) {
         const sectionData = course.CourseData.SectionData;
@@ -26,7 +33,8 @@ export class Department {
         }
       }
     } else {
-      throw new Error("No data found");
+      this.courseData = [];
+      this.sections = {};
     }
   }
 
@@ -55,6 +63,15 @@ export class Department {
       courseName: course.CourseData.title,
       sectionNumber: section.id,
       instructor: section.instructor,
+      isDistanceLearning: section.IsDistanceLearning !== "N" || !section.IsDistanceLearning,
+      type: addIfString(section.type),
+      units: addIfString(section.units),
+      location: addIfString(section.location),
+      session: addIfString(section.session),
+      day: addIfString(section.day),
     };
   }
 }
+const addIfString = (object: unknown): string | undefined => {
+  return typeof object === "string" ? object : undefined;
+};
