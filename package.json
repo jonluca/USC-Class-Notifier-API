@@ -146,7 +146,7 @@
     "tabWidth": 2,
     "trailingComma": "all"
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.2.2",
   "engines": {
     "node": ">=20.0.0",
     "yarn": ">=4.1.1"
