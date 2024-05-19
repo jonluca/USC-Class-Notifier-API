@@ -6,6 +6,7 @@ import { verificationEmail } from "~/emails/processors/verificationEmail";
 
 import { getSemester } from "~/utils/semester";
 import { validDepartments } from "~/utils/validDepartments";
+import { nowWatchingEmail } from "~/emails/processors/nowWatchingEmail";
 export const userRouter = {
   verifyByKey: publicProcedure
     .input(
@@ -128,21 +129,33 @@ export const userRouter = {
       }
 
       const semester = input.semester || getSemester();
-      return ctx.prisma.watchedSection.create({
+      const created = await ctx.prisma.watchedSection.create({
         data: {
           section: input.sectionNumber,
-          studentId: student.id,
+          student: { connect: { id: student.id } },
           phoneOverride: input.phone,
           semester,
           paidId,
           ClassInfo: {
             connect: {
-              semester,
-              section: input.sectionNumber,
+              section_semester: {
+                semester,
+                section: input.sectionNumber,
+              },
             },
           },
         },
+        include: {
+          ClassInfo: true,
+        },
       });
+      await nowWatchingEmail({
+        key: student.verificationKey,
+        email: student.email,
+        sectionEntry: created,
+        classInfo: created.ClassInfo || null,
+      });
+      return created;
     }),
 
   continueReceivingNotificationsForSection: publicProcedureWithUser

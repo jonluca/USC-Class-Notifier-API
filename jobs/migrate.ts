@@ -166,5 +166,5 @@ const fixDepartmentsAndNames = async () => {
   await prisma.$queryRawUnsafe(`UPDATE "WatchedSection" ws
 SET "classInfoId" = ci.id
 FROM "ClassInfo" ci
-WHERE ws.section = ci.section AND ws.semester = ci.semester;`);
+WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.semester;`);
 };
