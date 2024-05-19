@@ -1,6 +1,6 @@
 import tw from "twilio";
 import logger from "~/server/logger";
-import { isProd } from "~/server/config/logger";
+import { isProd } from "~/constants";
 const { Twilio } = tw;
 
 const accountSid = process.env.TWILIO_SID;
