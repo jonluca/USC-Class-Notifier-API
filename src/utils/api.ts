@@ -9,8 +9,8 @@ import { createTRPCNext } from "@trpc/next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import getLink from "./httpLink";
-import type { AppRouter } from "~/server/api/root";
-import { transformer } from "~/server/api/transformer";
+import type { AppRouter } from "@/server/api/root";
+import { transformer } from "@/server/api/transformer";
 import { toast } from "react-toastify";
 
 /** A set of type-safe react-query hooks for your tRPC API. */

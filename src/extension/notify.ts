@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { context } from "~/extension/context";
+import { context } from "@/extension/context";
 
 export function addNotifyMe(section: HTMLElement) {
   const hasNotifyMe = $(section).find(".notify");

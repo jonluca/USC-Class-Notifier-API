@@ -1,9 +1,9 @@
-import { getSemester } from "~/utils/semester";
+import { getSemester } from "@/utils/semester";
 import $ from "jquery";
-import { parseCoursePage } from "~/extension/coursesPage";
-import { parseWebRegPage } from "~/extension/webRegPage";
-import type { Options } from "~/extension/utils";
-import { getCurrentSchedule, parseSchedule } from "~/extension/schedule";
+import { parseCoursePage } from "@/extension/coursesPage";
+import { parseWebRegPage } from "@/extension/webRegPage";
+import type { Options } from "@/extension/utils";
+import { getCurrentSchedule, parseSchedule } from "@/extension/schedule";
 
 function insertExportButton() {
   const navbar = $("ul.nav");

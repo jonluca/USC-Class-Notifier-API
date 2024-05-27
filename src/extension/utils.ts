@@ -1,4 +1,4 @@
-import ratings from "~/data/ratings.json" assert { type: "json" };
+import ratings from "@/data/ratings.json" assert { type: "json" };
 import $ from "jquery";
 
 type Rating = (typeof ratings)[number];

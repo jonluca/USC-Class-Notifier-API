@@ -1,8 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { publicProcedure } from "../trpc";
-import { prisma } from "~/server/db";
+import { prisma } from "@/server/db";
 import { z } from "zod";
-import { runRefresh } from "~/server/api/controller";
+import { runRefresh } from "@/server/api/controller";
 
 export const adminRouter = {
   refresh: publicProcedure.query(async () => {

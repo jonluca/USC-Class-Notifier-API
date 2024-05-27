@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { splitDays } from "~/extension/utils";
+import { splitDays } from "@/extension/utils";
 import $ from "jquery";
 import { insertAllOverlap } from "./insert-class-info";
 

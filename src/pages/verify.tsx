@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { api } from "~/utils/api";
-import { SendLoginEmail } from "~/components/SendLoginEmail";
+import { api } from "@/utils/api";
+import { SendLoginEmail } from "@/components/SendLoginEmail";
 import { LinearProgress } from "@mui/material";
 import Link from "next/link";
 import type { GetServerSideProps } from "next";
-import { setCookie } from "~/server/utils/cookie";
+import { setCookie } from "@/server/utils/cookie";
 import dayjs from "dayjs";
 
 export default function Verify() {

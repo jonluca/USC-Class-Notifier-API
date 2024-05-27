@@ -1,21 +1,19 @@
 import type { PlasmoCSConfig } from "plasmo";
 import { useStorage } from "@plasmohq/storage/hook";
 import React, { useEffect, useState } from "react";
-import { initExtension } from "~/extension/extension";
-import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "~/constants";
-import { AppContext, context, useScheduleHelperContext } from "~/extension/context";
+import { initExtension } from "@/extension/extension";
+import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "@/constants";
+import { AppContext, context, useScheduleHelperContext } from "@/extension/context";
 // @ts-ignore
 import cssText from "data-text:~/styles/globals.css";
 // @ts-ignore
 import toastifyStyles from "data-text:react-toastify/dist/ReactToastify.css";
-
 import { CssBaseline } from "@mui/material";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-import NotificationModal from "~/extension/notification";
-import "https://www.googletagmanager.com/gtag/js?id=G-057WK9KK0E";
+import NotificationModal from "@/extension/notification";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { trpc, trpcClient } from "~/extension/data";
+import { trpc, trpcClient } from "@/extension/data";
 import { ToastContainer } from "react-toastify";
 
 export const config: PlasmoCSConfig = {
@@ -51,9 +49,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 };
 
 const ExtensionLogic = () => {
-  const [enabled] = useStorage(extensionEnabledKey);
-  const [showConflicts] = useStorage(showConflictsKey);
-  const [showUnits] = useStorage(showUnitsKey);
+  const [enabled] = useStorage(extensionEnabledKey, true);
+  const [showConflicts] = useStorage(showConflictsKey, true);
+  const [showUnits] = useStorage(showUnitsKey, true);
   const selectedClass = useScheduleHelperContext((state) => state.selectedClass);
   useEffect(() => {
     initExtension({

@@ -1,7 +1,7 @@
 import { httpLink } from "@trpc/client";
 // import { unstable_httpBatchStreamLink } from "@trpc/client";
 import type { NextPageContext } from "next";
-import { transformer } from "~/server/api/transformer";
+import { transformer } from "@/server/api/transformer";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") {

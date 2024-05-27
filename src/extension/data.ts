@@ -1,8 +1,8 @@
 import { httpLink } from "@trpc/client";
-import type { AppRouter } from "~/server/api";
-import { transformer } from "~/server/api/transformer";
+import type { AppRouter } from "@/server/api";
+import { transformer } from "@/server/api/transformer";
 import { createTRPCReact } from "@trpc/react-query";
-import { baseDomain } from "~/constants";
+import { baseDomain } from "@/constants";
 
 export const trpc = createTRPCReact<AppRouter>();
 

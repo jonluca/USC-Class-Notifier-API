@@ -2,12 +2,12 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { publicProcedure, publicProcedureWithUser } from "../trpc";
 import { z } from "zod";
 import { v4 as uuid } from "uuid";
-import { verificationEmail } from "~/emails/processors/verificationEmail";
+import { verificationEmail } from "@/emails/processors/verificationEmail";
 
-import { getSemester } from "~/utils/semester";
-import { validDepartments } from "~/utils/validDepartments";
-import { nowWatchingEmail } from "~/emails/processors/nowWatchingEmail";
-import { prisma } from "~/server/db";
+import { getSemester } from "@/utils/semester";
+import { validDepartments } from "@/utils/validDepartments";
+import { nowWatchingEmail } from "@/emails/processors/nowWatchingEmail";
+import { prisma } from "@/server/db";
 export const userRouter = {
   verifyByKey: publicProcedure
     .input(

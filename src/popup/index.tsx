@@ -1,6 +1,6 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 import { useStorage } from "@plasmohq/storage/hook";
-import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "~/constants";
+import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "@/constants";
 
 function IndexPopup() {
   const [enabled, setEnabled] = useStorage(extensionEnabledKey, true);

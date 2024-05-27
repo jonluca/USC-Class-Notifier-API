@@ -1,13 +1,13 @@
-import { api } from "~/utils/api";
+import { api } from "@/utils/api";
 import { LinearProgress, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
-import type { RouterOutputs } from "~/server/api";
+import type { RouterOutputs } from "@/server/api";
 import type { AgGridReactProps } from "@ag-grid-community/react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { getSemester } from "~/utils/semester";
-import { SettingEntry } from "~/components/SettingsEntry";
+import { getSemester } from "@/utils/semester";
+import { SettingEntry } from "@/components/SettingsEntry";
 import { toast } from "react-toastify";
 import PencilIcon from "@mui/icons-material/Edit";
 import Close from "@mui/icons-material/Close";

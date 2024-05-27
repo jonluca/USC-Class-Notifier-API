@@ -1,4 +1,4 @@
-import type { Course, DepartmentInfo, Instructor, SectionDataClass } from "~/server/api/types";
+import type { Course, DepartmentInfo, Instructor, SectionDataClass } from "@/server/api/types";
 
 export interface SectionEntry {
   available: number;

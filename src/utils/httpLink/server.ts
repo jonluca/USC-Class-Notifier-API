@@ -2,9 +2,9 @@ import { httpLink } from "@trpc/client";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import type { NextPageContext } from "next";
 import type { GetServerSidePropsContext } from "next/types";
-import { createInnerTRPCContext } from "~/server/api/trpc";
-import { transformer } from "~/server/api/transformer";
-import { appRouter } from "~/server/api";
+import { createInnerTRPCContext } from "@/server/api/trpc";
+import { transformer } from "@/server/api/transformer";
+import { appRouter } from "@/server/api";
 
 const serverLink = (ctx: NextPageContext | GetServerSidePropsContext | undefined | null) => {
   const createContext = async () => {

@@ -1,4 +1,4 @@
-import { api } from "~/utils/api";
+import { api } from "@/utils/api";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";

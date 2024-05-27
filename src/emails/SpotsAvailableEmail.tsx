@@ -1,8 +1,8 @@
 import { Button, Row, Section, Text } from "@react-email/components";
 import * as React from "react";
 import EmailBase from "./components/EmailBase";
-import { baseDomain } from "~/constants";
-import type { SectionEntry } from "~/server/api/DepartmentInfo";
+import { baseDomain } from "@/constants";
+import type { SectionEntry } from "@/server/api/DepartmentInfo";
 
 export interface SpotsAvailableEmailProps {
   email: string;

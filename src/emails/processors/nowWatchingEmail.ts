@@ -1,7 +1,7 @@
 import sendEmail from "../utilities/sendEmail";
-import type { NowWatchingEmailProps } from "~/emails/NowWatchingEmail";
-import NowWatchingEmail from "~/emails/NowWatchingEmail";
-import { prisma } from "~/server/db";
+import type { NowWatchingEmailProps } from "@/emails/NowWatchingEmail";
+import NowWatchingEmail from "@/emails/NowWatchingEmail";
+import { prisma } from "@/server/db";
 
 export const nowWatchingEmail = async (props: NowWatchingEmailProps) => {
   const { email, sectionEntry } = props;

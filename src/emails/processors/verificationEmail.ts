@@ -1,5 +1,5 @@
 import sendEmail from "../utilities/sendEmail";
-import VerificationEmail from "~/emails/VerificationEmail";
+import VerificationEmail from "@/emails/VerificationEmail";
 
 export const verificationEmail = async ({
   email,

@@ -1,7 +1,7 @@
 import sendEmail from "../utilities/sendEmail";
-import type { SpotsAvailableEmailProps } from "~/emails/SpotsAvailableEmail";
-import SpotsAvailableEmail from "~/emails/SpotsAvailableEmail";
-import { prisma } from "~/server/db";
+import type { SpotsAvailableEmailProps } from "@/emails/SpotsAvailableEmail";
+import SpotsAvailableEmail from "@/emails/SpotsAvailableEmail";
+import { prisma } from "@/server/db";
 
 export const spotsAvailableEmail = async (
   props: SpotsAvailableEmailProps & {

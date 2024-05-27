@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { getProfessorRatings, isNumber, ratingURLTemplate } from "~/extension/utils";
+import { getProfessorRatings, isNumber, ratingURLTemplate } from "@/extension/utils";
 
 export function parseCoursePage() {
   //Get all courses

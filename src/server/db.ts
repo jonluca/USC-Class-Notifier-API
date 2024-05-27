@@ -1,4 +1,4 @@
-import "~/server/logger";
+import "@/server/logger";
 import { PrismaClient } from "@prisma/client";
 
 const baseClient = new PrismaClient();

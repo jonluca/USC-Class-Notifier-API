@@ -1,6 +1,6 @@
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 import type { NodeHTTPHandlerOptions } from "@trpc/server/adapters/node-http";
-import { appRouter, createTRPCContext } from "~/server/api";
+import { appRouter, createTRPCContext } from "@/server/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // export API handler

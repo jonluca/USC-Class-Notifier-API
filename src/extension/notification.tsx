@@ -1,8 +1,8 @@
-import { useScheduleHelperContext } from "~/extension/context";
+import { useScheduleHelperContext } from "@/extension/context";
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import { CircularProgress, TextField, Typography } from "@mui/material";
-import { trpc } from "~/extension/data";
+import { trpc } from "@/extension/data";
 import { toast } from "react-toastify";
 import venmoBase64 from "data-base64:-/venmo.png";
 import venmoBase64Qr from "data-base64:-/venmo-qr.jpeg";

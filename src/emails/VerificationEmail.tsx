@@ -1,7 +1,7 @@
 import { Button, Row, Section, Text } from "@react-email/components";
 import * as React from "react";
 import EmailBase from "./components/EmailBase";
-import { baseDomain } from "~/constants";
+import { baseDomain } from "@/constants";
 
 interface VerificationEmailProps {
   key: string;

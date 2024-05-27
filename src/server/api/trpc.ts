@@ -9,14 +9,14 @@
 
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ZodError } from "zod";
-import type { PrismaClientType } from "~/server/db";
-import { prisma } from "~/server/db";
+import type { PrismaClientType } from "@/server/db";
+import { prisma } from "@/server/db";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import type { IncomingMessage, ServerResponse } from "http";
-import { transformer } from "~/server/api/transformer";
+import { transformer } from "@/server/api/transformer";
 import type { Student } from "@prisma/client";
-import { getCookie, getCookies } from "~/server/utils/cookie";
-import logger from "~/server/logger";
+import { getCookie, getCookies } from "@/server/utils/cookie";
+import logger from "@/server/logger";
 
 /**
  * 1. CONTEXT

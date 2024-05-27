@@ -1,4 +1,4 @@
-import { SendLoginEmail } from "~/components/SendLoginEmail";
+import { SendLoginEmail } from "@/components/SendLoginEmail";
 
 export default function Index() {
   return (

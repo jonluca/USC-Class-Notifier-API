@@ -1,12 +1,12 @@
 import $ from "jquery";
-import { changeCSSColumnWidth } from "~/extension/style";
-import type { ClassInfo, Options } from "~/extension/utils";
-import { isNumber } from "~/extension/utils";
-import { baseClassInfo } from "~/extension/utils";
-import { parseProfessor } from "~/extension/utils";
-import { insertBlankRatingCell } from "~/extension/utils";
-import { emptySpanCell } from "~/extension/utils";
-import { addNotifyMe } from "~/extension/notify";
+import { changeCSSColumnWidth } from "@/extension/style";
+import type { ClassInfo, Options } from "@/extension/utils";
+import { isNumber } from "@/extension/utils";
+import { baseClassInfo } from "@/extension/utils";
+import { parseProfessor } from "@/extension/utils";
+import { insertBlankRatingCell } from "@/extension/utils";
+import { emptySpanCell } from "@/extension/utils";
+import { addNotifyMe } from "@/extension/notify";
 import { insertClosedRegistration, insertOnlyLabNumbers, insertTotalSpots } from "./insert-class-info";
 
 function addUnitsToTitle(row: HTMLElement) {

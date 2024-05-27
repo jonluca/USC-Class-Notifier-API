@@ -1,13 +1,13 @@
-import { prisma } from "~/server/db";
-import logger from "~/server/logger";
+import { prisma } from "@/server/db";
+import logger from "@/server/logger";
 import { Agent, fetch } from "undici";
-import type { DepartmentElement, DepartmentInfo, DepartmentList, DepartmentResponse } from "~/server/api/types";
-import { Department } from "~/server/api/DepartmentInfo";
+import type { DepartmentElement, DepartmentInfo, DepartmentList, DepartmentResponse } from "@/server/api/types";
+import { Department } from "@/server/api/DepartmentInfo";
 import pMap from "p-map";
 import { groupBy } from "lodash-es";
-import { spotsAvailableEmail } from "~/emails/processors/spotsAvailableEmail";
-import { sendMessage } from "~/server/Twilio";
-import { getSemester } from "~/utils/semester";
+import { spotsAvailableEmail } from "@/emails/processors/spotsAvailableEmail";
+import { sendMessage } from "@/server/Twilio";
+import { getSemester } from "@/utils/semester";
 
 const ONE_SECOND_MS = 1000;
 const timeout = 5 * 60 * ONE_SECOND_MS;
@@ -246,7 +246,7 @@ export const createClassInfo = async () => {
       continue;
     }
     const departmentCodes = new Set<string>();
-    // eslint-disable-next-line no-inner-declarations
+
     function parseDepartments(dept: DepartmentElement | DepartmentList) {
       if (Array.isArray(dept.department)) {
         for (const department of dept.department) {

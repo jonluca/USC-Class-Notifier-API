@@ -1,4 +1,4 @@
-import type { ClassInfo } from "~/extension/utils";
+import type { ClassInfo } from "@/extension/utils";
 import $ from "jquery";
 
 export function insertTotalSpots(element: HTMLElement, classInfo: ClassInfo) {
