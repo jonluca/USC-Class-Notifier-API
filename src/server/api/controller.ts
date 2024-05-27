@@ -131,27 +131,34 @@ const refreshDepartment = async (
 };
 
 const getListOfDepartments = async (semester = getSemester()): Promise<null | DepartmentList> => {
-  const body = await fetch(`https://web-app.usc.edu/web/soc/api/depts/${semester}`, {
-    headers: {
-      DNT: "1",
-      "User-Agent": "https://jldc.me/soc/ Class Refresher",
-      "Cache-Control": "max-age=0",
-    },
-    dispatcher: new Agent({
-      bodyTimeout: timeout,
-      headersTimeout: timeout,
-    }),
-  });
-  const isValid = body.status === 200;
-  if (!isValid) {
-    return null;
+  for (let i = 0; i < 3; i++) {
+    try {
+      const body = await fetch(`https://web-app.usc.edu/web/soc/api/depts/${semester}`, {
+        headers: {
+          DNT: "1",
+          "User-Agent": "https://jldc.me/soc/ Class Refresher",
+          "Cache-Control": "max-age=0",
+        },
+        dispatcher: new Agent({
+          bodyTimeout: timeout,
+          headersTimeout: timeout,
+        }),
+      });
+      const isValid = body.status === 200;
+      if (!isValid) {
+        return null;
+      }
+      const data = (await body.json()) as DepartmentList;
+      if (data && "error" in data) {
+        console.error(data.error);
+        return null;
+      }
+      return data;
+    } catch (e) {
+      console.error(e);
+    }
   }
-  const data = (await body.json()) as DepartmentList;
-  if (data && "error" in data) {
-    console.error(data.error);
-    return null;
-  }
-  return data;
+  return null;
 };
 
 const checkForAvailabilityForDepartment = async (department: string) => {
@@ -167,10 +174,9 @@ const checkForAvailabilityForDepartment = async (department: string) => {
 
 export const runRefresh = async () => {
   const currentSemester = getSemester();
-  await checkForAvailabilityForDepartment("CSCI");
 
   const departments = await prisma.$queryRawUnsafe<{ department: string }[]>(
-    `SELECT DISTINCT department FROM "Section" WHERE semester = '${currentSemester}' and notified = false`,
+    `select distinct coalesce(prefix, department) as department from "ClassInfo" where section in (SELECT DISTINCT section FROM "WatchedSection" WHERE semester = '${currentSemester}' and notified = false) and semester='${currentSemester}'`,
   );
 
   await pMap(
