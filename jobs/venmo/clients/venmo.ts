@@ -146,7 +146,7 @@ export class VenmoClient extends BaseService {
     let depth = 0;
     let nextId = undefined;
     let count = 0;
-    while (depth < 150) {
+    while (depth < 15) {
       const posts = await this.fetchPosts(nextId);
       const stories = posts?.stories;
       if (stories) {
