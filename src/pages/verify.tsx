@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { GetServerSideProps } from "next";
 import { setCookie } from "@/server/utils/cookie";
 import dayjs from "dayjs";
+import { cookieKey } from "@/server/auth";
 
 export default function Verify() {
   const router = useRouter();
@@ -63,9 +64,9 @@ export default function Verify() {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const key = context.query.key;
   if (key && context.res) {
-    setCookie(context.res, "key", key as string, {
+    setCookie(context.res, cookieKey, key as string, {
       expires: dayjs().add(1, "year").toDate(),
-      httpOnly: true,
+      httpOnly: false,
     });
   }
   return {

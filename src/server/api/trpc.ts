@@ -17,6 +17,7 @@ import { transformer } from "@/server/api/transformer";
 import type { Student } from "@prisma/client";
 import { getCookie, getCookies } from "@/server/utils/cookie";
 import logger from "@/server/logger";
+import { cookieKey, isAuthenticated } from "@/server/auth";
 
 /**
  * 1. CONTEXT
@@ -151,7 +152,7 @@ const enforceUser = t.middleware(async ({ ctx, next, getRawInput }) => {
     });
   }
   const cookies = getCookies(ctx.req);
-  let verificationKey = cookies["key"];
+  let verificationKey = cookies[cookieKey];
   if (!verificationKey) {
     const rawInput = await getRawInput();
 
@@ -176,7 +177,16 @@ const enforceUser = t.middleware(async ({ ctx, next, getRawInput }) => {
   });
 });
 
-/**
+const enforceUserIsAdminOrMod = t.middleware(({ ctx, next }) => {
+  const isAuthed = ctx.req && isAuthenticated(ctx.req);
+  if (!isAuthed) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return next({
+    ctx,
+  });
+}); /**
  * Public (unauthenticated) procedure
  *
  * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
@@ -184,4 +194,5 @@ const enforceUser = t.middleware(async ({ ctx, next, getRawInput }) => {
  * are logged in.
  */
 export const publicProcedure = baseProcedure;
+export const adminProcedure = baseProcedure.use(enforceUserIsAdminOrMod);
 export const publicProcedureWithUser = baseProcedure.use(enforceUser);

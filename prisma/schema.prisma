@@ -28,7 +28,6 @@ model Student {
   verificationKey  String
   phone            String?
   validAccount     Boolean            @default(false)
-  deleted          Boolean            @default(false)
   uscID            String?
   WatchedSection   WatchedSection[]
   NotificationSent NotificationSent[]
@@ -36,8 +35,8 @@ model Student {
   @@unique([email])
   @@unique([verificationKey])
   @@index([email])
-  @@index([deleted])
   @@index([phone])
+  @@index([verificationKey])
   @@index([email, verificationKey])
 }
 

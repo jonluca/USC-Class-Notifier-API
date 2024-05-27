@@ -3,6 +3,7 @@ import { prisma } from "@/server/db";
 import pMap from "p-map";
 import { chunk, groupBy, uniq } from "lodash-es";
 import { getSemester } from "@/utils/semester";
+import { v4 as uuid } from "uuid";
 const connPromise = mongoose.connect("mongodb://127.0.0.1/admin");
 const db = mongoose.connection;
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));
@@ -84,11 +85,19 @@ const paidId = new mongoose.Schema({
   },
 });
 const paidIdModel = db.model("paidIds", paidId);
+const fixDepartmentsAndNames = async () => {
+  const skip = 0;
+  await prisma.$queryRawUnsafe(`UPDATE "WatchedSection" ws
+SET "classInfoId" = ci.id
+FROM "ClassInfo" ci
+WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.semester;`);
+};
+
 // iterate over all the students in the student model and create it in prisma if it doesn't exist
 const updatePrisma = async () => {
   await connPromise;
   const students = await studentModel.find({});
-  const grouped = groupBy(students, "email");
+  const grouped = groupBy(students, (e) => e.email.trim());
   const toParse = Object.values(grouped)
     .filter((student) => student.length === 1)
     .flat();
@@ -129,6 +138,17 @@ const updatePrisma = async () => {
           createdAt: section.date,
         };
       });
+    const phone = toCreate.find((s) => s.phoneOverride);
+    if (!newStudent.phone && phone) {
+      await prisma.student.update({
+        where: {
+          id: newStudent.id,
+        },
+        data: {
+          phone: phone.phoneOverride,
+        },
+      });
+    }
     if (toCreate.length) {
       const created = await prisma.watchedSection.createMany({
         data: toCreate,
@@ -137,9 +157,31 @@ const updatePrisma = async () => {
       console.log(`Created ${created.count} sections for ${newStudent.email}`);
     }
   };
-  for (const student of doubleEmails.flat()) {
-    await processStudent(student);
-  }
+  const dedupedStudents = doubleEmails.flatMap((dupStudent) => {
+    const email = dupStudent[0].email.trim();
+    const phone = dupStudent.find((s) => s.phone)?.phone;
+    const verificationKey = dupStudent.find((s) => s.verificationKey)?.verificationKey;
+
+    const sections = dupStudent.flatMap((s) => s.sectionsWatching);
+    const validAccount = dupStudent.some((s) => s.validAccount);
+
+    return {
+      ...dupStudent[0],
+      sectionsWatching: sections,
+      phone,
+      email,
+      validAccount,
+      verificationKey: verificationKey || uuid(),
+    };
+  });
+  await pMap(
+    dedupedStudents,
+    async (student) => {
+      // @ts-ignore
+      await processStudent(student);
+    },
+    { concurrency: 10 },
+  );
   await pMap(toParse, processStudent, { concurrency: 50, stopOnError: false });
   console.log(`Finished parsing ${toParse.length} students`);
   console.log(`Found ${doubleEmails.length} students with multiple entries`);
@@ -159,12 +201,8 @@ const updatePrisma = async () => {
     });
   }
   console.log(`Updated ${ids.length} sections with paid status`);
+  await fixDepartmentsAndNames();
+  console.log("Finished updating prisma");
+  process.exit(0);
 };
 updatePrisma();
-const fixDepartmentsAndNames = async () => {
-  const skip = 0;
-  await prisma.$queryRawUnsafe(`UPDATE "WatchedSection" ws
-SET "classInfoId" = ci.id
-FROM "ClassInfo" ci
-WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.semester;`);
-};
