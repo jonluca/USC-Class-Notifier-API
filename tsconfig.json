@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ESNext",
     "lib": ["DOM", "ESNext", "ESNext.AsyncIterable", "DOM.Iterable"],
     "allowJs": true,
     "checkJs": false,
@@ -25,11 +25,12 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "~/pub/*": ["./public/*"]
-    },
-    "rootDir": "."
+      "~/pub/*": ["./public/*"],
+      "-/*": ["./assets/*"]
+    }
   },
   "include": [
+    ".plasmo/index.d.ts",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",

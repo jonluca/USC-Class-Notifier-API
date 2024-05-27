@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --rt-color-white: #fff;
   --rt-color-dark: #222;
@@ -10,13 +14,6 @@
   --rt-transition-closing-delay: 0.15s;
 }
 
-* {
-  box-sizing: border-box;
-}
-:root {
-  touch-action: pan-x pan-y;
-  height: 100%;
-}
 .z-99999 {
   z-index: 99999;
 }
@@ -31,9 +28,6 @@
 }
 
 html {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
   scroll-behavior: smooth;
 }
 .info {

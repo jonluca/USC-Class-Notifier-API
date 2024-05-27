@@ -5,3 +5,4 @@ ui/out/**/*
 electron/build/**/*
 public/*.js
 public/*.map
+**/*.css

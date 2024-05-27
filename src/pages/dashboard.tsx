@@ -27,6 +27,16 @@ const NotifyButton = ({ data }: { data: Section }) => {
   if (!data || !data.notified) {
     return null;
   }
+  // check if it's in the past
+  const semester = data.semester;
+  if (semester) {
+    const year = semester.slice(0, 4);
+    const currentYear = new Date().getFullYear();
+    // we could be smarter and do per semester but this is fine
+    if (parseInt(year) < currentYear) {
+      return null;
+    }
+  }
   const utils = api.useUtils();
 
   const { mutateAsync, isPending } = api.user.continueReceivingNotificationsForSection.useMutation();
@@ -107,9 +117,9 @@ const VenmoLink = ({ data }: { data: Section }) => {
 };
 
 const columns = [
-  { headerName: "Department", field: "department" },
-  { headerName: "Section", field: "sectionNumber", width: 100 },
-  { headerName: "Course", field: "fullCourseId", width: 120 },
+  // { headerName: "Department", field: "ClassInfo.department" },
+  { headerName: "Section", field: "section", width: 100 },
+  { headerName: "Course", field: "ClassInfo.courseNumber", width: 120 },
   { headerName: "Semester", field: "semester", initialSort: "desc", width: 137 },
   { headerName: "Notified", field: "notified", width: 90, filter: false },
   { headerName: "Venmo ID", field: "paidId", width: 113, cellRenderer: VenmoLink },

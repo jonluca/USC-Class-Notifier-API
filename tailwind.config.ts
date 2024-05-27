@@ -5,5 +5,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("tailwindcss-safe-area"), require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography")],
 } satisfies Config;

@@ -7,6 +7,7 @@ import { verificationEmail } from "~/emails/processors/verificationEmail";
 import { getSemester } from "~/utils/semester";
 import { validDepartments } from "~/utils/validDepartments";
 import { nowWatchingEmail } from "~/emails/processors/nowWatchingEmail";
+import { prisma } from "~/server/db";
 export const userRouter = {
   verifyByKey: publicProcedure
     .input(
@@ -55,6 +56,9 @@ export const userRouter = {
       where: {
         studentId: user.id,
       },
+      include: {
+        ClassInfo: true,
+      },
     });
   }),
   getUserInfo: publicProcedureWithUser.query(async ({ ctx }) => {
@@ -66,12 +70,10 @@ export const userRouter = {
       z.object({
         sectionNumber: z.string(),
         email: z.string().email(),
-        courseid: z.string().optional(),
         department: z.string(),
         phone: z.string().optional(),
         uscId: z.string().optional(),
         semester: z.string().optional(),
-        fullCourseId: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -97,6 +99,8 @@ export const userRouter = {
           studentId: student.id,
         },
       });
+      const showVenmoInfo = Boolean(student.phone || input.phone);
+
       if (section) {
         if (section.notified) {
           await ctx.prisma.watchedSection.update({
@@ -108,7 +112,13 @@ export const userRouter = {
             },
           });
         }
-        return section;
+        return {
+          ...section,
+          alreadyWatching: true,
+          isVerifiedAccount: student.validAccount,
+          showVenmoInfo,
+          email: input.email,
+        };
       }
 
       // generate 20 random 8 digit numbers
@@ -149,13 +159,24 @@ export const userRouter = {
           ClassInfo: true,
         },
       });
+      await prisma.$queryRawUnsafe(`UPDATE "WatchedSection" ws
+SET "classInfoId" = ci.id
+FROM "ClassInfo" ci
+WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.semester;`);
       await nowWatchingEmail({
-        key: student.verificationKey,
+        verificationKey: student.verificationKey,
         email: student.email,
         sectionEntry: created,
         classInfo: created.ClassInfo || null,
+        showVenmoInfo,
       });
-      return created;
+      return {
+        ...created,
+        alreadyWatching: false,
+        isVerifiedAccount: student.validAccount,
+        showVenmoInfo,
+        email: input.email,
+      };
     }),
 
   continueReceivingNotificationsForSection: publicProcedureWithUser

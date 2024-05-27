@@ -2,10 +2,8 @@ import { CacheProvider } from "@emotion/react";
 import { CssBaseline, NoSsr } from "@mui/material";
 import createEmotionCache from "~/utils/emotionCache";
 import type { AppPropsType } from "next/dist/shared/lib/utils";
-const clientSideEmotionCache = createEmotionCache();
 import { api } from "~/utils/api";
 import { ToastContainer } from "react-toastify";
-import "tailwindcss/tailwind.css";
 import "~/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
@@ -13,6 +11,9 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied
 
 import { Navbar } from "~/components/navbar";
 import dynamic from "next/dynamic";
+
+const clientSideEmotionCache = createEmotionCache();
+
 const ReactQueryDevtools = dynamic(
   () => import("@tanstack/react-query-devtools").then((module) => module.ReactQueryDevtools),
   {
