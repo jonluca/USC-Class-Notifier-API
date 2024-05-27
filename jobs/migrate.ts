@@ -119,7 +119,7 @@ const updatePrisma = async () => {
           phone: student.phone,
           verificationKey: student.verificationKey!,
           validAccount: student.validAccount,
-          deleted: student.deleted,
+
           uscID: student.uscID,
         },
       });
