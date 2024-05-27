@@ -233,6 +233,9 @@ const createDepartmentInfo = async (department: string, semester: string) => {
         },
         create: sectionInfo,
         update: sectionInfo,
+        select: {
+          id: true,
+        },
       });
     }
   }
