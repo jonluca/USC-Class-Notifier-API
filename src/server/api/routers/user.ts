@@ -39,6 +39,7 @@ export const userRouter = {
 
       return {
         success: true,
+        message: "Verification successful",
       };
     }),
   hasUser: publicProcedure.query(async ({ ctx, input }) => {

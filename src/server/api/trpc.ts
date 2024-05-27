@@ -131,7 +131,7 @@ const loggerMiddleware = t.middleware(async ({ path, next, ctx, type }) => {
     if (result?.ok) {
       logger.info(`[${type}]: ${path} - ${durationInMs}ms - OK`);
     } else {
-      const errors = [error, result?.error].filter(Boolean);
+      const errors = [error, (result as any)?.error].filter(Boolean);
       for (const e of errors) {
         logger.error(`[${type}] ${path} - ${durationInMs}ms - ${e.code} ${e.message}`);
       }

@@ -121,7 +121,7 @@ const refreshDepartment = async (
       console.error(data.error);
       return null;
     }
-    return data;
+    return data as DepartmentInfo;
   } catch (e) {
     if (withoutHardRefresh) {
       return null;
