@@ -211,6 +211,7 @@ const createDepartmentInfo = async (department: string, semester: string) => {
         section: sectionNumber,
         courseNumber: course.courseID,
         courseTitle: course.courseName,
+        prefix: course.prefix,
         semester,
         instructor: instructor || null,
         isDistanceLearning: course.isDistanceLearning,

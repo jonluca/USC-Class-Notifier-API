@@ -103,6 +103,7 @@ model ClassInfo {
   semester           String
   instructor         String?
   type               String?
+  prefix             String?
   units              String?
   day                String?
   session            String?

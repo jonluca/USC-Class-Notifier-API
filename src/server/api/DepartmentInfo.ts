@@ -7,6 +7,7 @@ export interface SectionEntry {
   sectionNumber: string;
   type: string | undefined;
   units: string | undefined;
+  prefix: string | undefined;
   day: string | undefined;
   session: string | undefined;
   location: string | undefined;
@@ -69,6 +70,7 @@ export class Department {
       location: addIfString(section.location),
       session: addIfString(section.session),
       day: addIfString(section.day),
+      prefix: course.CourseData.prefix,
     };
   }
 }
