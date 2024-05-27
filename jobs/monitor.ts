@@ -1,5 +1,5 @@
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
-import { createClassInfo, runRefresh } from "~/server/api/controller";
+import { createClassInfo, runRefresh } from "@/server/api/controller";
 
 const scheduler = new ToadScheduler();
 const job = new SimpleIntervalJob(

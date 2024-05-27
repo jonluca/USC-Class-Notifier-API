@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { VenmoClient } from "./clients/venmo";
-import logger from "~/server/logger";
+import logger from "@/server/logger";
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
-import { sendMessage } from "~/server/Twilio";
+import { sendMessage } from "@/server/Twilio";
 import dayjs from "dayjs";
 const client = new VenmoClient();
 

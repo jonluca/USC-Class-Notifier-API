@@ -4,13 +4,13 @@ import createEmotionCache from "@/utils/emotionCache";
 import type { AppPropsType } from "next/dist/shared/lib/utils";
 import { api } from "@/utils/api";
 import { ToastContainer } from "react-toastify";
-import "@/styles/globals.css";
-import "react-toastify/dist/ReactToastify.css";
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-
 import { Navbar } from "@/components/navbar";
 import dynamic from "next/dynamic";
+
+import "@/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 
 const clientSideEmotionCache = createEmotionCache();
 

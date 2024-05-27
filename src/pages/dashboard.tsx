@@ -14,6 +14,7 @@ import Close from "@mui/icons-material/Close";
 import Save from "@mui/icons-material/Save";
 import LinkIcon from "@mui/icons-material/Link";
 import Link from "next/link";
+
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 type Section = RouterOutputs["user"]["getWatchedClasses"][number];
 type ColDef = AgGridReactProps<Section>["columnDefs"];

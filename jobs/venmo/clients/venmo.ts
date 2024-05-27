@@ -1,7 +1,7 @@
 import { BaseService } from "./BaseService";
-import logger from "~/server/logger";
+import logger from "@/server/logger";
 import type { PostsResponse, Story } from "./types";
-import { prisma } from "~/server/db";
+import { prisma } from "@/server/db";
 
 export class VenmoClient extends BaseService {
   csrfToken: string | undefined = undefined;

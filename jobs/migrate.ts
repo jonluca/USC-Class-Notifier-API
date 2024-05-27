@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { prisma } from "~/server/db";
+import { prisma } from "@/server/db";
 import pMap from "p-map";
 import { chunk, groupBy, uniq } from "lodash-es";
-import { getSemester } from "~/utils/semester";
+import { getSemester } from "@/utils/semester";
 const connPromise = mongoose.connect("mongodb://127.0.0.1/admin");
 const db = mongoose.connection;
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));
