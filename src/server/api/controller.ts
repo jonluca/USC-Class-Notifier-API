@@ -295,4 +295,5 @@ export const createClassInfo = async (full = false) => {
       console.error(e);
     }
   }
+  logger.info("Finished creating class info");
 };

@@ -67,6 +67,9 @@ export class VenmoClient extends BaseService {
   };
 
   private loadCsrf = async () => {
+    if (this.csrfToken) {
+      return;
+    }
     const response = await this.get<string>("https://account.venmo.com/", {
       params: {
         feed: "mine",
@@ -142,15 +145,13 @@ export class VenmoClient extends BaseService {
   };
 
   getPosts = async (handler: (p: Story[]) => Promise<void>): Promise<void> => {
-    logger.info(`Fetching posts`);
     let depth = 0;
     let nextId = undefined;
-    let count = 0;
+
     while (depth < 15) {
       const posts = await this.fetchPosts(nextId);
       const stories = posts?.stories;
       if (stories) {
-        count += stories.length;
         await handler(stories);
         nextId = posts.nextId;
         depth++;
@@ -164,13 +165,10 @@ export class VenmoClient extends BaseService {
         break;
       }
     }
-    logger.info(`Found ${count} posts`);
   };
 
   checkPosts = async () => {
-    logger.info(`Loading csrf token`);
     await this.loadCsrf();
-    logger.info(`Loaded csrf token`);
     const storyIdToPaidIdsMap = new Map<string, string[]>();
     await this.getPosts(async (posts: Story[]) => {
       for (const payment of posts) {
@@ -191,8 +189,6 @@ export class VenmoClient extends BaseService {
         for (const id of ids) {
           await this.likePost(id);
         }
-      } else {
-        logger.info("No eligible submissions");
       }
     });
   };

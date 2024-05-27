@@ -114,6 +114,7 @@ model ClassInfo {
   @@unique([section, semester])
   @@index([section, semester])
   @@index([department])
+  @@index([prefix])
   @@index([courseNumber])
   @@index([semester])
 }
