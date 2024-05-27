@@ -7,7 +7,7 @@ import pMap from "p-map";
 import { groupBy } from "lodash-es";
 import { spotsAvailableEmail } from "@/emails/processors/spotsAvailableEmail";
 import { sendMessage } from "@/server/Twilio";
-import { getSemester } from "@/utils/semester";
+import { getNextSemester, getPreviousSemester, getSemester } from "@/utils/semester";
 
 const ONE_SECOND_MS = 1000;
 const timeout = 5 * 60 * ONE_SECOND_MS;
@@ -230,54 +230,62 @@ const createDepartmentInfo = async (department: string, semester: string) => {
     }
   }
 };
-export const createClassInfo = async () => {
-  // get the class list from 2009 until now
-  const start = 2009;
-  const end = new Date().getFullYear();
-  const semesters = [];
-  for (let i = start; i <= end; i++) {
-    semesters.push({ semester: `${i}1` });
-    semesters.push({ semester: `${i}2` });
-    semesters.push({ semester: `${i}3` });
-  }
-  for (const { semester } of semesters) {
-    const departments = await getListOfDepartments(semester);
-    if (!departments) {
-      continue;
+export const createClassInfo = async (full = false) => {
+  const semesters = new Set<string>(
+    [getSemester(), getNextSemester(), getPreviousSemester()].filter(Boolean) as string[],
+  );
+  if (full) {
+    // get the class list from 2009 until now
+    const start = 2009;
+    const end = new Date().getFullYear();
+    for (let i = start; i <= end; i++) {
+      semesters.add(`${i}1`);
+      semesters.add(`${i}2`);
+      semesters.add(`${i}3`);
     }
-    const departmentCodes = new Set<string>();
+  }
+  for (const semester of semesters) {
+    try {
+      const departments = await getListOfDepartments(semester);
+      if (!departments) {
+        continue;
+      }
+      const departmentCodes = new Set<string>();
 
-    function parseDepartments(dept: DepartmentElement | DepartmentList) {
-      if (Array.isArray(dept.department)) {
-        for (const department of dept.department) {
-          departmentCodes.add(department.code);
-          if (department.department) {
-            parseDepartments(department);
+      function parseDepartments(dept: DepartmentElement | DepartmentList) {
+        if (Array.isArray(dept.department)) {
+          for (const department of dept.department) {
+            departmentCodes.add(department.code);
+            if (department.department) {
+              parseDepartments(department);
+            }
+          }
+        } else {
+          if (dept.department) {
+            departmentCodes.add(dept.department.code);
           }
         }
-      } else {
-        if (dept.department) {
-          departmentCodes.add(dept.department.code);
-        }
       }
-    }
-    parseDepartments(departments);
-    console.log(`Found ${departmentCodes.size} departments for ${semester}`);
+      parseDepartments(departments);
+      console.log(`Found ${departmentCodes.size} departments for ${semester}`);
 
-    await pMap(
-      [...departmentCodes],
-      async (department) => {
-        try {
-          await createDepartmentInfo(department, semester);
-          console.log(`Finished ${semester} - ${department}`);
-        } catch (e: any) {
-          console.error(`Error creating class info for ${department} in ${semester}: ${e.message}`);
-        }
-      },
-      {
-        concurrency: 25,
-        stopOnError: false,
-      },
-    );
+      await pMap(
+        [...departmentCodes],
+        async (department) => {
+          try {
+            await createDepartmentInfo(department, semester);
+            console.log(`Finished ${semester} - ${department}`);
+          } catch (e: any) {
+            console.error(`Error creating class info for ${department} in ${semester}: ${e.message}`);
+          }
+        },
+        {
+          concurrency: 25,
+          stopOnError: false,
+        },
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
 };

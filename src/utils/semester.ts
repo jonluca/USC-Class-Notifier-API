@@ -21,3 +21,25 @@ export function getSemester() {
   console.error(`Invalid month ${month}`);
   return `${year}3`;
 }
+export function getNextSemester(semester: string = getSemester()) {
+  const year = parseInt(semester.substring(0, 4));
+  const season = parseInt(semester.substring(4, 5));
+  if (season === 1) {
+    return `${year}3`;
+  } else if (season === 3) {
+    return `${year + 1}1`;
+  }
+  console.error(`Invalid semester ${semester}`);
+  return null;
+}
+export function getPreviousSemester(semester: string = getSemester()) {
+  const year = parseInt(semester.substring(0, 4));
+  const season = parseInt(semester.substring(4, 5));
+  if (season === 1) {
+    return `${year - 1}3`;
+  } else if (season === 3) {
+    return `${year}1`;
+  }
+  console.error(`Invalid semester ${semester}`);
+  return null;
+}
