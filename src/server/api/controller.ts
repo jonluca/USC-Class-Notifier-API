@@ -67,6 +67,7 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
             numberOfStudentsWatching,
             section,
             student: section.student,
+            sectionId: section.id,
           });
         }
 
