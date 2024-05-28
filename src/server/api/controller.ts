@@ -28,7 +28,7 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
       where: {
         section: { in: departmentsSectionNumbers },
         semester,
-        // notified: false,
+        notified: false,
         student: {
           validAccount: true,
         },
