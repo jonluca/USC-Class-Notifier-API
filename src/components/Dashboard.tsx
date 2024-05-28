@@ -16,6 +16,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { cookieKey } from "@/server/auth";
+import { useRouter } from "next/router";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 type Section = RouterOutputs["user"]["getWatchedClasses"][number];
 type ColDef = AgGridReactProps<Section>["columnDefs"];
@@ -240,6 +241,14 @@ export default function Dashboard({
   section?: string;
   isAdmin?: boolean;
 }) {
+  const router = useRouter();
+  const { key } = router.query;
+  if (key) {
+    const verificationKey = Array.isArray(key) ? key[0] : key;
+    Cookies.set(cookieKey, verificationKey, {
+      path: "/",
+    });
+  }
   const { data, isLoading } = api.user.getWatchedClasses.useQuery();
   const { data: userInfo } = api.user.getUserInfo.useQuery();
   const [showOldSemesters, setShowOldSemesters] = useState(false);
