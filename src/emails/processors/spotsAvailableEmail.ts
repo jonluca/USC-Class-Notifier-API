@@ -2,6 +2,7 @@ import sendEmail from "../utilities/sendEmail";
 import type { SpotsAvailableEmailProps } from "@/emails/SpotsAvailableEmail";
 import SpotsAvailableEmail from "@/emails/SpotsAvailableEmail";
 import { prisma } from "@/server/db";
+import logger from "@/server/logger";
 
 export const spotsAvailableEmail = async (
   props: SpotsAvailableEmailProps & {
@@ -27,4 +28,5 @@ export const spotsAvailableEmail = async (
       studentId: props.student.id,
     },
   });
+  logger.info(`Sent spots available email to ${email} for ${sectionId} - ${className}`);
 };
