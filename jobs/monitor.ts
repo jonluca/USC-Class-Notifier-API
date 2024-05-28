@@ -1,5 +1,7 @@
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
 import { createClassInfo, runRefresh } from "@/server/api/controller";
+import logger from "@/server/logger";
+import { isProd } from "@/constants";
 
 const scheduler = new ToadScheduler();
 const job = new SimpleIntervalJob(
@@ -25,5 +27,6 @@ const classInfoJob = new SimpleIntervalJob(
   },
 );
 
+logger.info(`Starting monitor jobs - ${isProd ? "PROD" : "DEV"}`);
 scheduler.addSimpleIntervalJob(job);
 scheduler.addSimpleIntervalJob(classInfoJob);
