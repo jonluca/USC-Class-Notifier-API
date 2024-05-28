@@ -40,7 +40,6 @@
     "@plasmohq/storage": "^1.10.0",
     "@prisma/client": "^5.14.0",
     "@react-email/components": "^0.0.19",
-    "@react-email/render": "^0.0.15",
     "@tailwindcss/typography": "^0.5.13",
     "@tanstack/react-query": "^5.39.0",
     "@tanstack/react-query-devtools": "^5.39.0",
@@ -82,6 +81,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-unused-imports": "^4.0.0",
     "globals": "^15.3.0",
+    "html-to-text": "^9.0.5",
     "http-cookie-agent": "^6.0.5",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
@@ -134,5 +134,8 @@
       "tailwindcss": {},
       "autoprefixer": {}
     }
+  },
+  "devDependencies": {
+    "@types/html-to-text": "^9"
   }
 }

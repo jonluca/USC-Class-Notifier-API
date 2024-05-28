@@ -4966,7 +4966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-email/render@npm:0.0.15, @react-email/render@npm:^0.0.15":
+"@react-email/render@npm:0.0.15":
   version: 0.0.15
   resolution: "@react-email/render@npm:0.0.15"
   dependencies:
@@ -6238,6 +6238,13 @@ __metadata:
   version: 1.2.15
   resolution: "@types/har-format@npm:1.2.15"
   checksum: 10c0/43ede55c3947e5cf59561f165930dc2eb3ae983fd162980cdc7274be1e7f528a6f77e65fee9a02a20d91b09bde10bed832b0470724f5c744ef6669015d00564e
+  languageName: node
+  linkType: hard
+
+"@types/html-to-text@npm:^9":
+  version: 9.0.4
+  resolution: "@types/html-to-text@npm:9.0.4"
+  checksum: 10c0/8e0e548f280d1c1107f70db01ff6331a295f3097f535f4d07c30ced271818fc3803a8f03bb2117c1207c46a3d40da256a03a17bd05fc9f5f1b4821c5bcbf98d8
   languageName: node
   linkType: hard
 
@@ -7802,7 +7809,6 @@ __metadata:
     "@plasmohq/storage": "npm:^1.10.0"
     "@prisma/client": "npm:^5.14.0"
     "@react-email/components": "npm:^0.0.19"
-    "@react-email/render": "npm:^0.0.15"
     "@tailwindcss/typography": "npm:^0.5.13"
     "@tanstack/react-query": "npm:^5.39.0"
     "@tanstack/react-query-devtools": "npm:^5.39.0"
@@ -7813,6 +7819,7 @@ __metadata:
     "@types/chrome": "npm:0.0.268"
     "@types/cookie": "npm:^0.6.0"
     "@types/eslint": "npm:^8.56.10"
+    "@types/html-to-text": "npm:^9"
     "@types/jquery": "npm:^3.5.30"
     "@types/js-cookie": "npm:^3.0.6"
     "@types/lodash-es": "npm:^4.17.12"
@@ -7844,6 +7851,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-unused-imports: "npm:^4.0.0"
     globals: "npm:^15.3.0"
+    html-to-text: "npm:^9.0.5"
     http-cookie-agent: "npm:^6.0.5"
     jquery: "npm:^3.7.1"
     js-cookie: "npm:^3.0.5"
@@ -10694,7 +10702,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-to-text@npm:9.0.5":
+"html-to-text@npm:9.0.5, html-to-text@npm:^9.0.5":
   version: 9.0.5
   resolution: "html-to-text@npm:9.0.5"
   dependencies:

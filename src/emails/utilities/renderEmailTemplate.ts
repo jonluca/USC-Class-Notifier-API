@@ -1,4 +1,4 @@
-import { renderAsync } from "@react-email/render";
+import { renderAsync } from "../email-render/render-async";
 import type React from "react";
 
 const renderEmailTemplate = async (email: React.ReactElement) => {
