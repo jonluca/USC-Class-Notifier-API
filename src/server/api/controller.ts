@@ -40,7 +40,7 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
         isPaid: true,
       },
     });
-    const grouped = groupBy(watchedSections, "sectionNumber");
+    const grouped = groupBy(watchedSections, "section");
     for (const [sectionNumber, sections] of Object.entries(grouped)) {
       const course = department.getSection(sectionNumber);
       if (course && course.available > 0) {

@@ -12,7 +12,7 @@ const job = new SimpleIntervalJob(
   },
 );
 const classInfoJob = new SimpleIntervalJob(
-  { hours: 24, runImmediately: true },
+  { hours: 24, runImmediately: false },
   new AsyncTask(
     "Create class info",
     () => createClassInfo(),
@@ -25,5 +25,5 @@ const classInfoJob = new SimpleIntervalJob(
   },
 );
 
-// scheduler.addSimpleIntervalJob(job);
+scheduler.addSimpleIntervalJob(job);
 scheduler.addSimpleIntervalJob(classInfoJob);

@@ -7,10 +7,11 @@ import type { SectionEntry } from "@/server/api/DepartmentInfo";
 export interface SpotsAvailableEmailProps {
   email: string;
   key: string;
+  sectionId: string;
   sectionEntry: SectionEntry;
   numberOfStudentsWatching: number;
 }
-const SpotsAvailableEmail = ({ sectionEntry, key }: SpotsAvailableEmailProps) => {
+const SpotsAvailableEmail = ({ sectionEntry, key, sectionId }: SpotsAvailableEmailProps) => {
   const spotsAvailable = sectionEntry.available;
   const className = sectionEntry.courseName;
   const courseID = sectionEntry.courseID;
@@ -35,9 +36,15 @@ const SpotsAvailableEmail = ({ sectionEntry, key }: SpotsAvailableEmailProps) =>
       </Section>
       <Button
         className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-        href={`${baseDomain}/watch?key=${key}&section=${section}`}
+        href={`${baseDomain}/watch?key=${key}&section=${sectionId}`}
       >
         Continue receiving notifications
+      </Button>
+      <Button
+        className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
+        href={`${baseDomain}/dashboard?key=${key}`}
+      >
+        View Dashboard
       </Button>
       <Button
         className="bg-violet-100 rounded-xl text-black font-bold no-underline text-center py-2 w-full text-lg mt-2"

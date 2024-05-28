@@ -231,7 +231,15 @@ const AdminEmailSetter = () => {
     </div>
   );
 };
-export default function Dashboard({ isAdmin }: { isAdmin?: boolean }) {
+export default function Dashboard({
+  isAdmin,
+  didSucceedInWatchingSection,
+  section,
+}: {
+  didSucceedInWatchingSection?: boolean;
+  section?: string;
+  isAdmin?: boolean;
+}) {
   const { data, isLoading } = api.user.getWatchedClasses.useQuery();
   const { data: userInfo } = api.user.getUserInfo.useQuery();
   const [showOldSemesters, setShowOldSemesters] = useState(false);
@@ -252,11 +260,33 @@ export default function Dashboard({ isAdmin }: { isAdmin?: boolean }) {
     }
     return data?.filter((section) => section.semester === getSemester()) || [];
   }, [data, showOldSemesters]);
+
+  const matchingSection = data?.find((s) => s.id === section);
   return (
     <div className={"flex flex-col h-full py-4 gap-4"}>
       {isLoading && <LinearProgress />}
       {isAdmin && <AdminEmailSetter />}
       {userInfo && <h1>Welcome, {userInfo.email}</h1>}
+      {section && (
+        <>
+          {didSucceedInWatchingSection ? (
+            <div className={"flex flex-col bg-green-200 rounded-lg p-1 w-fit"}>
+              <div className="space-y-2 ">
+                <h1 className="text-3xl font-bold">Success</h1>
+                <p className="max-w-md">
+                  You will continue receiving notifications for{" "}
+                  {matchingSection?.ClassInfo?.courseNumber || "this class"}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className={"flex flex-col justify-center bg-red-200 rounded-lg p-1 w-fit"}>
+              <div className={"text-xl"}>Error</div>
+              There was an issue watching section - please reach out to jdecaro@usc.edu for more help: {section}
+            </div>
+          )}
+        </>
+      )}
       {userInfo && (
         <div className={"flex items-center gap-2"}>
           <div className={"flex items-center gap-2"}>

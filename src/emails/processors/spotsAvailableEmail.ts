@@ -14,6 +14,7 @@ export const spotsAvailableEmail = async (
   const className = sectionEntry.courseID;
   const spotText = spotsAvailable === 1 ? "spot" : "spots";
   const subject = `${spotsAvailable} ${spotText} open for ${className}!`;
+  const sectionId = props.section.id;
   await sendEmail({
     EmailTemplate: SpotsAvailableEmail(props),
     recipient: email,
@@ -22,7 +23,7 @@ export const spotsAvailableEmail = async (
   });
   await prisma.notificationSent.create({
     data: {
-      sectionId: props.section.id,
+      sectionId,
       studentId: props.student.id,
     },
   });
