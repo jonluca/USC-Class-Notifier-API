@@ -3,13 +3,9 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const notify = require("./routes/notify");
-const admin = require("./routes/admin");
-const account = require("./config/config").account;
 const app = express();
-const basicAuth = require("express-basic-auth");
 // Add security headers and options
-require("./utils/security")(app);
+app.set("trust proxy", true);
 // view engine setup
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
@@ -18,26 +14,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
-app.use("/", notify);
-const username = account.user;
-const password = account.pass;
-const users = {};
-users[username] = password;
-app.use(
-  "/admin",
-  basicAuth({
-    users,
-    challenge: true,
-    realm: "soc",
-  }),
-  admin
-);
+
+app.get("/texts-enabled", (req, res, next) => {
+    res.send({ enabled: true }).end();
+});
+/* GET home page. */
+app.get("/", (req, res, next) => {
+    res.render("landing");
+});
+app.get("/privacy", (req, res, next) => {
+    res.render("privacy");
+});
+app.get("/terms", (req, res, next) => {
+    res.render("terms");
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  const err = new Error("Not Found");
-  err.status = 404;
-  next(err);
+    res.render("landing");
 });
+
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

@@ -14,9 +14,6 @@ process.on('unhandledRejection', (reason, p) => {
 /**
  * Initialise log4js first, so we don't miss any log messages
  */
-const log4js = require('log4js');
-log4js.configure('./server/config/loggerConfig.json');
-const logger = require('log4js').getLogger("notification");
 
 /**
  * Get port from environment and store in Express.
@@ -62,7 +59,7 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  logger.error("Error starting app: " + error);
+  console.error("Error starting app: " + error);
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -92,7 +89,7 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  logger.info("Listening on " + bind);
+  console.info("Listening on " + bind);
 }
 
 
