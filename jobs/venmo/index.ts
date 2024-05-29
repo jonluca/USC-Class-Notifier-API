@@ -12,8 +12,7 @@ const checkVenmoPosts = async () => {
     try {
       logger.info("Checking for new posts");
       const authCookie = client.jar.getCookiesSync("https://venmo.com").find((l) => l.key === "api_access_token");
-      const now = dayjs().subtract(2, "minute").toDate(); // subtract 2 minutes to account for time it takes to make requests
-      if (!authCookie || (authCookie.expires < now && authCookie.expires !== "Infinity")) {
+      if (!authCookie) {
         await client.login();
       }
       await client.checkPosts();
