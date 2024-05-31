@@ -42,6 +42,13 @@ $(document).on("click", ".notify", function () {
         }
       }
     }
+    if (!id && form) {
+      const inputs = $(form).find("input");
+      const sectionInput = inputs.toArray().find((i) => i.id === "sectionid" || i.name === "sectionid");
+      if (sectionInput) {
+        id = sectionInput.value;
+      }
+    }
     const titleTopbar = $(form).parents(".accordion-content-area");
     const header = $(titleTopbar).prev();
     //get the department by matching form ID to the row above

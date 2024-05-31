@@ -218,7 +218,13 @@ const NotificationModal = () => {
         <div
           className={`flex outline-none flex-col items-center gap-4 w-full md:w-[500px] min-h-[200px] absolute bottom-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 px-6 py-6 rounded-t-3xl md:rounded-2xl shadow-lg bg-white max-h-screen overflow-y-auto pb-8 md:pb-4`}
         >
-          {selectedClass ? "isInvalid" in selectedClass ? <div>hi</div> : <CollectInfo onClose={onClose} /> : null}
+          {selectedClass ? (
+            "isInvalid" in selectedClass ? (
+              <div>Invalid class or section</div>
+            ) : (
+              <CollectInfo onClose={onClose} />
+            )
+          ) : null}
         </div>
       </>
     </Modal>
