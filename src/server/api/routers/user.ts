@@ -8,6 +8,11 @@ import { getSemester } from "@/utils/semester";
 import { validDepartments } from "@/utils/validDepartments";
 import { nowWatchingEmail } from "@/emails/processors/nowWatchingEmail";
 import { prisma } from "@/server/db";
+function generateRandom8DigitNumber(): number {
+  const min = 10000000;
+  const max = 99999999;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 export const userRouter = {
   verifyByKey: publicProcedure
     .input(
@@ -123,7 +128,7 @@ export const userRouter = {
       }
 
       // generate 20 random 8 digit numbers
-      const randoms = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100000000)).map(String);
+      const randoms = Array.from({ length: 20 }, () => generateRandom8DigitNumber()).map(String);
       const sections = await ctx.prisma.watchedSection.findMany({
         where: {
           paidId: {
