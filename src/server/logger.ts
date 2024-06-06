@@ -34,33 +34,6 @@ const logger = winston.createLogger({
   exitOnError: false,
   transports,
 }) as CustomLogger;
-logger.baseError = logger.error;
-const oldError = logger.error;
-logger.error = ((...args) => {
-  let err = args[0] || {};
-  if (!(err instanceof Error)) {
-    const stack = new Error().stack;
-    if (typeof err === "string") {
-      err = { message: err, stack };
-    } else {
-      // todo deal with arrays?
-      err.stack = stack;
-    }
-  }
-
-  if (!err.message) {
-    err.message = "Unknown error";
-  }
-  try {
-    args[0] = JSON.parse(JSON.stringify(err, Object.getOwnPropertyNames(err)));
-  } catch (e) {
-    // weird error, just log it
-    console.error(e);
-  }
-
-  // @ts-ignore
-  return oldError(...args);
-}) as LeveledLogMethod;
 
 // @ts-ignore
 const getArgs = (args: any[]) => {

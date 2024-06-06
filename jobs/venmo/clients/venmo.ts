@@ -82,8 +82,7 @@ export class VenmoClient extends BaseService {
     if (!match) {
       throw new Error("Failed to find csrf token");
     }
-    const csrfToken = match[1];
-    this.csrfToken = csrfToken;
+    this.csrfToken = match[1];
   };
   private fetchPosts = async (nextId?: string) => {
     const response = await this.get<PostsResponse>("https://account.venmo.com/api/stories", {
@@ -169,26 +168,29 @@ export class VenmoClient extends BaseService {
 
   checkPosts = async () => {
     await this.loadCsrf();
-    const storyIdToPaidIdsMap = new Map<string, string[]>();
+
     await this.getPosts(async (posts: Story[]) => {
+      const postsToLike: string[] = [];
+      const idsToSubmit: string[] = [];
       for (const payment of posts) {
         const likes = payment.likes;
         const message = payment?.note?.content;
-        if (!likes?.userCommentedOrLiked && message) {
-          const validIds = this.parseText(payment, message);
-          if (validIds.length) {
-            storyIdToPaidIdsMap.set(payment.id, validIds);
+        const validIds = this.parseText(payment, message);
+        if (validIds.length) {
+          if (!likes?.userCommentedOrLiked) {
+            idsToSubmit.push(...validIds);
+            postsToLike.push(payment.id);
+          } else if (process.env.FORCE_RESUBMIT) {
+            idsToSubmit.push(...validIds);
           }
         }
       }
-      const uniqueIds = Array.from(storyIdToPaidIdsMap.values()).flat();
-      const ids = Array.from(storyIdToPaidIdsMap.keys());
-      if (uniqueIds.length) {
-        logger.info(`Submitting ids: ${uniqueIds}`);
-        await this.submitPaidIds(uniqueIds);
-        for (const id of ids) {
-          await this.likePost(id);
-        }
+      if (idsToSubmit.length) {
+        logger.info(`Submitting ids: ${idsToSubmit}`);
+        await this.submitPaidIds(idsToSubmit);
+      }
+      for (const id of postsToLike) {
+        await this.likePost(id);
       }
     });
   };
