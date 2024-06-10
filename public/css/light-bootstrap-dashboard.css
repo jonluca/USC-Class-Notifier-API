@@ -197,13 +197,7 @@ a:active {
 .sidebar:after {
   background: #787878;
   background: -moz-linear-gradient(top, #787878 0%, #343434 100%);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, #787878),
-    color-stop(100%, #343434)
-  );
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #787878), color-stop(100%, #343434));
   background: -webkit-linear-gradient(top, #787878 0%, #343434 100%);
   background: -o-linear-gradient(top, #787878 0%, #343434 100%);
   background: -ms-linear-gradient(top, #787878 0%, #343434 100%);
@@ -216,13 +210,7 @@ a:active {
 .sidebar[data-color="red"]:after {
   background: #fb404b;
   background: -moz-linear-gradient(top, #fb404b 0%, #bb0502 100%);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, #fb404b),
-    color-stop(100%, #bb0502)
-  );
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fb404b), color-stop(100%, #bb0502));
   background: -webkit-linear-gradient(top, #fb404b 0%, #bb0502 100%);
   background: -o-linear-gradient(top, #fb404b 0%, #bb0502 100%);
   background: -ms-linear-gradient(top, #fb404b 0%, #bb0502 100%);
@@ -296,7 +284,9 @@ a:active {
 
 .card {
   border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(63, 63, 68, 0.1);
   background-color: #ffffff;
   margin-bottom: 30px;
 }

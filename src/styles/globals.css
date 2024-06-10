@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rt-color-white: #fff;
+  --rt-color-dark: #222;
+  --rt-color-success: #8dc572;
+  --rt-color-error: #be6464;
+  --rt-color-warning: #f0ad4e;
+  --rt-color-info: #337ab7;
+  --rt-opacity: 0.9;
+  --rt-transition-show-delay: 0.15s;
+  --rt-transition-closing-delay: 0.15s;
+}
+
+.z-99999 {
+  z-index: 99999;
+}
+
+#__next {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.info {
+  color: black;
+}
+
+.subtext {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.faq {
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 25px 0;
+  font-size: 19px;
+}
+#faq-text {
+  margin: 16px auto;
+  max-height: 100%;
+  transition: max-height 0.25s ease-in;
+  text-align: justify;
+}
+.faq-off {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-in;
+}

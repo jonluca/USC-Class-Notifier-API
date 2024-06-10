@@ -1,0 +1,5 @@
+{
+  "name": "http-link",
+  "browser": "./browser",
+  "main": "./server"
+}

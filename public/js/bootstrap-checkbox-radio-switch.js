@@ -33,9 +33,7 @@
         e = $.Event("toggle");
 
       if ($el.prop("disabled") == false) {
-        $parent.toggleClass(ch) && checked
-          ? $el.removeAttr(ch)
-          : $el.prop(ch, ch);
+        $parent.toggleClass(ch) && checked ? $el.removeAttr(ch) : $el.prop(ch, ch);
         $el.trigger(e).trigger("change");
       }
     },
@@ -48,9 +46,7 @@
         checkAction = option == "check" ? true : false,
         e = $.Event(option);
 
-      $parent[checkAction ? "addClass" : "removeClass"](ch) && checkAction
-        ? $el.prop(ch, ch)
-        : $el.removeAttr(ch);
+      $parent[checkAction ? "addClass" : "removeClass"](ch) && checkAction ? $el.prop(ch, ch) : $el.removeAttr(ch);
       $el.trigger(e).trigger("change");
     },
   };
@@ -64,12 +60,7 @@
     return this.each(function () {
       var $this = $(this),
         data = $this.data("checkbox"),
-        options = $.extend(
-          {},
-          $.fn.checkbox.defaults,
-          $this.data(),
-          typeof option == "object" && option
-        );
+        options = $.extend({}, $.fn.checkbox.defaults, $this.data(), typeof option == "object" && option);
       if (!data) {
         $this.data("checkbox", (data = new Checkbox(this, options)));
       }
@@ -100,20 +91,16 @@
   /* CHECKBOX DATA-API
    * =============== */
 
-  $(document).on(
-    "click.checkbox.data-api",
-    "[data-toggle^=checkbox], .checkbox",
-    function (e) {
-      var $checkbox = $(e.target);
-      if (e.target.tagName != "A") {
-        e && e.preventDefault() && e.stopPropagation();
-        if (!$checkbox.hasClass("checkbox")) {
-          $checkbox = $checkbox.closest(".checkbox");
-        }
-        $checkbox.find(":checkbox").checkbox("toggle");
+  $(document).on("click.checkbox.data-api", "[data-toggle^=checkbox], .checkbox", function (e) {
+    var $checkbox = $(e.target);
+    if (e.target.tagName != "A") {
+      e && e.preventDefault() && e.stopPropagation();
+      if (!$checkbox.hasClass("checkbox")) {
+        $checkbox = $checkbox.closest(".checkbox");
       }
+      $checkbox.find(":checkbox").checkbox("toggle");
     }
-  );
+  });
 
   $(function () {
     $('[data-toggle="checkbox"]').each(function () {
@@ -160,12 +147,8 @@
         $el = this.$element,
         checked = $el.prop(ch),
         $parent = $el.closest(".radio"),
-        $parentWrap = $el.closest("form").length
-          ? $el.closest("form")
-          : $el.closest("body"),
-        $elemGroup = $parentWrap.find(
-          ':radio[name="' + $el.attr("name") + '"]'
-        ),
+        $parentWrap = $el.closest("form").length ? $el.closest("form") : $el.closest("body"),
+        $elemGroup = $parentWrap.find(':radio[name="' + $el.attr("name") + '"]'),
         e = $.Event("toggle");
 
       if ($el.prop(d) == false) {
@@ -195,12 +178,8 @@
         $parent = $el.closest(".radio"),
         checkAction = option == "check" ? true : false,
         checked = $el.prop(ch),
-        $parentWrap = $el.closest("form").length
-          ? $el.closest("form")
-          : $el.closest("body"),
-        $elemGroup = $parentWrap.find(
-          ':radio[name="' + $el["attr"]("name") + '"]'
-        ),
+        $parentWrap = $el.closest("form").length ? $el.closest("form") : $el.closest("body"),
+        $elemGroup = $parentWrap.find(':radio[name="' + $el["attr"]("name") + '"]'),
         e = $.Event(option);
 
       $elemGroup.not($el).each(function () {
@@ -210,9 +189,7 @@
         $parent.removeClass(ch) && $el.removeAttr(ch);
       });
 
-      $parent[checkAction ? "addClass" : "removeClass"](ch) && checkAction
-        ? $el.prop(ch, ch)
-        : $el.removeAttr(ch);
+      $parent[checkAction ? "addClass" : "removeClass"](ch) && checkAction ? $el.prop(ch, ch) : $el.removeAttr(ch);
       $el.trigger(e);
 
       if (checked !== $el.prop(ch)) {
@@ -230,12 +207,7 @@
     return this.each(function () {
       var $this = $(this),
         data = $this.data("radio"),
-        options = $.extend(
-          {},
-          $.fn.radio.defaults,
-          $this.data(),
-          typeof option == "object" && option
-        );
+        options = $.extend({}, $.fn.radio.defaults, $this.data(), typeof option == "object" && option);
       if (!data) {
         $this.data("radio", (data = new Radio(this, options)));
       }
@@ -266,18 +238,14 @@
   /* RADIO DATA-API
    * =============== */
 
-  $(document).on(
-    "click.radio.data-api",
-    "[data-toggle^=radio], .radio",
-    function (e) {
-      var $radio = $(e.target);
-      e && e.preventDefault() && e.stopPropagation();
-      if (!$radio.hasClass("radio")) {
-        $radio = $radio.closest(".radio");
-      }
-      $radio.find(":radio").radio("toggle");
+  $(document).on("click.radio.data-api", "[data-toggle^=radio], .radio", function (e) {
+    var $radio = $(e.target);
+    e && e.preventDefault() && e.stopPropagation();
+    if (!$radio.hasClass("radio")) {
+      $radio = $radio.closest(".radio");
     }
-  );
+    $radio.find(":radio").radio("toggle");
+  });
 
   $(function () {
     $('[data-toggle="radio"]').each(function () {
@@ -315,14 +283,11 @@
             offLabel = "OFF",
             icon = false;
 
-          $.each(
-            ["switch-mini", "switch-small", "switch-large"],
-            function (i, el) {
-              if (classes.indexOf(el) >= 0) {
-                myClasses = el;
-              }
+          $.each(["switch-mini", "switch-small", "switch-large"], function (i, el) {
+            if (classes.indexOf(el) >= 0) {
+              myClasses = el;
             }
-          );
+          });
 
           $element.addClass("has-switch");
 
@@ -342,37 +307,22 @@
             icon = $element.data("icon");
           }
 
-          $switchLeft = $("<span>")
-            .addClass("switch-left")
-            .addClass(myClasses)
-            .addClass(color)
-            .html(onLabel);
+          $switchLeft = $("<span>").addClass("switch-left").addClass(myClasses).addClass(color).html(onLabel);
 
           color = "";
           if ($element.data("off") !== undefined) {
             color = "switch-" + $element.data("off");
           }
 
-          $switchRight = $("<span>")
-            .addClass("switch-right")
-            .addClass(myClasses)
-            .addClass(color)
-            .html(offLabel);
+          $switchRight = $("<span>").addClass("switch-right").addClass(myClasses).addClass(color).html(offLabel);
 
-          $label = $("<label>")
-            .html("&nbsp;")
-            .addClass(myClasses)
-            .attr("for", $element.find("input").attr("id"));
+          $label = $("<label>").html("&nbsp;").addClass(myClasses).attr("for", $element.find("input").attr("id"));
 
           if (icon) {
             $label.html('<i class="' + icon + '"></i>');
           }
 
-          $div = $element
-            .find(":checkbox")
-            .wrap($("<div>"))
-            .parent()
-            .data("animated", false);
+          $div = $element.find(":checkbox").wrap($("<div>")).parent().data("animated", false);
 
           if ($element.data("animated") !== false) {
             $div.addClass("switch-animate").data("animated", true);
@@ -380,22 +330,14 @@
 
           $div.append($switchLeft).append($label).append($switchRight);
 
-          $element
-            .find(">div")
-            .addClass(
-              $element.find("input").is(":checked") ? "switch-on" : "switch-off"
-            );
+          $element.find(">div").addClass($element.find("input").is(":checked") ? "switch-on" : "switch-off");
 
           if ($element.find("input").is(":disabled")) {
             $(this).addClass("deactivate");
           }
 
           var changeStatus = function ($this) {
-            $this
-              .siblings("label")
-              .trigger("mousedown")
-              .trigger("mouseup")
-              .trigger("click");
+            $this.siblings("label").trigger("mousedown").trigger("mouseup").trigger("click");
           };
 
           $element.on("keydown", function (e) {
@@ -456,9 +398,7 @@
             } else {
               $this.on("mousemove touchmove", function (e) {
                 var $element = $(this).closest(".switch"),
-                  relativeX =
-                    (e.pageX || e.originalEvent.targetTouches[0].pageX) -
-                    $element.offset().left,
+                  relativeX = (e.pageX || e.originalEvent.targetTouches[0].pageX) - $element.offset().left,
                   percent = (relativeX / $element.width()) * 100,
                   left = 25,
                   right = 75;
@@ -485,10 +425,7 @@
                 $this.unbind("mouseleave");
 
                 if (moving) {
-                  $myCheckBox.prop(
-                    "checked",
-                    !(parseInt($this.parent().css("left")) < -25)
-                  );
+                  $myCheckBox.prop("checked", !(parseInt($this.parent().css("left")) < -25));
                 } else {
                   $myCheckBox.prop("checked", !$myCheckBox.is(":checked"));
                 }
@@ -507,12 +444,7 @@
                 $this.unbind("mouseleave");
                 $this.trigger("mouseup");
 
-                $myCheckBox
-                  .prop(
-                    "checked",
-                    !(parseInt($this.parent().css("left")) < -25)
-                  )
-                  .trigger("change");
+                $myCheckBox.prop("checked", !(parseInt($this.parent().css("left")) < -25)).trigger("change");
               });
 
               $this.on("mouseup", function (e) {
@@ -540,15 +472,10 @@
       },
       toggleState: function (skipOnChange) {
         var $input = $(this).find("input:checkbox");
-        $input
-          .prop("checked", !$input.is(":checked"))
-          .trigger("change", skipOnChange);
+        $input.prop("checked", !$input.is(":checked")).trigger("change", skipOnChange);
       },
       setState: function (value, skipOnChange) {
-        $(this)
-          .find("input:checkbox")
-          .prop("checked", value)
-          .trigger("change", skipOnChange);
+        $(this).find("input:checkbox").prop("checked", value).trigger("change", skipOnChange);
       },
       status: function () {
         return $(this).find("input:checkbox").is(":checked");
@@ -569,10 +496,7 @@
     };
 
     if (methods[method]) {
-      return methods[method].apply(
-        this,
-        Array.prototype.slice.call(arguments, 1)
-      );
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
     } else if (typeof method === "object" || !method) {
       return methods.init.apply(this, arguments);
     } else {

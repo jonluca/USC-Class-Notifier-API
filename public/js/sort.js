@@ -108,16 +108,11 @@ sorttable = {
               // if we're already sorted by this column, just
               // reverse the table, which is quicker
               sorttable.reverse(this.sorttable_tbody);
-              this.className = this.className.replace(
-                "sorttable_sorted",
-                "sorttable_sorted_reverse"
-              );
+              this.className = this.className.replace("sorttable_sorted", "sorttable_sorted_reverse");
               this.removeChild(document.getElementById("sorttable_sortfwdind"));
               sortrevind = document.createElement("span");
               sortrevind.id = "sorttable_sortrevind";
-              sortrevind.innerHTML = stIsIE
-                ? '&nbsp<font face="webdings">5</font>'
-                : "&nbsp;&#x25B4;";
+              sortrevind.innerHTML = stIsIE ? '&nbsp<font face="webdings">5</font>' : "&nbsp;&#x25B4;";
               this.appendChild(sortrevind);
               return;
             }
@@ -125,16 +120,11 @@ sorttable = {
               // if we're already sorted by this column in reverse, just
               // re-reverse the table, which is quicker
               sorttable.reverse(this.sorttable_tbody);
-              this.className = this.className.replace(
-                "sorttable_sorted_reverse",
-                "sorttable_sorted"
-              );
+              this.className = this.className.replace("sorttable_sorted_reverse", "sorttable_sorted");
               this.removeChild(document.getElementById("sorttable_sortrevind"));
               sortfwdind = document.createElement("span");
               sortfwdind.id = "sorttable_sortfwdind";
-              sortfwdind.innerHTML = stIsIE
-                ? '&nbsp<font face="webdings">6</font>'
-                : "&nbsp;&#x25BE;";
+              sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : "&nbsp;&#x25BE;";
               this.appendChild(sortfwdind);
               return;
             }
@@ -144,10 +134,7 @@ sorttable = {
             forEach(theadrow.childNodes, function (cell) {
               if (cell.nodeType == 1) {
                 // an element
-                cell.className = cell.className.replace(
-                  "sorttable_sorted_reverse",
-                  ""
-                );
+                cell.className = cell.className.replace("sorttable_sorted_reverse", "");
                 cell.className = cell.className.replace("sorttable_sorted", "");
               }
             });
@@ -163,9 +150,7 @@ sorttable = {
             this.className += " sorttable_sorted";
             sortfwdind = document.createElement("span");
             sortfwdind.id = "sorttable_sortfwdind";
-            sortfwdind.innerHTML = stIsIE
-              ? '&nbsp<font face="webdings">6</font>'
-              : "&nbsp;&#x25BE;";
+            sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : "&nbsp;&#x25BE;";
             this.appendChild(sortfwdind);
 
             // build an array to sort. This is a Schwartzian transform thing,
@@ -176,10 +161,7 @@ sorttable = {
             col = this.sorttable_columnindex;
             rows = this.sorttable_tbody.rows;
             for (var j = 0; j < rows.length; j++) {
-              row_array[row_array.length] = [
-                sorttable.getInnerText(rows[j].cells[col]),
-                rows[j],
-              ];
+              row_array[row_array.length] = [sorttable.getInnerText(rows[j].cells[col]), rows[j]];
             }
             /* If you want a stable sort, uncomment the following line */
             //sorttable.shaker_sort(row_array, this.sorttable_sortfunction);
@@ -192,7 +174,7 @@ sorttable = {
             }
 
             delete row_array;
-          })
+          }),
         );
       }
     }
@@ -242,9 +224,7 @@ sorttable = {
       return "";
     }
 
-    hasInputs =
-      typeof node.getElementsByTagName == "function" &&
-      node.getElementsByTagName("input").length;
+    hasInputs = typeof node.getElementsByTagName == "function" && node.getElementsByTagName("input").length;
 
     if (node.getAttribute("sorttable_customkey") != null) {
       return node.getAttribute("sorttable_customkey");
@@ -498,12 +478,7 @@ function removeEvent(element, type, handler) {
 function handleEvent(event) {
   var returnValue = true;
   // grab the event object (IE uses a global event object)
-  event =
-    event ||
-    fixEvent(
-      ((this.ownerDocument || this.document || this).parentWindow || window)
-        .event
-    );
+  event = event || fixEvent(((this.ownerDocument || this.document || this).parentWindow || window).event);
   // get a reference to the hash table of event handlers
   var handlers = this.events[event.type];
   // execute each event handler
