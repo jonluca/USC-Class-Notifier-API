@@ -4,6 +4,7 @@ import logger from "@/server/logger";
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
 import { sendMessage } from "@/server/Twilio";
 const client = new VenmoClient();
+import dayjs from "dayjs";
 
 let lastSuccess: null | Date = null;
 const checkVenmoPosts = async () => {
@@ -11,9 +12,9 @@ const checkVenmoPosts = async () => {
   while (attempts < 3) {
     try {
       logger.info("Checking for new posts");
-      const cookieJar = client.jar.toJSON();
-      const authCookie = cookieJar.cookies.find((l) => l.key === "api_access_token");
-      if (!authCookie) {
+      const authCookie = client.jar.getCookiesSync("https://venmo.com").find((l) => l.key === "api_access_token");
+      const now = dayjs().subtract(2, "minute").toDate(); // subtract 2 minutes to account for time it takes to make requests
+      if (!authCookie || authCookie.expires < now) {
         await client.login();
       }
       lastSuccess = new Date();
