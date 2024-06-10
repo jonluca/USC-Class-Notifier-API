@@ -34,9 +34,10 @@ export class VenmoClient extends BaseService {
       return;
     } catch (e) {
       logger.error(e);
+      throw new Error(`Failed to login ${e}`);
     }
-    throw new Error("Failed to login");
   };
+
   private tryLogin = async () => {
     if (!process.env.VENMO_PWD) {
       throw new Error("VENMO_PWD not set");

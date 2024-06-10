@@ -3,25 +3,29 @@ import { VenmoClient } from "./clients/venmo";
 import logger from "@/server/logger";
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
 import { sendMessage } from "@/server/Twilio";
-import dayjs from "dayjs";
 const client = new VenmoClient();
 
+let lastSuccess: null | Date = null;
 const checkVenmoPosts = async () => {
   let attempts = 0;
   while (attempts < 3) {
     try {
       logger.info("Checking for new posts");
-      const authCookie = client.jar.getCookiesSync("https://venmo.com").find((l) => l.key === "api_access_token");
+      const cookieJar = client.jar.toJSON();
+      const authCookie = cookieJar.cookies.find((l) => l.key === "api_access_token");
       if (!authCookie) {
         await client.login();
       }
+      lastSuccess = new Date();
       await client.checkPosts();
       logger.info("Finished checking for venmo posts");
       return;
     } catch (e) {
       client.csrfToken = undefined;
       attempts++;
-      if (attempts >= 2) {
+      // if we haven't successfully checked in the last 24 hours, send a message
+      const shouldNotify = !lastSuccess || new Date().getTime() - lastSuccess.getTime() > 1000 * 60 * 60 * 24;
+      if (attempts >= 2 && shouldNotify) {
         await sendMessage({ to: process.env.TO_NUMBER!, message: `Error checking venmo posts: ${e}` });
       }
       logger.error(e);
