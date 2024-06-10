@@ -38,9 +38,10 @@ const scheduler = new ToadScheduler();
 const task = new AsyncTask("Venmo checker", checkVenmoPosts, (err: Error) => {
   logger.error(err);
 });
-const job = new SimpleIntervalJob({ minutes: 15 }, task, { preventOverrun: true });
+
+const job = new SimpleIntervalJob({ minutes: 15, runImmediately: Boolean(process.env.RUN_NOW) }, task, {
+  preventOverrun: true,
+});
+
 scheduler.addSimpleIntervalJob(job);
 logger.info("Scheduled venmo data update");
-if (process.env.RUN_NOW) {
-  checkVenmoPosts();
-}
