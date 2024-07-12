@@ -6953,10 +6953,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:^31.3.2":
-  version: 31.3.2
-  resolution: "ag-grid-community@npm:31.3.2"
-  checksum: 10c0/01cb0e3c7593e96c7635cc74e7f68d7fb1721e8122ab58a367eec9be21f6ae73f4038c0782644785c7e64b75890cf71334465ad4c3011781fab592f1d118509e
+"ag-charts-types@npm:10.0.1":
+  version: 10.0.1
+  resolution: "ag-charts-types@npm:10.0.1"
+  checksum: 10c0/5ee8658d11b60405b586559a71f23ea77d8a5b323ae5d015da4b67c07b4066f66e6c073d0693079db3f9285ae9e049cad9291da084d77b74f1ae1a3d268b0fff
+  languageName: node
+  linkType: hard
+
+"ag-grid-community@npm:^32.0.1":
+  version: 32.0.1
+  resolution: "ag-grid-community@npm:32.0.1"
+  dependencies:
+    ag-charts-types: "npm:10.0.1"
+  checksum: 10c0/7e4c26c2f5255996bad86a3d52bae9fd90f8dcba3de47cefa5bee675ac1f0da27c13bebaf1c029ea3d33f4487696619d6ec500088c40625c16591446ded43f86
   languageName: node
   linkType: hard
 
@@ -7830,7 +7839,7 @@ __metadata:
     "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^7.10.0"
     "@typescript-eslint/parser": "npm:^7.10.0"
-    ag-grid-community: "npm:^31.3.2"
+    ag-grid-community: "npm:^32.0.1"
     autoprefixer: "npm:^10.4.19"
     cookie: "npm:^0.6.0"
     critters: "npm:^0.0.22"

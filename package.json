@@ -60,7 +60,7 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "@typescript-eslint/parser": "^7.10.0",
-    "ag-grid-community": "^31.3.2",
+    "ag-grid-community": "^32.0.1",
     "autoprefixer": "^10.4.19",
     "cookie": "^0.6.0",
     "critters": "^0.0.22",
