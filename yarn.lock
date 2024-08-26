@@ -6953,10 +6953,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:^31.3.2":
-  version: 31.3.2
-  resolution: "ag-grid-community@npm:31.3.2"
-  checksum: 10c0/01cb0e3c7593e96c7635cc74e7f68d7fb1721e8122ab58a367eec9be21f6ae73f4038c0782644785c7e64b75890cf71334465ad4c3011781fab592f1d118509e
+"ag-grid-community@npm:^31.3.4":
+  version: 31.3.4
+  resolution: "ag-grid-community@npm:31.3.4"
+  checksum: 10c0/65597ac57a27e5bd9a7ab7b5ae88677e3f4b4c904c0ef39f254a2c4dda4e2f3c1b62c69394d78320f2de4c175dd374e76e8293976065bfcc24ff81314847dce3
   languageName: node
   linkType: hard
 
@@ -7830,7 +7830,7 @@ __metadata:
     "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^7.10.0"
     "@typescript-eslint/parser": "npm:^7.10.0"
-    ag-grid-community: "npm:^31.3.2"
+    ag-grid-community: "npm:^31.3.4"
     autoprefixer: "npm:^10.4.19"
     cookie: "npm:^0.6.0"
     critters: "npm:^0.0.22"
