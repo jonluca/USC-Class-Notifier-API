@@ -7,23 +7,28 @@ export class VenmoClient extends BaseService {
   csrfToken: string | undefined = undefined;
   private sharedHeaders = () => {
     return {
-      authority: "venmo.com",
-      accept: "*/*",
+      accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
       "accept-language": "en",
+      "cache-control": "max-age=0",
+      priority: "u=0, i",
+      referer: "https://account.venmo.com/",
+      "sec-ch-ua": '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": '"macOS"',
+      "sec-fetch-dest": "document",
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-site": "same-origin",
+      "sec-fetch-user": "?1",
+      "upgrade-insecure-requests": "1",
+      "user-agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+      authority: "venmo.com",
       "content-type": "application/json",
-      cookie: `v_id=fp01-6c6d6173-4b47-4ff2-adf3-5f1f204090f7; _csrf=cdfsEFIsm-mCqSiTYHiTfkhe; login_email=${process.env.VENMO_USERNAME}; cookie_prefs=T%3D1%2CP%3D1%2CF%3D1%2Ctype%3Dexplicit_banner`,
+      cookie: `v_id=fp01-b00e009a-ba8b-4431-b005-ab6e03a116c7; s_id=4729a0a3-2d7b-4cc4-aca2-78d477880bbe; _csrf=cdfsEFIsm-mCqSiTYHiTfkhe; login_email=${process.env.VENMO_USERNAME}; cookie_prefs=T%3D1%2CP%3D1%2CF%3D1%2Ctype%3Dexplicit_banner`,
       "csrf-token": this.csrfToken || "SkpNaPOP-9jZMUkhKNd8GkkQDIc6mNfzl7xU",
       "xsrf-token": this.csrfToken || "SkpNaPOP-9jZMUkhKNd8GkkQDIc6mNfzl7xU",
       origin: "https://venmo.com",
-      referer: "https://venmo.com/",
-      "sec-ch-ua": '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "same-origin",
-      "user-agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
     };
   };
 
@@ -81,9 +86,9 @@ export class VenmoClient extends BaseService {
     const text = response.data;
     const match = text.match(/"csrfToken":"(.*?)?"/);
     if (!match) {
-      throw new Error("Failed to find csrf token");
+      // throw new Error("Failed to find csrf token");
     }
-    this.csrfToken = match[1];
+    this.csrfToken = match?.[1];
   };
   private fetchPosts = async (nextId?: string) => {
     const response = await this.get<PostsResponse>("https://account.venmo.com/api/stories", {
