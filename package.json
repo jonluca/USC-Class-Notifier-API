@@ -89,7 +89,7 @@
     "moment": "^2.30.1",
     "moment-range": "^4.0.2",
     "mongoose": "8.4.0",
-    "next": "^14.2.3",
+    "next": "^14.2.10",
     "p-map": "^7.0.2",
     "phone-parser": "0.0.2",
     "plasmo": "0.86.3",
