@@ -7,7 +7,7 @@ import pMap from "p-map";
 import { groupBy } from "lodash-es";
 import { spotsAvailableEmail } from "@/emails/processors/spotsAvailableEmail";
 import { sendMessage } from "@/server/Twilio";
-import { getCurrentSemester, getValidSemesters } from "@/utils/semester";
+import { getValidSemesters } from "@/utils/semester";
 
 const ONE_SECOND_MS = 1000;
 const timeout = 5 * 60 * ONE_SECOND_MS;
@@ -185,16 +185,29 @@ const checkForAvailabilityForDepartment = async (department: string, semester: s
 };
 
 export const runRefresh = async () => {
-  const currentSemester = getCurrentSemester();
+  const semesters = getValidSemesters();
 
+  for (const semester of semesters) {
+    try {
+      await refreshSemester(semester);
+    } catch (e: any) {
+      console.error(`Error refreshing semester ${semester}: ${e}`);
+    }
+  }
+};
+
+const refreshSemester = async (semester: string) => {
   const departments = await prisma.$queryRawUnsafe<{ department: string }[]>(
-    `select distinct coalesce(prefix, department) as department from "ClassInfo" where section in (SELECT DISTINCT section FROM "WatchedSection" WHERE semester = '${currentSemester}' and notified = false) and semester='${currentSemester}'`,
+    `select distinct coalesce(prefix, department) as department from "ClassInfo" where section in (SELECT DISTINCT section FROM "WatchedSection" WHERE semester = '${semester}' and notified = false) and semester='${semester}'`,
   );
 
+  if (!departments.length) {
+    return;
+  }
   await pMap(
     departments,
     async (department) => {
-      await checkForAvailabilityForDepartment(department.department, currentSemester);
+      await checkForAvailabilityForDepartment(department.department, semester);
     },
     {
       concurrency: 5,

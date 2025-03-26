@@ -79,8 +79,9 @@ const TermsOfService: NextPage = () => {
                   </p>
                   <p className={"prose"}>
                     If you registered for a class that is not full, and still has spots that just have not been opened
-                    yet, this will <i>not work.</i> Please contact <a href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a>{" "}
-                    if you have any issues.
+                    yet, this will <i>not work.</i> Please contact{" "}
+                    <a href="mailto:usc-schedule-helper@jonlu.ca">usc-schedule-helper@jonlu.ca</a> if you have any
+                    issues.
                   </p>
                 </>
               }

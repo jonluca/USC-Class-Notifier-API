@@ -29,5 +29,15 @@ export function getValidSemesters() {
   // we want to get this years (1, 2, 3) and next years (1)
   const date = new Date();
   const year = date.getFullYear();
-  return [`${year}1`, `${year}2`, `${year}3`, `${year + 1}1`];
+  const month = date.getMonth() + 1;
+
+  // dont include spring of this year if we are past the registration date
+  const terms: string[] = [`${year}2`, `${year}3`];
+  if (month >= 10) {
+    terms.unshift(`${year + 1}1`);
+  }
+  if (month < 4) {
+    terms.unshift(`${year}1`);
+  }
+  return terms;
 }

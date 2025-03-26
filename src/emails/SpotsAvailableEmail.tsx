@@ -65,7 +65,7 @@ SpotsAvailableEmail.PreviewProps = {
     sectionNumber: "29904",
   },
   key: "asf",
-  email: "jdecaro@usc.edu",
+  email: "usc-schedule-helper@jonlu.ca",
 } as SpotsAvailableEmailProps;
 
 export default SpotsAvailableEmail;

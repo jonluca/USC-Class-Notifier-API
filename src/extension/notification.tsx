@@ -1,5 +1,5 @@
 import { useScheduleHelperContext } from "@/extension/context";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import { CircularProgress, TextField, Typography } from "@mui/material";
 import { trpc } from "@/extension/data";
@@ -7,16 +7,31 @@ import { toast } from "react-toastify";
 import venmoBase64 from "data-base64:-/venmo.png";
 import venmoBase64Qr from "data-base64:-/venmo-qr.jpeg";
 import * as EmailValidator from "email-validator";
+import { rootShouldForwardProp, slotShouldForwardProp } from "@mui/material/styles/styled";
+import { getCurrentTerm } from "@/extension/getCurrentTerm";
 
 const localStorageEmailKey = "uscScheduleHelperEmail";
 const localStoragePhoneKey = "uscScheduleHelperPhone";
-const Input = ({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) => {
+const Input = ({
+  label,
+  value,
+  onChange,
+  type,
+}: {
+  type?: React.InputHTMLAttributes<unknown>["type"];
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) => {
+  const FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
+
   return (
     <div className="flex flex-col items-center gap-1 bg-gray-100 rounded-xl p-1 w-full">
       <Typography variant="body2" className="font-bold text-neutral-400 text-xs ml-4 -mb-3 w-full">
         {label}
       </Typography>
       <TextField
+        type={type}
         className={`flex w-full bg-white rounded-xl`}
         size="small"
         variant="outlined"
@@ -53,6 +68,13 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
   const { mutateAsync: sendLoginEmail, isPending: isPendingLogin, isSuccess } = trpc.user.sendLoginEmail.useMutation();
   const [email, setEmail] = useState(localStorage.getItem(localStorageEmailKey) || "");
   const [phone, setPhone] = useState(localStorage.getItem(localStoragePhoneKey) || "");
+
+  useEffect(() => {
+    localStorage.setItem(localStorageEmailKey, email);
+  }, [email]);
+  useEffect(() => {
+    localStorage.setItem(localStoragePhoneKey, phone);
+  }, [phone]);
   if ("isInvalid" in selectedClass) {
     toast.error("Invalid class");
     return null;
@@ -64,6 +86,7 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
       email,
       department: selectedClass.department,
       phone: phone || undefined,
+      semester: getCurrentTerm(),
     });
   };
 
@@ -129,8 +152,8 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
     return (
       <>
         <div className="flex flex-col items-center gap-1 bg-gray-100 rounded-xl p-1 w-full">
-          <Input label="Email" value={email} onChange={setEmail} />
-          <Input label="Phone (optional, $1 per section per semester)" value={phone} onChange={setPhone} />
+          <Input label="Email" value={email} onChange={setEmail} type={"email"} />
+          <Input label="Phone (optional, $1 per section per semester)" type={"tel"} value={phone} onChange={setPhone} />
         </div>
       </>
     );
@@ -140,7 +163,9 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
       <div className="flex flex-col items-center gap-1 w-full">
         <span>
           Notifications for{" "}
-          {selectedClass.fullCourseId && <span className="font-bold">{selectedClass.fullCourseId} - </span>}
+          {selectedClass.fullCourseId && (
+            <span className="font-bold">{selectedClass.fullCourseId.replace(/:/gi, "")} - </span>
+          )}
           <span className={"font-bold"}>{`Section ${selectedClass.sectionId}`}</span>
         </span>
       </div>
@@ -149,7 +174,9 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
         <div className="flex flex-col gap-2 w-full">
           <span className={"text-red-400 font-bold"}>There was an error processing your class:</span>
           <span className={"text-red-400"}>{error.message}</span>
-          <span className={"text-red-400"}>Please reach out to jdecaro@usc.edu with a screenshot of the above</span>
+          <span className={"text-red-400"}>
+            Please reach out to usc-schedule-helper@jonlu.ca with a screenshot of the above
+          </span>
         </div>
       )}
       <div className="flex gap-2 items-center w-full">

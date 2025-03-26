@@ -4,7 +4,7 @@
 generator client {
   provider        = "prisma-client-js"
   // output          = "./generated/client"
-  previewFeatures = ["fullTextSearch", "fullTextIndex", "relationJoins", "nativeDistinct", "tracing", "omitApi"]
+  previewFeatures = ["fullTextSearchPostgres", "relationJoins", "nativeDistinct"]
 }
 
 /// Always after the prisma-client-js generator

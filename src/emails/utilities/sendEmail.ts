@@ -15,8 +15,8 @@ const sendEmail = async ({
   subject: string;
   previewText: string;
 }) => {
-  if (!isProd && recipient !== "jdecaro@usc.edu") {
-    recipient = "jdecaro@usc.edu";
+  if (!isProd && recipient !== "usc-schedule-helper@jonlu.ca") {
+    recipient = "usc-schedule-helper@jonlu.ca";
   }
   const client = new SESClient({
     region: "us-east-1",

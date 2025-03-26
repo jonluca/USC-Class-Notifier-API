@@ -6,7 +6,7 @@ import type { AgGridReactProps } from "@ag-grid-community/react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { getCurrentSemester } from "@/utils/semester";
+import { getValidSemesters } from "@/utils/semester";
 import { SettingEntry } from "@/components/SettingsEntry";
 import { toast } from "react-toastify";
 import PencilIcon from "@mui/icons-material/Edit";
@@ -267,7 +267,8 @@ export default function Dashboard({
     if (showOldSemesters) {
       return data || [];
     }
-    return data?.filter((section) => section.semester === getCurrentSemester()) || [];
+    const currentSemesters = getValidSemesters();
+    return data?.filter((section) => currentSemesters.includes(section.semester)) || [];
   }, [data, showOldSemesters]);
 
   const matchingSection = data?.find((s) => s.id === section);
@@ -291,7 +292,8 @@ export default function Dashboard({
           ) : (
             <div className={"flex flex-col justify-center bg-red-200 rounded-lg p-1 w-fit"}>
               <div className={"text-xl"}>Error</div>
-              There was an issue watching section - please reach out to jdecaro@usc.edu for more help: {section}
+              There was an issue watching section - please reach out to usc-schedule-helper@jonlu.ca for more help:{" "}
+              {section}
             </div>
           )}
         </>

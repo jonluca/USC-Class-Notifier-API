@@ -70,7 +70,7 @@ NowWatchingEmail.PreviewProps = {
     paidId: "12345678",
   },
   showVenmoInfo: true,
-  email: "jdecaro@usc.edu",
+  email: "usc-schedule-helper@jonlu.ca",
   classInfo: {
     courseNumber: "CSCI 104",
     department: "CSCI",

@@ -1,4 +1,4 @@
-import cookie from "cookie";
+import * as cookie from "cookie";
 import type { IncomingMessage, ServerResponse } from "http";
 import type { NextApiRequest } from "next";
 
