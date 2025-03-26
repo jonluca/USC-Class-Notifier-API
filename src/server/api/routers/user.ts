@@ -47,10 +47,10 @@ export const userRouter = {
         message: "Verification successful",
       };
     }),
-  hasUser: publicProcedure.query(async ({ ctx, input }) => {
+  hasUser: publicProcedure.query(async ({ ctx }) => {
     return Boolean(ctx.user);
   }),
-  getDepartments: publicProcedure.query(async ({ ctx, input }) => {
+  getDepartments: publicProcedure.query(async () => {
     return validDepartments;
   }),
   getWatchedClasses: publicProcedureWithUser.query(async ({ ctx }) => {
@@ -209,7 +209,7 @@ WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.
         },
       });
     }),
-  setAccountLevelPhoneToAllSections: publicProcedureWithUser.mutation(async ({ ctx, input }) => {
+  setAccountLevelPhoneToAllSections: publicProcedureWithUser.mutation(async ({ ctx }) => {
     await ctx.prisma.watchedSection.updateMany({
       where: {
         studentId: ctx.user.id,

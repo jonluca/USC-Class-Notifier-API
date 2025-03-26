@@ -25,7 +25,9 @@ export interface DeptInfo {
   dept_url: string;
 }
 
-export interface TermNotes {}
+export interface TermNotes {
+  [key: string]: string;
+}
 
 export enum Abbreviation {
   Ame = "AME",

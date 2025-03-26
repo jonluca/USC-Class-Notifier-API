@@ -184,7 +184,7 @@ const EditPhoneGlobal = () => {
 
 const AdminEmailSetter = () => {
   const [email, setEmail] = useState("");
-  const { mutateAsync, isPending } = api.admin.getUserKey.useMutation();
+  const { mutateAsync } = api.admin.getUserKey.useMutation();
   const utils = api.useUtils();
 
   return (

@@ -67,7 +67,7 @@ export class VenmoClient extends BaseService {
         headers: this.sharedHeaders(),
       });
       logger.info(`Liked post ${postId} - status ${response.status}`);
-    } catch (e) {
+    } catch {
       logger.error(`Failed to like post ${postId}`);
     }
   };

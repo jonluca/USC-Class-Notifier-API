@@ -23,7 +23,7 @@ const Input = ({
   value: string;
   onChange: (value: string) => void;
 }) => {
-  const FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
+  const _FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
 
   return (
     <div className="flex flex-col items-center gap-1 bg-gray-100 rounded-xl p-1 w-full">
@@ -129,6 +129,7 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
                 with just the code {data.paidId}, like below:
               </span>
               <a href={venmoUrl} target={"_blank"} id="venmo-image" style={{ position: "relative" }} className={"my-2"}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={venmoBase64 as unknown as string} alt="Venmo QR Code" />
 
                 <span
@@ -142,6 +143,7 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
                   {data.paidId}
                 </span>
               </a>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={venmoBase64Qr as unknown as string} alt="Venmo QR Code" style={{ maxHeight: 250 }} />
               <span className={"font-bold"}>If it asks for a last 4 digits of the phone number, use 9020</span>
             </>

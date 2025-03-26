@@ -4,7 +4,7 @@
   "homepage": "https://usc.jonlu.ca",
   "description": "A tool to help you find classes at USC",
   "author": "JonLuca DeCaro <usc-schedule-helper@jonlu.ca>",
-  "version": "15.2",
+  "version": "15.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -19,7 +19,7 @@
     "refresh-rmp": "tsx jobs/refreshRmpData.ts",
     "dev:extension": "plasmo dev --src-path src",
     "build:extension": "NODE_ENV=production plasmo build",
-    "package:extension": "plasmo package"
+    "package:extension": "NODE_ENV=production plasmo build && plasmo package"
   },
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^32.3.4",

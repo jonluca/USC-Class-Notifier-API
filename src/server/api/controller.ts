@@ -130,7 +130,7 @@ const refreshDepartment = async ({
       return null;
     }
     return data as DepartmentInfo;
-  } catch (e) {
+  } catch {
     if (withoutHardRefresh) {
       return null;
     }

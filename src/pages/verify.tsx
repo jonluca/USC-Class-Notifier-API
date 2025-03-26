@@ -12,7 +12,6 @@ export default function Verify() {
   const router = useRouter();
 
   const key = router.query.key as string;
-  const section = router.query.section as string;
 
   const enabled = Boolean(key);
   const { data, isLoading, error } = api.user.verifyByKey.useQuery(

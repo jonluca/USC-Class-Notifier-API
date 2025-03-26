@@ -4,7 +4,7 @@ import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "@/constants
 import { rootShouldForwardProp, slotShouldForwardProp } from "@mui/material/styles/styled";
 
 function IndexPopup() {
-  const FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
+  const _FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
   const [enabled, setEnabled] = useStorage(extensionEnabledKey, true);
   const [showConflicts, setShowConflicts] = useStorage(showConflictsKey, true);
   const [showUnits, setShowUnits] = useStorage(showUnitsKey, true);

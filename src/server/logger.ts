@@ -1,7 +1,7 @@
 import type { LeveledLogMethod, LoggerOptions } from "winston";
 import winston from "winston";
 import { partition } from "lodash-es";
-const { combine, timestamp, printf, colorize, errors, splat, json } = winston.format;
+const { combine, timestamp, printf, colorize, errors, splat } = winston.format;
 export const winstonTimestamp = timestamp({
   format: "YYYY-MM-DD HH:mm:ss",
 });

@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       });
       didSucceed = true;
-    } catch (e) {}
+    } catch {}
   }
   return {
     props: { didSucceed, section },
