@@ -4,7 +4,7 @@ import { z } from "zod";
 import { v4 as uuid } from "uuid";
 import { verificationEmail } from "@/emails/processors/verificationEmail";
 
-import { getSemester } from "@/utils/semester";
+import { getCurrentSemester } from "@/utils/semester";
 import { validDepartments } from "@/utils/validDepartments";
 import { nowWatchingEmail } from "@/emails/processors/nowWatchingEmail";
 import { prisma } from "@/server/db";
@@ -144,7 +144,7 @@ export const userRouter = {
         throw new Error("Please try again later. We are currently at capacity.");
       }
 
-      const semester = input.semester || getSemester();
+      const semester = input.semester || getCurrentSemester();
       const created = await ctx.prisma.watchedSection.create({
         data: {
           section: input.sectionNumber,

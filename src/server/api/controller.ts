@@ -7,12 +7,12 @@ import pMap from "p-map";
 import { groupBy } from "lodash-es";
 import { spotsAvailableEmail } from "@/emails/processors/spotsAvailableEmail";
 import { sendMessage } from "@/server/Twilio";
-import { getNextSemester, getPreviousSemester, getSemester } from "@/utils/semester";
+import { getCurrentSemester, getValidSemesters } from "@/utils/semester";
 
 const ONE_SECOND_MS = 1000;
 const timeout = 5 * 60 * ONE_SECOND_MS;
 
-async function parseCourses(departmentInfo: DepartmentInfo) {
+async function parseCourses({ data: departmentInfo, semester }: { semester: string; data: DepartmentInfo }) {
   try {
     /*Object key checks for returned JSON - the Schedule of Classes API is a bit finicky and not very reliable*/
     if (!(departmentInfo && departmentInfo.Dept_Info && departmentInfo.Dept_Info.abbreviation)) {
@@ -20,7 +20,6 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
       return;
     }
 
-    const semester = getSemester();
     const department = new Department(departmentInfo);
     const departmentsSectionNumbers = department.getSectionNumbersWithAvailability();
 
@@ -89,11 +88,15 @@ async function parseCourses(departmentInfo: DepartmentInfo) {
     logger.error(e.message); // error in the above string (in this case, yes)!
   }
 }
-const refreshDepartment = async (
-  department: string,
-  withoutHardRefresh: boolean = false,
-  semester = getSemester(),
-): Promise<null | DepartmentInfo> => {
+const refreshDepartment = async ({
+  department,
+  withoutHardRefresh = false,
+  semester,
+}: {
+  department: string;
+  withoutHardRefresh?: boolean;
+  semester: string;
+}): Promise<null | DepartmentInfo> => {
   try {
     const suffix = withoutHardRefresh ? "" : "?refresh=Mary4adAL1ttleLamp";
 
@@ -114,7 +117,11 @@ const refreshDepartment = async (
         logger.error(`Failed to refresh department ${department} without hard refresh`);
         return null;
       }
-      return refreshDepartment(department, true, semester);
+      return refreshDepartment({
+        department,
+        withoutHardRefresh: true,
+        semester,
+      });
     }
     const text = await body.text();
     const data = JSON.parse(text) as DepartmentResponse;
@@ -127,11 +134,15 @@ const refreshDepartment = async (
     if (withoutHardRefresh) {
       return null;
     }
-    return refreshDepartment(department, true, semester);
+    return refreshDepartment({
+      department,
+      withoutHardRefresh: true,
+      semester,
+    });
   }
 };
 
-const getListOfDepartments = async (semester = getSemester()): Promise<null | DepartmentList> => {
+const getListOfDepartments = async (semester: string): Promise<null | DepartmentList> => {
   for (let i = 0; i < 3; i++) {
     try {
       const body = await fetch(`https://web-app.usc.edu/web/soc/api/depts/${semester}`, {
@@ -162,11 +173,11 @@ const getListOfDepartments = async (semester = getSemester()): Promise<null | De
   return null;
 };
 
-const checkForAvailabilityForDepartment = async (department: string) => {
+const checkForAvailabilityForDepartment = async (department: string, semester: string) => {
   try {
-    const data = await refreshDepartment(department);
+    const data = await refreshDepartment({ department, semester });
     if (data) {
-      await parseCourses(data);
+      await parseCourses({ data, semester });
     }
   } catch (e) {
     console.error(e);
@@ -174,7 +185,7 @@ const checkForAvailabilityForDepartment = async (department: string) => {
 };
 
 export const runRefresh = async () => {
-  const currentSemester = getSemester();
+  const currentSemester = getCurrentSemester();
 
   const departments = await prisma.$queryRawUnsafe<{ department: string }[]>(
     `select distinct coalesce(prefix, department) as department from "ClassInfo" where section in (SELECT DISTINCT section FROM "WatchedSection" WHERE semester = '${currentSemester}' and notified = false) and semester='${currentSemester}'`,
@@ -183,7 +194,7 @@ export const runRefresh = async () => {
   await pMap(
     departments,
     async (department) => {
-      await checkForAvailabilityForDepartment(department.department);
+      await checkForAvailabilityForDepartment(department.department, currentSemester);
     },
     {
       concurrency: 5,
@@ -193,7 +204,11 @@ export const runRefresh = async () => {
 };
 
 const createDepartmentInfo = async (department: string, semester: string) => {
-  const data = await refreshDepartment(department, true, semester);
+  const data = await refreshDepartment({
+    department,
+    semester,
+    withoutHardRefresh: true,
+  });
   if (!data) {
     return;
   }
@@ -241,10 +256,9 @@ const createDepartmentInfo = async (department: string, semester: string) => {
     }
   }
 };
+
 export const createClassInfo = async (full = false) => {
-  const semesters = new Set<string>(
-    [getSemester(), getNextSemester(), getPreviousSemester()].filter(Boolean) as string[],
-  );
+  const semesters = new Set<string>(getValidSemesters().filter(Boolean) as string[]);
   if (full) {
     // get the class list from 2009 until now
     const start = 2009;

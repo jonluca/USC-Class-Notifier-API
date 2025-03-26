@@ -6,7 +6,7 @@ import type { AgGridReactProps } from "@ag-grid-community/react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { getSemester } from "@/utils/semester";
+import { getCurrentSemester } from "@/utils/semester";
 import { SettingEntry } from "@/components/SettingsEntry";
 import { toast } from "react-toastify";
 import PencilIcon from "@mui/icons-material/Edit";
@@ -267,7 +267,7 @@ export default function Dashboard({
     if (showOldSemesters) {
       return data || [];
     }
-    return data?.filter((section) => section.semester === getSemester()) || [];
+    return data?.filter((section) => section.semester === getCurrentSemester()) || [];
   }, [data, showOldSemesters]);
 
   const matchingSection = data?.find((s) => s.id === section);

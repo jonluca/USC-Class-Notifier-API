@@ -1,4 +1,3 @@
-import type { CookieSerializeOptions } from "cookie";
 import cookie from "cookie";
 import type { IncomingMessage, ServerResponse } from "http";
 import type { NextApiRequest } from "next";
@@ -38,7 +37,10 @@ export function setCookie(
   res: ServerResponse<IncomingMessage>,
   name: string,
   value: string,
-  options?: CookieSerializeOptions,
+  options?: {
+    expires?: Date;
+    httpOnly?: boolean;
+  },
 ) {
   res.setHeader("Set-Cookie", cookie.serialize(name, value, options));
 }

@@ -1,4 +1,4 @@
-import { getSemester } from "@/utils/semester";
+import { getCurrentSemester } from "@/utils/semester";
 import $ from "jquery";
 import { parseCoursePage } from "@/extension/coursesPage";
 import { parseWebRegPage } from "@/extension/webRegPage";
@@ -9,7 +9,7 @@ function insertExportButton() {
   const navbar = $("ul.nav");
   $(navbar).find(".exportCal").remove();
   $(navbar).append(
-    `<li><a class="exportCal" href="https://my.usc.edu/ical/?term=${getSemester()}">Export To Calendar</a></li>`,
+    `<li><a class="exportCal" href="https://my.usc.edu/ical/?term=${getCurrentSemester()}">Export To Calendar</a></li>`,
   );
   const cals = $(".exportCal");
   $(cals[1]).remove();

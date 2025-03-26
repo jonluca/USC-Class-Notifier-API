@@ -2,7 +2,10 @@ const springRegMonthsAddYear = [10, 11, 12]; // oct, nov, dec, jan, feb are when
 const springRegMonths = [1, 2]; // oct, nov, dec, jan, feb are when you can register for spring classes
 const fallRegMonths = [3, 4, 5, 6, 7, 8, 9]; // mar, apr, may, jun, jul, aug, sep are when you can register for fall classes
 
-export function getSemester() {
+// in fall you can register for fall and spring
+// in spring you can register for spring, and fall
+// in summer you can register for summer and fall
+export function getCurrentSemester() {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -21,25 +24,10 @@ export function getSemester() {
   console.error(`Invalid month ${month}`);
   return `${year}3`;
 }
-export function getNextSemester(semester: string = getSemester()) {
-  const year = parseInt(semester.substring(0, 4));
-  const season = parseInt(semester.substring(4, 5));
-  if (season === 1) {
-    return `${year}3`;
-  } else if (season === 3) {
-    return `${year + 1}1`;
-  }
-  console.error(`Invalid semester ${semester}`);
-  return null;
-}
-export function getPreviousSemester(semester: string = getSemester()) {
-  const year = parseInt(semester.substring(0, 4));
-  const season = parseInt(semester.substring(4, 5));
-  if (season === 1) {
-    return `${year - 1}3`;
-  } else if (season === 3) {
-    return `${year}1`;
-  }
-  console.error(`Invalid semester ${semester}`);
-  return null;
+
+export function getValidSemesters() {
+  // we want to get this years (1, 2, 3) and next years (1)
+  const date = new Date();
+  const year = date.getFullYear();
+  return [`${year}1`, `${year}2`, `${year}3`, `${year + 1}1`];
 }

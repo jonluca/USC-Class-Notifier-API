@@ -8,7 +8,6 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     largePageDataBytes: 100000000,
-    instrumentationHook: true,
     optimizeServerReact: true,
     appDocumentPreloading: true,
   },
