@@ -37,6 +37,7 @@ const checkVenmoPosts = async () => {
 const scheduler = new ToadScheduler();
 
 const task = new AsyncTask("Venmo checker", checkVenmoPosts, (err: Error) => {
+  logger.error("Error in Venmo checker task");
   logger.error(err);
 });
 

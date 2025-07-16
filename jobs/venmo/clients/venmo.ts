@@ -132,6 +132,7 @@ export class VenmoClient extends BaseService {
       }
       return Array.from(valid);
     } catch (e) {
+      logger.error(`Error parsing text for entry ${entry.id}: ${message}`);
       logger.error(e);
       return Array.from(valid);
     }

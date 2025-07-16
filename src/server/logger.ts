@@ -38,7 +38,10 @@ const logger = winston.createLogger({
 // @ts-ignore
 const getArgs = (args: any[]) => {
   const [strings, others] = partition(args, (arg) => typeof arg === "string");
-  return [strings.join(" "), ...others];
+  if (strings.length) {
+    return [strings.join(" "), ...others];
+  }
+  return args;
 };
 // @ts-ignore
 console.log = (...args: any[]) => logger.info.call(logger, ...getArgs(args));
