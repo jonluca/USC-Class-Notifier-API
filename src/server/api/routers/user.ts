@@ -1,6 +1,6 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { publicProcedure, publicProcedureWithUser } from "../trpc";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { v4 as uuid } from "uuid";
 import { verificationEmail } from "@/emails/processors/verificationEmail";
 

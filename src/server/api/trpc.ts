@@ -8,7 +8,7 @@
  */
 
 import { initTRPC, TRPCError } from "@trpc/server";
-import { ZodError } from "zod";
+import { z, ZodError } from "zod/v4";
 import type { PrismaClientType } from "@/server/db";
 import { prisma } from "@/server/db";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
@@ -90,7 +90,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       ...shape,
       data: {
         ...shape.data,
-        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
+        zodError: error.cause instanceof ZodError ? z.treeifyError(error.cause) : null,
       },
     };
   },
