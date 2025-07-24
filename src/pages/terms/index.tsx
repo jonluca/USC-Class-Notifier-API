@@ -11,8 +11,8 @@ const TermsOfService: NextPage = () => {
           </div>
           <div>
             <p>
-              These Terms of Use apply to the website of USC Schedule Helper (the “Company”) at www.jonlu.ca/soc/, and
-              its various associated web pages, applications, and website-related services (the “Site”).
+              These Terms of Use apply to the website of USC Schedule Helper (the “Company”) at https://usc.jonlu.ca/,
+              and its various associated web pages, applications, and website-related services (the “Site”).
             </p>
             <p>
               This Agreement governs the relationship between the Company and the visitor of the Site (“You”) with

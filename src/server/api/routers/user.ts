@@ -103,6 +103,7 @@ export const userRouter = {
         where: {
           section: input.sectionNumber,
           studentId: student.id,
+          semester: input.semester || getCurrentSemester(),
         },
       });
       const showVenmoInfo = Boolean(student.phone || input.phone);
