@@ -37,6 +37,7 @@ async function parseCourses({ data: departmentInfo, semester }: { semester: stri
         section: true,
         student: { select: { id: true, email: true, phone: true, verificationKey: true } },
         isPaid: true,
+        phoneOverride: true,
       },
     });
     const grouped = groupBy(watchedSections, "section");
@@ -50,9 +51,10 @@ async function parseCourses({ data: departmentInfo, semester }: { semester: stri
         const otherPeople = `${numberOfStudentsWatching} others ${verbText} watching this section.`;
 
         for (const section of paidSections) {
-          if (section.student.phone) {
+          const phoneNumber = section.phoneOverride || section.student.phone;
+          if (phoneNumber) {
             await sendMessage({
-              to: section.student.phone,
+              to: phoneNumber,
               message: `${course.available} ${spotText} available for section ${course.sectionNumber} in class ${course.courseID}. ${otherPeople}`,
             });
           }
