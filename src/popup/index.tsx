@@ -3,6 +3,13 @@ import { useStorage } from "@plasmohq/storage/hook";
 import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "@/constants";
 import { rootShouldForwardProp, slotShouldForwardProp } from "@mui/material/styles/styled";
 
+window.addEventListener("click", function (e) {
+  const href = (e.target as HTMLAnchorElement)?.href;
+  if (href !== undefined) {
+    chrome.tabs.create({ url: href });
+  }
+});
+
 function IndexPopup() {
   const _FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
   const [enabled, setEnabled] = useStorage(extensionEnabledKey, true);
@@ -55,7 +62,7 @@ function IndexPopup() {
       </div>
       <p className="mt-2">
         <a href="https://jonlu.ca">&copy; {new Date().getFullYear()} JonLuca DeCaro </a> -{" "}
-        <a href="https://github.com/jonluca/USC-Schedule-Helper">Source Code</a> -{" "}
+        <a href="https://github.com/jonluca/USC-Class-Notifier-API">Source Code</a> -{" "}
         <a href="mailto:uscschedulehelper@jonlu.ca">Support</a>
       </p>
     </div>
