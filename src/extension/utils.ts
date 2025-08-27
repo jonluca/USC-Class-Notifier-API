@@ -15,9 +15,15 @@ export function getCleanName(name: string) {
   return name.toLowerCase().replace(/[^a-zA-Z]/gi, "");
 }
 export const getProfessorRatings = (professorName: string) => {
-  return professorRatings.get(getCleanName(professorName));
+  const rating = professorRatings.get(getCleanName(professorName));
+  if (rating) {
+    return rating;
+  }
+  // try some fallbacks now
+  const name = professorName.split(" ");
+  const fallbackRating = professorRatings.get(getCleanName(`${name[0]} ${name[name.length - 1]}`));
+  return fallbackRating;
 };
-
 function insertProfessorRating(row: HTMLElement, professors: Rating[]) {
   for (const prof of professors) {
     $(row).find(`.id-${prof.legacyId}`).remove();

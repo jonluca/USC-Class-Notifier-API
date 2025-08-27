@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { parseCoursePage } from "@/extension/coursesPage";
+import { initCoursePage } from "@/extension/coursesPage";
 import { parseWebRegPage } from "@/extension/webRegPage";
 import type { Options } from "@/extension/utils";
 import { getCurrentSchedule, parseSchedule } from "@/extension/schedule";
@@ -33,6 +33,6 @@ export const initExtension = (options: Options) => {
       parseWebRegPage(options);
     }
   } else {
-    parseCoursePage();
+    initCoursePage();
   }
 };

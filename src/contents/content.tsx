@@ -17,7 +17,7 @@ import { trpc, trpcClient } from "@/extension/data";
 import { ToastContainer } from "react-toastify";
 
 export const config: PlasmoCSConfig = {
-  matches: ["*://classes.usc.edu/*/classes/*", "*://webreg.usc.edu/*"],
+  matches: ["*://classes.usc.edu/term/*", "*://webreg.usc.edu/*"],
   all_frames: true,
 };
 const styleElement = document.createElement("style");

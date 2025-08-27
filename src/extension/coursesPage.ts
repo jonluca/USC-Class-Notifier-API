@@ -1,92 +1,128 @@
 import $ from "jquery";
-import { getProfessorRatings, isNumber, ratingURLTemplate } from "@/extension/utils";
+import { getProfessorRatings, ratingURLTemplate } from "@/extension/utils";
 
-export function parseCoursePage() {
-  //Get all courses
-  const courses = $(".course-info");
-  let totalSpots = 0;
-  let availSpots = 0;
-  //Iterate over courses on page
-  for (const course of courses) {
-    totalSpots = 0;
-    availSpots = 0;
-    //Get table with jQuery selector
-    const table = $(course).find("> .course-details > table.sections");
-    //Get rows, iterate over each one
-    $(table[0])
-      .find("> tbody > tr")
-      .each(function () {
-        if ($(this).hasClass("headers")) {
-          //create new column
-          $(this).find(".instructor").after("<th>Prof. Rating</th>");
-          //jQuery's version of continue
-          return;
-        }
-        //find Type column
-        const tdType = $(this).find("td.type");
-        if (tdType.length === 0) {
-          return;
-        }
-        const type = tdType[0].textContent;
-        //Get registration numbers
-        const registratioNumbers = $(this).find("td.registered")[0].textContent?.split(" of ") || ["0", "0"];
-        const currentlyEnrolled = parseInt(registratioNumbers[0]);
-        const totalAvailable = parseInt(registratioNumbers[1]);
-        //If it's not a lab or quiz
-        if (type === "Lecture" || type === "Lecture-Lab") {
-          totalSpots += totalAvailable;
-          availSpots += totalAvailable - currentlyEnrolled;
-        }
-        const professor = $(this).find("td.instructor")[0];
-        //Professor names are separated by commas, so this handles the case that multiple profs teach a section
-        const profName = (professor.textContent || "").split(",");
-        for (let i = 0; i < profName.length; i++) {
-          const splitProfName = profName[i];
-          //Names are formatted "First Last" so no reordering is necessary
-          //However, some names are "First Middle Middle2 Last", and we only want "First Last" as that is the format of
-          // our json
-          const name = splitProfName.split(" ");
-
-          //If its in JSON
-          const professors = getProfessorRatings(`${name[0]} ${name[name.length - 1]}`);
-          if (professors) {
-            //generate RMP URL
-            for (const prof of professors) {
-              const url = ratingURLTemplate + prof.legacyId;
-              //If we've never inserted before, insert. Otherwise insert with a comma before it for good formatting
-              if ($(this).find(".rating").length === 0) {
-                $(this)
-                  .find("td.instructor")
-                  .after(`<td class="rating"><a href=${url} target="_blank">${prof.avgRating || "Link"}</a></td>`);
-              } else {
-                $(this)
-                  .find(".rating")
-                  .append(`, <a href=${url} target="_blank">${prof.avgRating || "Link"}</a>`);
-              }
-            }
-          } else {
-            //If not in JSON, we need an empty space to make table format correctly
-            if ($(this).find(".rating").length === 0) {
-              $(this).find("td.instructor").after('<td class="rating"> </td>');
-            } else {
-              $(this).find(".rating").append(" ");
-            }
+function parseCoursePage() {
+  // Find all mat-header-cell where the text is "Instructor"
+  const headerCells = $("mat-header-cell")
+    .filter(function () {
+      const textValue = $(this).text().trim();
+      return textValue === "INSTRUCTOR" || textValue === "INSTRUCTORS";
+    })
+    .toArray();
+  // now for each one, we want to add a new header cell after it
+  for (const headerCell of headerCells) {
+    if ($(headerCell).next(".rating-header").length === 0) {
+      // clone it and change text
+      const newHeaderCell = $(headerCell).clone();
+      newHeaderCell.text("PROF RATING");
+      newHeaderCell.addClass("rating-header");
+      // insert after
+      $(headerCell).after(newHeaderCell);
+    }
+    // find its index in the header, then insert the rating for each row at that index + 1
+    const headerIndex = $(headerCell).index();
+    // now find all rows
+    const parent = $(headerCell).closest("mat-table, table");
+    if (parent.length === 0) {
+      continue;
+    }
+    const rows = parent.find("mat-row, tr").toArray();
+    for (const row of rows) {
+      const cells = $(row).find("mat-cell, td").toArray();
+      if (cells.length <= headerIndex) {
+        continue;
+      }
+      const instructorCell = cells[headerIndex];
+      const instructorNames = (instructorCell.textContent || "").split(",").map((l) => l.trim());
+      const toAdd = [] as string[];
+      for (const name of instructorNames) {
+        const professors = getProfessorRatings(name);
+        if (professors) {
+          for (const prof of professors) {
+            const url = ratingURLTemplate + prof.legacyId;
+            toAdd.push(`<a href=${url} style="padding-left: 2px;"  target="_blank">${prof.avgRating || "Link"}</a>`);
           }
         }
-      });
-    //insert remaining spots in main
-    const title = $(course).find("> .course-id > h3 > a");
-    if (totalSpots !== 0 && isNumber(totalSpots)) {
-      let availableString = ` - ${availSpots} remaining spot`;
-      if (availSpots > 1) {
-        availableString += "s";
       }
-      if (availSpots === 0) {
-        availableString += "s";
-        const background = $(course).find("> .course-id");
-        $(background).css("background-color", "rgba(240, 65, 36, 0.45)");
+      const ratingsHTML = toAdd.join(", ");
+      // create new cell
+      const newCell = $(instructorCell).clone();
+      newCell.addClass("rating");
+      newCell.html(ratingsHTML || " ");
+      // insert after instructor cell
+      if ($(row).find(".rating").length === 0) {
+        $(instructorCell).after(newCell);
+      } else {
+        $(row)
+          .find(".rating")
+          .html(ratingsHTML || " ");
       }
-      title.append(availableString);
     }
   }
+}
+// Create a MutationObserver to watch for mat-table elements
+function observeMatTableInsertion(callback: () => void) {
+  // Check if an element is or contains a mat-table
+  function checkForMatTable(element: HTMLElement) {
+    if (element.nodeType !== Node.ELEMENT_NODE) {
+      return [];
+    }
+
+    const matTables = [];
+
+    // Check if the element itself is a mat-table (class, attribute, or tag)
+    if (
+      element.classList?.contains("mat-table") ||
+      element.hasAttribute?.("mat-table") ||
+      element.tagName?.toLowerCase() === "mat-table"
+    ) {
+      matTables.push(element);
+    }
+
+    // Check for mat-table descendants
+    const descendants = element.querySelectorAll(".mat-table, [mat-table], mat-table");
+    matTables.push(...descendants);
+
+    return matTables;
+  }
+
+  // Create the observer
+  const observer = new MutationObserver((mutations) => {
+    let shouldCallback = false;
+    mutations.forEach((mutation) => {
+      if (shouldCallback) {
+        return;
+      }
+      // Check added nodes
+      mutation.addedNodes.forEach((node) => {
+        if (shouldCallback) {
+          return;
+        }
+        const matTables = checkForMatTable(node as HTMLElement);
+        if (matTables.length) {
+          shouldCallback = true;
+        }
+      });
+    });
+    if (shouldCallback) {
+      callback();
+    }
+  });
+
+  // Start observing
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  // Return the observer so it can be disconnected if needed
+  return observer;
+}
+
+export function initCoursePage() {
+  parseCoursePage();
+  // Example usage:
+  const observer = observeMatTableInsertion(() => {
+    parseCoursePage();
+  });
 }
