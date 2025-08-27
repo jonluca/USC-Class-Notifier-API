@@ -122,7 +122,7 @@ function observeMatTableInsertion(callback: () => void) {
 export function initCoursePage() {
   parseCoursePage();
   // Example usage:
-  const observer = observeMatTableInsertion(() => {
+  observeMatTableInsertion(() => {
     parseCoursePage();
   });
 }

@@ -16,7 +16,8 @@ const nextApiHandler = createNextApiHandler({
   createContext: createTRPCContext,
   onError,
 });
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<any | void> {
   // We can use the response object to enable CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Request-Method", "*");
