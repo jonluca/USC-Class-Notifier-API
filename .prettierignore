@@ -1,0 +1,8 @@
+.yarn
+public/js
+prisma/generated
+.plasmo
+.next
+.expo
+.claude
+.cursor
