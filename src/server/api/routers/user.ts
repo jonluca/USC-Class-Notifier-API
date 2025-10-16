@@ -146,21 +146,21 @@ export const userRouter = {
       }
 
       const semester = input.semester || getCurrentSemester();
+
+      const classInfo = await ctx.prisma.classInfo.findFirst({
+        where: {
+          section: input.sectionNumber,
+          semester,
+        },
+      });
       const created = await ctx.prisma.watchedSection.create({
         data: {
           section: input.sectionNumber,
-          student: { connect: { id: student.id } },
+          studentId: student.id,
           phoneOverride: input.phone,
           semester,
           paidId,
-          ClassInfo: {
-            connect: {
-              section_semester: {
-                semester,
-                section: input.sectionNumber,
-              },
-            },
-          },
+          classInfoId: classInfo?.id || null,
         },
         include: {
           ClassInfo: true,
