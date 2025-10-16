@@ -1,7 +1,19 @@
 import "@/server/logger";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@app/prisma";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const baseClient = new PrismaClient();
+const adapter = new PrismaPg({
+  connectionString: process.env.POSTGRES_PRISMA_URL!,
+  keepAlive: true,
+  statement_timeout: undefined,
+  connectionTimeoutMillis: 5_000,
+  idleTimeoutMillis: 60_000,
+  max: 80,
+});
+
+const baseClient = new PrismaClient({
+  adapter,
+});
 
 export type PrismaClientType = typeof baseClient;
 const globalForPrisma = globalThis as unknown as {

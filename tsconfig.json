@@ -18,6 +18,8 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@app/prisma": ["./prisma/generated/client.ts"],
+      "@app/prisma/*": ["./prisma/generated/*"],
       "-/*": ["./assets/*"]
     },
     "baseUrl": "."

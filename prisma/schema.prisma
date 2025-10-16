@@ -2,9 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  // output          = "./generated/client"
-  previewFeatures = ["fullTextSearchPostgres", "relationJoins", "nativeDistinct"]
+  provider = "prisma-client"
+  output   = "./generated"
+
+  previewFeatures        = ["fullTextSearchPostgres", "relationJoins", "nativeDistinct", "views"]
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
+  engineType             = "client"
 }
 
 /// Always after the prisma-client-js generator

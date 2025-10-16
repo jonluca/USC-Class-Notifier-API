@@ -286,3 +286,4 @@ dist/
 # typescript
 .tsbuildinfo
 logs
+prisma/generated

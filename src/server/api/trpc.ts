@@ -14,7 +14,7 @@ import { prisma } from "@/server/db";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import type { IncomingMessage, ServerResponse } from "http";
 import { transformer } from "@/server/api/transformer";
-import type { Student } from "@prisma/client";
+import type { Student } from "@app/prisma";
 import { getCookie, getCookies } from "@/server/utils/cookie";
 import logger from "@/server/logger";
 import { cookieKey, isAuthenticated } from "@/server/auth";

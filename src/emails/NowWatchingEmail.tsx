@@ -2,7 +2,7 @@ import { Button, Row, Section, Text, Link } from "@react-email/components";
 import * as React from "react";
 import EmailBase from "./components/EmailBase";
 import { baseDomain } from "@/constants";
-import type { WatchedSection, ClassInfo } from "@prisma/client";
+import type { WatchedSection, ClassInfo } from "@app/prisma";
 
 export interface NowWatchingEmailProps {
   verificationKey: string;
