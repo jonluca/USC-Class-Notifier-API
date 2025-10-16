@@ -16,6 +16,7 @@
   ],
   "compilerOptions": {
     "strict": true,
+    "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"],
       "@app/prisma": ["./prisma/generated/client.ts"],
