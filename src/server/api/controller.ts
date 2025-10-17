@@ -4,7 +4,12 @@ import pMap from "p-map";
 import { groupBy, uniq } from "lodash-es";
 import { spotsAvailableEmail } from "@/emails/processors/spotsAvailableEmail";
 import { sendMessage } from "@/server/Twilio";
-import { getValidSemesters } from "@/utils/semester";
+import {
+  FALL_REGISTRATION_RANGE,
+  getValidSemesters,
+  SPRING_REGISTRATION_RANGE,
+  SUMMER_REGISTRATION_RANGE,
+} from "@/utils/semester";
 import { getCurrentAvailableCourses, searchClasses } from "@/server/api/usc-api.ts";
 import type { Prisma } from "@app/prisma";
 import type { Course } from "@/server/api/types.ts";
@@ -115,7 +120,29 @@ export const runRefresh = async () => {
   const semesters = getValidSemesters();
 
   for (const semester of semesters) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // getMonth is zero-indexed
+
+    // we only want to run the refresh during months where users can actually register for classes - no point in checking after February 14th for the Spring semester, for instance
+    // so for spring semester, only run from October to February
+    // for fall semester, only run from March to September
+    // for summer semester, only run from March to July
     try {
+      const isSpring = semester.endsWith("1");
+      const isSummer = semester.endsWith("2");
+      const isFall = semester.endsWith("3");
+      if (isSpring && !SPRING_REGISTRATION_RANGE.includes(currentMonth)) {
+        console.debug(`Skipping refresh for spring semester ${semester} in month ${currentMonth}`);
+        continue;
+      }
+      if (isFall && !FALL_REGISTRATION_RANGE.includes(currentMonth)) {
+        console.debug(`Skipping refresh for fall semester ${semester} in month ${currentMonth}`);
+        continue;
+      }
+      if (isSummer && !SUMMER_REGISTRATION_RANGE.includes(currentMonth)) {
+        console.debug(`Skipping refresh for summer semester ${semester} in month ${currentMonth}`);
+        continue;
+      }
       await refreshSemester(semester);
     } catch (e: any) {
       console.error(`Error refreshing semester ${semester}: ${e}`);

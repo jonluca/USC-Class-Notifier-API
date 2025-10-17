@@ -41,3 +41,42 @@ export function getValidSemesters() {
   }
   return terms;
 }
+
+export const MONTHS = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12,
+};
+export const SPRING_REGISTRATION_RANGE = [
+  MONTHS.October,
+  MONTHS.November,
+  MONTHS.December,
+  MONTHS.January,
+  MONTHS.February,
+];
+export const SUMMER_REGISTRATION_RANGE = [
+  MONTHS.February,
+  MONTHS.March,
+  MONTHS.April,
+  MONTHS.May,
+  MONTHS.June,
+  MONTHS.July,
+];
+export const FALL_REGISTRATION_RANGE = [
+  MONTHS.March,
+  MONTHS.April,
+  MONTHS.May,
+  MONTHS.June,
+  MONTHS.July,
+  MONTHS.August,
+  MONTHS.September,
+];
