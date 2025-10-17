@@ -171,7 +171,7 @@ const refreshSemester = async (semester: string) => {
 };
 
 export const createClassInfo = async () => {
-  const semesters = new Set<string>(getValidSemesters().filter(Boolean) as string[]);
+  const semesters = getValidSemesters();
 
   for (const semester of semesters) {
     try {
