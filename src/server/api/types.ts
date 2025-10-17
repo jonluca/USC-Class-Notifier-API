@@ -1,176 +1,118 @@
-export type DepartmentResponse = DepartmentInfo | { error: string };
-export interface DepartmentInfo {
-  schd_sync_dtm: Date;
-  Dept_Info: DeptInfo;
-  OfferedCourses: OfferedCourses;
-}
-
-export interface DeptInfo {
-  department: string;
-  abbreviation: Abbreviation;
-  phone_number: string;
-  address: string;
-  email: TermNotes;
-  url: string;
-  ugrad_dclass_phone_number: string;
-  ugrad_dclass_address: string;
-  ugrad_dclass_email: TermNotes;
-  ugrad_dclass_url: TermNotes;
-  grad_dclass_phone_number: string;
-  grad_dclass_address: string;
-  grad_dclass_email: TermNotes;
-  grad_dclass_url: TermNotes;
-  Notes: string;
-  TermNotes: TermNotes;
-  dept_url: string;
-}
-
-export interface TermNotes {
-  [key: string]: string;
-}
-
-export enum Abbreviation {
-  Ame = "AME",
-  Csci = "CSCI",
-  Dsci = "DSCI",
-  Ee = "EE",
-  Ise = "ISE",
-  Itp = "ITP",
-  Math = "MATH",
-  Phys = "PHYS",
-  Psyc = "PSYC",
-}
-
-export interface OfferedCourses {
-  course: Course[] | Course;
+export interface CoursesResponse {
+  termCode: number;
+  courseCount: number;
+  searchQuery: null;
+  courses: Course[];
+  programs: null;
 }
 
 export interface Course {
-  IsCrossListed: IsCrossListed;
-  PublishedCourseID: string | undefined;
-  ScheduledCourseID: string;
-  CourseData: CourseData;
-}
-
-export interface CourseData {
-  prefix: Abbreviation;
-  number: string;
-  sequence: PrereqText;
-  suffix: PrereqText;
-  title: string;
-  description: string;
-  units: string;
-  restriction_by_major: PrereqText;
-  restriction_by_class: PrereqText;
-  restriction_by_school: TermNotes;
-  CourseNotes: TermNotes;
-  CourseTermNotes: TermNotes;
-  prereq_text: PrereqText;
-  coreq_text: TermNotes;
-  SectionData: SectionDataUnion;
-}
-
-export type SectionDataUnion = SectionDataClass[] | SectionDataClass;
-export interface SectionDataClass {
-  id: string;
-  session: string;
-  dclass_code: DclassCode;
-  title: string;
-  section_title: PrereqText;
-  description: PrereqText;
-  notes: PrereqText;
-  type: Type;
-  units: string;
-  spaces_available: string;
-  number_registered: string;
-  wait_qty: string;
-  canceled: IsCrossListed;
-  blackboard: BlackboardUnion;
-  day?: DayUnion;
-  start_time?: string;
-  end_time?: string;
-  location?: string;
-  instructor?: Instructor;
-  syllabus: Syllabus;
-  IsDistanceLearning: IsCrossListed;
-}
-
-export enum IsCrossListed {
-  N = "N",
-  Y = "Y",
-}
-
-export type BlackboardUnion = BlackboardClass | IsCrossListed;
-
-export interface BlackboardClass {
-  "0": The0;
-}
-
-export enum The0 {
-  Empty = " ",
-}
-
-export type DayUnion = TermNotes | DayEnum;
-
-export enum DayEnum {
-  F = "F",
-  H = "H",
-  M = "M",
-  Mw = "MW",
-  Mwf = "MWF",
-  S = "S",
-  T = "T",
-  Th = "TH",
-  W = "W",
-}
-
-export enum DclassCode {
-  D = "D",
-  R = "R",
-}
-
-export type PrereqText = TermNotes | string;
-
-export interface Instructor {
-  last_name: string;
-  first_name: string;
-  bio_url?: string;
-}
-
-export interface Syllabus {
-  format: FormatUnion;
-  filesize: PrereqText;
-}
-
-export type FormatUnion = TermNotes | FormatEnum;
-
-export enum FormatEnum {
-  ApplicationPDF = "application/pdf",
-}
-
-export enum Type {
-  Dis = "Dis",
-  Lab = "Lab",
-  Lec = "Lec",
-  LecLab = "Lec-Lab",
-  Qz = "Qz",
-}
-
-export type DepartmentUnion = DepartmentElement[] | DepartmentElement;
-
-export interface DepartmentList {
-  department: DepartmentUnion;
-}
-
-export interface DepartmentElement {
-  code: string;
+  courseId: number;
+  startTermCode: number;
+  endTermCode: null;
+  classNumber: string | null;
+  sequence: string | null;
+  suffix: string | null;
+  description: string | null;
+  fullCourseName: string | null;
+  isCrossListed: boolean;
+  maxUnits: number | null;
+  courseNotes: string | null;
+  termNotes: string | null;
+  duplicateCredit: null;
+  recommendedPrep: null;
+  geCode: null;
+  scheduledCourseCode: EdCourseCode | null;
+  publishedCourseCode: EdCourseCode | null;
+  matchedCourseCode: EdCourseCode | null;
+  courseUnits: number[];
+  sections: null | Section[];
+  prerequisiteCourseCodes: null;
+  corequisiteCourseCodes: null;
+  courseRestrictions: CourseRestriction[];
+  majorRestrictions: null;
+  schoolRestrictions: null;
+  concurrentCourses: null;
+  remainingSectionSeats: number;
+  sectionSeatCount: number;
+  termCode: number;
+  prefix: string;
   name: string;
-  type: Type;
-  department?: DepartmentUnion;
+  sortOrder: number;
 }
 
-export enum Type {
-  C = "C",
-  N = "N",
-  Y = "Y",
+export interface EdCourseCode {
+  prefix: string;
+  number: string;
+  suffix: string;
+  courseHyphen: string;
+  courseSpace: string;
+  courseSmashed: string;
+}
+
+export interface CourseRestriction {
+  groupCode: string;
+  groupDescription: string;
+  restrictionCode: string;
+  restriction: string;
+}
+export interface Instructor {
+  firstName: string;
+  lastName: string;
+}
+export interface Section {
+  sisSectionId: string;
+  linkCode: string | null;
+  linkCodeForSort: string | null;
+  rnrSessionId: number;
+  peSectionId: number;
+  courseId: number;
+  hasDClearance: boolean;
+  classType: null;
+  name: null;
+  notes: null;
+  description: null;
+  group: null;
+  schedule: Schedule[];
+  totalSeats: number;
+  registeredSeats: number;
+  waitlistedSeats: null;
+  rnrMode: string;
+  session: Session;
+  units: string[];
+  instructors: Instructor[];
+  syllabus: string;
+  isCancelled: boolean;
+  isFull: boolean;
+  rnrModeCode: string;
+  term: Term;
+  termCode: number;
+  season: string;
+  year: number;
+}
+
+export interface Schedule {
+  dayCode: null | string;
+  days: string[];
+  startTime: string;
+  endTime: string;
+  location: string;
+  building: string;
+  room: string;
+  sectionLocationSqNumber: number;
+  buildingRoom: string;
+}
+
+export interface Session {
+  termCode: string;
+  rnrSessionCode: string;
+  description: null;
+  rnrSessionId: number;
+}
+
+export interface Term {
+  value: number;
+  year: number;
+  term: number;
+  season: string;
 }

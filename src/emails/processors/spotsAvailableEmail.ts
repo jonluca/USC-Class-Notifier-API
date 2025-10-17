@@ -10,9 +10,9 @@ export const spotsAvailableEmail = async (
     student: { id: string };
   },
 ) => {
-  const { email, sectionEntry } = props;
-  const spotsAvailable = sectionEntry.available;
-  const className = sectionEntry.courseID;
+  const { email, sectionEntry, course } = props;
+  const spotsAvailable = sectionEntry.totalSeats - sectionEntry.registeredSeats;
+  const className = course.fullCourseName;
   const spotText = spotsAvailable === 1 ? "spot" : "spots";
   const subject = `${spotsAvailable} ${spotText} open for ${className}!`;
   const sectionId = props.section.id;

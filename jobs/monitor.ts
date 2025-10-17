@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
 import { createClassInfo, runRefresh } from "@/server/api/controller";
 import logger from "@/server/logger";

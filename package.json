@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit",
     "monitor": "tsx jobs/monitor.ts",
     "monitor:venmo": "tsx jobs/venmo/index.ts",
-    "refresh-rmp": "tsx jobs/refreshRmpData.ts",
+    "refresh-rmp": "tsx jobs/refreshRmpData.ts && prettier -w src/data",
     "dev:extension": "plasmo dev --src-path src",
     "build:extension": "NODE_ENV=production plasmo build",
     "package:extension": "NODE_ENV=production plasmo build && plasmo package"
@@ -138,6 +138,7 @@
     }
   },
   "devDependencies": {
+    "@react-email/preview-server": "^4.3.0",
     "@types/html-to-text": "^9",
     "@types/pg": "^8"
   }

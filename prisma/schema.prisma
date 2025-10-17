@@ -114,6 +114,7 @@ model ClassInfo {
   session            String?
   location           String?
   isDistanceLearning Boolean          @default(false)
+  hasDClearance      Boolean          @default(false)
   Section            WatchedSection[]
 
   @@unique([section, semester])
