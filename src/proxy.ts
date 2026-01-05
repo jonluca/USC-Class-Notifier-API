@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { isAuthenticated } from "@/server/auth";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   if (!isAuthenticated(req)) {
     return new NextResponse("Authentication required", {
       status: 401,
