@@ -1,11 +1,11 @@
 import "dotenv/config";
-import { GmailVenmoClient } from "./gmailClient";
+import { GmailVenmoImapClient } from "./gmailClient";
 import logger from "@/server/logger";
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
 import { sendMessage } from "@/server/Twilio";
 import dayjs from "dayjs";
 
-const client = new GmailVenmoClient();
+const client = new GmailVenmoImapClient();
 
 let lastSuccess: null | Date = null;
 let consecutiveJobFailures = 0;
@@ -24,6 +24,7 @@ const checkVenmoEmails = async () => {
     try {
       logger.info("Checking for Venmo emails via Gmail API");
       await client.checkEmails();
+
       lastSuccess = new Date();
       consecutiveJobFailures = 0;
       logger.info("Finished checking Venmo emails");
