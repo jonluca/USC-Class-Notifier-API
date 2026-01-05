@@ -55,9 +55,8 @@ const TermsOfService: NextPage = () => {
                   been released or if {"they're"} full yet, and will just continuously spam you with emails.
                   <br />
                   <br />
-                  If you {"haven't"} received text messages but have paid for them, make sure I have liked your Venmo
-                  payment and that the body of the Venmo payment is only your email address, and that email address
-                  matches the email you signed up for notifications with. <br />
+                  If you {"haven't"} received text messages but have paid for them, and section hasn't been marked as
+                  paid in your dashboard within 1 hour, please reach out to usc@jonlu.ca for support. <br />
                   <br />
                   As a reminder, this is just a service I, a student at USC, made in my spare time. {"It's"} not a
                   company, or an
