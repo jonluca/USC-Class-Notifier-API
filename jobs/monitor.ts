@@ -4,6 +4,9 @@ import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
 import { createClassInfo, runRefresh } from "@/server/api/controller";
 import logger from "@/server/logger";
 import { isProd } from "@/constants";
+import { GmailVenmoImapClient } from "./venmoGmail/gmailClient.ts";
+import { sendMessage } from "@/server/Twilio.ts";
+import { sendPaidNotificationsEmails } from "@/server/paid-notifications-emails.ts";
 
 const scheduler = new ToadScheduler();
 const job = new SimpleIntervalJob(
@@ -29,6 +32,45 @@ const classInfoJob = new SimpleIntervalJob(
   },
 );
 
+const client = new GmailVenmoImapClient();
+
+const checkVenmoEmails = async () => {
+  try {
+    logger.info("Checking for Venmo emails via Gmail API");
+    await client.checkEmails();
+
+    logger.info("Finished checking Venmo emails");
+    return;
+  } catch (e) {
+    await sendMessage({ to: process.env.TO_NUMBER!, message: `Error checking Venmo emails via Gmail: ${e}` });
+    logger.error(e);
+  }
+};
+
+const gmailJob = new SimpleIntervalJob(
+  { minutes: 15, runImmediately: Boolean(process.env.RUN_NOW) },
+  new AsyncTask("Venmo Gmail checker", checkVenmoEmails, (err: Error) => {
+    logger.error("Error in Venmo Gmail checker task");
+    logger.error(err);
+  }),
+  {
+    preventOverrun: true,
+  },
+);
+
+const paidNotificationEmails = new SimpleIntervalJob(
+  { minutes: 5, runImmediately: Boolean(process.env.RUN_NOW) },
+  new AsyncTask("Paid notification sender", sendPaidNotificationsEmails, (err: Error) => {
+    logger.error("Error in paid notification task");
+    logger.error(err);
+  }),
+  {
+    preventOverrun: true,
+  },
+);
+
 logger.info(`Starting monitor jobs - ${isProd ? "PROD" : "DEV"}`);
+scheduler.addSimpleIntervalJob(paidNotificationEmails);
+scheduler.addSimpleIntervalJob(gmailJob);
 scheduler.addSimpleIntervalJob(job);
 scheduler.addSimpleIntervalJob(classInfoJob);
