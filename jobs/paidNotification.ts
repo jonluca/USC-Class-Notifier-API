@@ -58,7 +58,7 @@ const task = new AsyncTask("Paid notification sender", sendPaidNotifications, (e
   logger.error(err);
 });
 
-const job = new SimpleIntervalJob({ minutes: 15, runImmediately: Boolean(process.env.RUN_NOW) }, task, {
+const job = new SimpleIntervalJob({ minutes: 5, runImmediately: Boolean(process.env.RUN_NOW) }, task, {
   preventOverrun: true,
 });
 

@@ -30,6 +30,16 @@ export default function Index() {
             </div>
           </div>
         </div>
+        {/* Footer with /terms and /privacy links */}
+        <footer className="mt-12 text-center text-sm text-gray-500 absolute bottom-4 mx-auto">
+          <a href="/terms" className="underline hover:text-gray-700">
+            Terms of Service
+          </a>
+          {" | "}
+          <a href="/privacy" className="underline hover:text-gray-700">
+            Privacy Policy
+          </a>
+        </footer>
       </section>
     </>
   );
