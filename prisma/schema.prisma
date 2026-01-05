@@ -56,6 +56,7 @@ model WatchedSection {
 
   paidId        String
   isPaid        Boolean @default(false)
+  paidNotified  Boolean @default(false) // If true, the user has been notified that their payment was processed
   phoneOverride String? // If set, will override the phone number for this section
 
   studentId        String
@@ -72,6 +73,7 @@ model WatchedSection {
   @@index([semester])
   @@index([notified])
   @@index([isPaid])
+  @@index([isPaid, paidNotified])
   @@index([phoneOverride])
   @@index([classInfoId])
   @@index([createdAt])
