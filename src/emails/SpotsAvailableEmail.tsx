@@ -12,6 +12,52 @@ export interface SpotsAvailableEmailProps {
   course: Course;
   numberOfStudentsWatching: number;
 }
+
+const primaryButtonStyle = {
+  backgroundColor: "#000000",
+  borderRadius: "12px",
+  color: "#ffffff",
+  fontWeight: "bold" as const,
+  textDecoration: "none" as const,
+  textAlign: "center" as const,
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  width: "100%",
+  fontSize: "18px",
+  marginTop: "16px",
+  display: "block",
+};
+
+const neutralButtonStyle = {
+  backgroundColor: "#404040",
+  borderRadius: "12px",
+  color: "#ffffff",
+  fontWeight: "bold" as const,
+  textDecoration: "none" as const,
+  textAlign: "center" as const,
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  width: "100%",
+  fontSize: "18px",
+  marginTop: "16px",
+  display: "block",
+};
+
+const secondaryButtonStyle = {
+  backgroundColor: "#ede9fe",
+  borderRadius: "12px",
+  color: "#000000",
+  fontWeight: "bold" as const,
+  textDecoration: "none" as const,
+  textAlign: "center" as const,
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  width: "100%",
+  fontSize: "18px",
+  marginTop: "8px",
+  display: "block",
+};
+
 const SpotsAvailableEmail = ({ course, sectionEntry, key, sectionId }: SpotsAvailableEmailProps) => {
   const spotsAvailable = sectionEntry.totalSeats - sectionEntry.registeredSeats;
   const className = course.name;
@@ -22,36 +68,50 @@ const SpotsAvailableEmail = ({ course, sectionEntry, key, sectionId }: SpotsAvai
   const previewText = `${spotsAvailable} ${spotText} available in ${courseID}`;
   return (
     <EmailBase previewText={previewText}>
-      <Text className="text-black text-[24px] font-bold text-center p-0 mt-6 mx-0">{previewText}</Text>
-      <Section className="mx-auto mt-6">
+      <Text
+        style={{
+          color: "#000000",
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+          padding: 0,
+          marginTop: "24px",
+          marginLeft: 0,
+          marginRight: 0,
+        }}
+      >
+        {previewText}
+      </Text>
+      <Section style={{ marginLeft: "auto", marginRight: "auto", marginTop: "24px" }}>
         <Row>
-          <Text className="text-black text-[16px] px-2 m-0">
+          <Text style={{ color: "#000000", fontSize: "16px", paddingLeft: "8px", paddingRight: "8px", margin: 0 }}>
             You are receiving this email because you requested to be notified when spots opened up for {courseID},{" "}
             {className} - Section {section}.
           </Text>
         </Row>
         <Row>
-          <Text className="text-black text-[16px] px-2 m-0 font-bold mt-2">
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: "16px",
+              paddingLeft: "8px",
+              paddingRight: "8px",
+              margin: 0,
+              fontWeight: "bold",
+              marginTop: "8px",
+            }}
+          >
             You will not be notified again unless you click the button below.
           </Text>
         </Row>
       </Section>
-      <Button
-        className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-        href={`${baseDomain}/watch?key=${key}&section=${sectionId}`}
-      >
+      <Button style={primaryButtonStyle} href={`${baseDomain}/watch?key=${key}&section=${sectionId}`}>
         Continue receiving notifications
       </Button>
-      <Button
-        className="bg-neutral-700 rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-        href={`${baseDomain}/dashboard?key=${key}`}
-      >
+      <Button style={neutralButtonStyle} href={`${baseDomain}/dashboard?key=${key}`}>
         View Dashboard
       </Button>
-      <Button
-        className="bg-violet-100 rounded-xl text-black font-bold no-underline text-center py-2 w-full text-lg mt-2"
-        href={`${baseDomain}/faq?key=${key}`}
-      >
+      <Button style={secondaryButtonStyle} href={`${baseDomain}/faq?key=${key}`}>
         FAQ
       </Button>
     </EmailBase>

@@ -11,35 +11,81 @@ export interface PaidProcessedEmailProps {
   classInfo: ClassInfo | null;
 }
 
+const primaryButtonStyle = {
+  backgroundColor: "#000000",
+  borderRadius: "12px",
+  color: "#ffffff",
+  fontWeight: "bold" as const,
+  textDecoration: "none" as const,
+  textAlign: "center" as const,
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  width: "100%",
+  fontSize: "18px",
+  marginTop: "16px",
+  display: "block",
+};
+
+const secondaryButtonStyle = {
+  backgroundColor: "#ede9fe",
+  borderRadius: "12px",
+  color: "#000000",
+  fontWeight: "bold" as const,
+  textDecoration: "none" as const,
+  textAlign: "center" as const,
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  width: "100%",
+  fontSize: "18px",
+  marginTop: "8px",
+  display: "block",
+};
+
 const PaidProcessedEmail = ({ classInfo, sectionEntry, verificationKey }: PaidProcessedEmailProps) => {
   const headerTitle = classInfo?.courseNumber || `Section ${sectionEntry.section}`;
   const previewText = `Payment received for ${headerTitle}!`;
 
   return (
     <EmailBase previewText={previewText}>
-      <Text className="text-black text-[24px] font-bold text-center p-0 mt-6 mx-0">{previewText}</Text>
-      <Section className="mx-auto mt-6">
+      <Text
+        style={{
+          color: "#000000",
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+          padding: 0,
+          marginTop: "24px",
+          marginLeft: 0,
+          marginRight: 0,
+        }}
+      >
+        {previewText}
+      </Text>
+      <Section style={{ marginLeft: "auto", marginRight: "auto", marginTop: "24px" }}>
         <Row>
-          <Text className="text-black text-[16px] px-2 m-0">
+          <Text style={{ color: "#000000", fontSize: "16px", paddingLeft: "8px", paddingRight: "8px", margin: 0 }}>
             Your payment has been processed for {headerTitle ? `${headerTitle} - ` : ""}Section {sectionEntry.section}.
           </Text>
         </Row>
         <Row>
-          <Text className="text-black text-[16px] px-2 pt-4 m-0">
+          <Text
+            style={{
+              color: "#000000",
+              fontSize: "16px",
+              paddingLeft: "8px",
+              paddingRight: "8px",
+              paddingTop: "16px",
+              margin: 0,
+            }}
+          >
             You will now receive text notifications when spots open up for this section.
           </Text>
         </Row>
       </Section>
-      <Button
-        className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-        href={`${baseDomain}/dashboard?key=${verificationKey}`}
-      >
+      <Button style={primaryButtonStyle} href={`${baseDomain}/dashboard?key=${verificationKey}`}>
         View Dashboard
       </Button>
-      <Button
-        className="bg-violet-100 rounded-xl text-black font-bold no-underline text-center py-2 w-full text-lg mt-2"
-        href={`${baseDomain}/faq?key=${verificationKey}`}
-      >
+      <Button style={secondaryButtonStyle} href={`${baseDomain}/faq?key=${verificationKey}`}>
         FAQ
       </Button>
     </EmailBase>

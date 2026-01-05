@@ -11,49 +11,93 @@ export interface NowWatchingEmailProps {
   classInfo: ClassInfo | null;
   showVenmoInfo?: boolean;
 }
+
+const buttonStyle = {
+  backgroundColor: "#000000",
+  borderRadius: "12px",
+  color: "#ffffff",
+  fontWeight: "bold" as const,
+  textDecoration: "none" as const,
+  textAlign: "center" as const,
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  width: "100%",
+  fontSize: "18px",
+  marginTop: "16px",
+  display: "block",
+};
+
 const NowWatchingEmail = ({ classInfo, sectionEntry, verificationKey, showVenmoInfo }: NowWatchingEmailProps) => {
   const headerTitle = classInfo?.courseNumber;
   const previewText = `Watching ${headerTitle}!`;
 
   return (
     <EmailBase previewText={previewText}>
-      <Text className="text-black text-[24px] font-bold text-center p-0 mt-6 mx-0">{previewText}</Text>
-      <Section className="mx-auto mt-6">
+      <Text
+        style={{
+          color: "#000000",
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+          padding: 0,
+          marginTop: "24px",
+          marginLeft: 0,
+          marginRight: 0,
+        }}
+      >
+        {previewText}
+      </Text>
+      <Section style={{ marginLeft: "auto", marginRight: "auto", marginTop: "24px" }}>
         <Row>
-          <Text className="text-black text-[16px] px-2 m-0">
+          <Text style={{ color: "#000000", fontSize: "16px", paddingLeft: "8px", paddingRight: "8px", margin: 0 }}>
             You are now watching {headerTitle ? `${headerTitle} - ` : ""}Section {sectionEntry.section}.
           </Text>
           {showVenmoInfo && (
             <>
-              <Text className="text-black text-[16px] px-2 pt-4 m-0">
+              <Text
+                style={{
+                  color: "#000000",
+                  fontSize: "16px",
+                  paddingLeft: "8px",
+                  paddingRight: "8px",
+                  paddingTop: "16px",
+                  margin: 0,
+                }}
+              >
                 To receive text notifications, send a venmo to{" "}
                 <Link href={"https://venmo.com/u/jonluca"}>@JonLuca</Link> with just the following code in it:
               </Text>
-              <Text className="text-black text-[24px] p-2 m-0 font-bold w-full text-center">{sectionEntry.paidId}</Text>
+              <Text
+                style={{
+                  color: "#000000",
+                  fontSize: "24px",
+                  padding: "8px",
+                  margin: 0,
+                  fontWeight: "bold",
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                {sectionEntry.paidId}
+              </Text>
             </>
           )}
         </Row>
       </Section>
       {showVenmoInfo && (
         <>
-          <Button
-            className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-            href={`venmo://paycharge?txn=pay&recipients=JonLuca&amount=1&note=${sectionEntry.paidId}`}
-          >
+          <Button style={buttonStyle} href={`venmo://paycharge?txn=pay&recipients=JonLuca&amount=1&note=${sectionEntry.paidId}`}>
             Send Venmo (app)
           </Button>
           <Button
-            className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
+            style={buttonStyle}
             href={`https://account.venmo.com/pay?recipients=JonLuca&amount=1&note=${sectionEntry.paidId}`}
           >
             Send Venmo (website)
           </Button>
         </>
       )}
-      <Button
-        className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-        href={`${baseDomain}/dashboard?key=${verificationKey}`}
-      >
+      <Button style={buttonStyle} href={`${baseDomain}/dashboard?key=${verificationKey}`}>
         View Dashboard
       </Button>
     </EmailBase>

@@ -1,5 +1,4 @@
 import { Body, Container, Head, Html, Preview } from "@react-email/components";
-import { Tailwind } from "@react-email/tailwind";
 import * as React from "react";
 import EmailFooter from "./EmailFooter";
 import EmailHeader from "./EmailHeader";
@@ -16,16 +15,35 @@ const EmailBase = ({
   return (
     <Html>
       <Preview>{previewText}</Preview>
-      <Tailwind>
-        <Head />
-        <Body className="bg-gray-100 my-auto mx-auto font-sans p-2 rounded-3xl">
-          <Container className="rounded-3xl bg-white mx-auto md:mt-8 p-[20px] max-w-[465px]">
-            {!hideHeader && <EmailHeader />}
-            {children}
-          </Container>
-          <EmailFooter />
-        </Body>
-      </Tailwind>
+      <Head />
+      <Body
+        style={{
+          backgroundColor: "#f3f4f6",
+          marginTop: "auto",
+          marginBottom: "auto",
+          marginLeft: "auto",
+          marginRight: "auto",
+          fontFamily: "ui-sans-serif, system-ui, sans-serif",
+          padding: "8px",
+          borderRadius: "24px",
+        }}
+      >
+        <Container
+          style={{
+            borderRadius: "24px",
+            backgroundColor: "#ffffff",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "32px",
+            padding: "20px",
+            maxWidth: "465px",
+          }}
+        >
+          {!hideHeader && <EmailHeader />}
+          {children}
+        </Container>
+        <EmailFooter />
+      </Body>
     </Html>
   );
 };
