@@ -4833,7 +4833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-email/components@npm:^1.0.3":
+"@react-email/components@npm:1.0.3":
   version: 1.0.3
   resolution: "@react-email/components@npm:1.0.3"
   dependencies:
@@ -7702,8 +7702,9 @@ __metadata:
     "@plasmohq/storage": "npm:^1.15.0"
     "@prisma/adapter-pg": "npm:^7.2.0"
     "@prisma/client": "npm:^7.2.0"
-    "@react-email/components": "npm:^1.0.3"
+    "@react-email/components": "npm:1.0.3"
     "@react-email/preview-server": "npm:^5.1.1"
+    "@react-email/render": "npm:2.0.1"
     "@tailwindcss/typography": "npm:^0.5.19"
     "@tanstack/react-query": "npm:^5.90.16"
     "@tanstack/react-query-devtools": "npm:^5.91.2"
