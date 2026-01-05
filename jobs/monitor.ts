@@ -58,19 +58,7 @@ const gmailJob = new SimpleIntervalJob(
   },
 );
 
-const paidNotificationEmails = new SimpleIntervalJob(
-  { minutes: 5, runImmediately: Boolean(process.env.RUN_NOW) },
-  new AsyncTask("Paid notification sender", sendPaidNotificationsEmails, (err: Error) => {
-    logger.error("Error in paid notification task");
-    logger.error(err);
-  }),
-  {
-    preventOverrun: true,
-  },
-);
-
 logger.info(`Starting monitor jobs - ${isProd ? "PROD" : "DEV"}`);
-scheduler.addSimpleIntervalJob(paidNotificationEmails);
 scheduler.addSimpleIntervalJob(gmailJob);
 scheduler.addSimpleIntervalJob(job);
 scheduler.addSimpleIntervalJob(classInfoJob);

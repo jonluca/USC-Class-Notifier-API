@@ -3,6 +3,7 @@ import { ImapFlow } from "imapflow";
 import { simpleParser } from "mailparser";
 import { convert } from "html-to-text";
 import { prisma } from "@/server/db.ts";
+import { sendPaidNotificationsEmails } from "@/server/paid-notifications-emails.ts";
 
 /**
  * ENV:
@@ -17,6 +18,7 @@ export class GmailVenmoImapClient {
         paidId: {
           in: ids,
         },
+        isPaid: false,
       },
       data: {
         isPaid: true,
@@ -143,5 +145,8 @@ export class GmailVenmoImapClient {
 
     const updatedCount = await this.submitPaidIds(paidIds);
     console.info(`Marked ${updatedCount} sections as paid based on Venmo emails`);
+    if (updatedCount) {
+      await sendPaidNotificationsEmails();
+    }
   };
 }

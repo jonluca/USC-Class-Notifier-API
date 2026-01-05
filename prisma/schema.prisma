@@ -73,6 +73,7 @@ model WatchedSection {
   @@index([semester])
   @@index([notified])
   @@index([isPaid])
+  @@index([paidNotified])
   @@index([isPaid, paidNotified])
   @@index([phoneOverride])
   @@index([classInfoId])
