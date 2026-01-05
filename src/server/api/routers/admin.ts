@@ -21,4 +21,22 @@ export const adminRouter = {
         },
       });
     }),
+  addPaidId: adminProcedure
+    .input(
+      z.object({
+        paidIds: z.array(z.string()),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { paidIds } = input;
+      const result = await ctx.prisma.watchedSection.updateMany({
+        where: {
+          paidId: { in: paidIds },
+        },
+        data: {
+          isPaid: true,
+        },
+      });
+      return { updated: result.count };
+    }),
 } satisfies TRPCRouterRecord;
