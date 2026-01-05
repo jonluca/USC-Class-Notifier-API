@@ -14,7 +14,7 @@ export const verificationEmail = async ({
     ? `Sign in to USC Schedule Helper`
     : `Verify your email for the USC Schedule Helper`;
   await sendEmail({
-    EmailTemplate: VerificationEmail({ isVerifiedAlready, key }),
+    EmailTemplate: VerificationEmail({ isVerifiedAlready, verificationKey: key }),
     recipient: email,
     subject,
     previewText: subject,

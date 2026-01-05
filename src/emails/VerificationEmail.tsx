@@ -4,10 +4,10 @@ import EmailBase from "./components/EmailBase";
 import { baseDomain } from "@/constants";
 
 interface VerificationEmailProps {
-  key: string;
+  verificationKey: string;
   isVerifiedAlready?: boolean;
 }
-const VerificationEmail = ({ isVerifiedAlready, key }: VerificationEmailProps) => {
+const VerificationEmail = ({ isVerifiedAlready, verificationKey }: VerificationEmailProps) => {
   const previewText = isVerifiedAlready ? "Sign in" : "🎉 Welcome to the USC Schedule Helper!";
   return (
     <EmailBase previewText={previewText}>
@@ -23,7 +23,7 @@ const VerificationEmail = ({ isVerifiedAlready, key }: VerificationEmailProps) =
       </Section>
       <Button
         className="bg-black rounded-xl text-white font-bold no-underline text-center py-2 w-full text-lg mt-4"
-        href={`${baseDomain}/verify?key=${key}`}
+        href={`${baseDomain}/verify?key=${verificationKey}`}
       >
         {isVerifiedAlready ? "Sign in" : "Verify"}
       </Button>
@@ -31,6 +31,6 @@ const VerificationEmail = ({ isVerifiedAlready, key }: VerificationEmailProps) =
   );
 };
 
-VerificationEmail.PreviewProps = { isVerifiedAlready: true, key: "asdf" } as VerificationEmailProps;
+VerificationEmail.PreviewProps = { isVerifiedAlready: true, verificationKey: "asdf" } as VerificationEmailProps;
 
 export default VerificationEmail;
