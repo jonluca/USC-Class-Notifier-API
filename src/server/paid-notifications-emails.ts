@@ -6,8 +6,6 @@ import { paidProcessedEmail } from "@/emails/processors/paidProcessedEmail";
 import logger from "@/server/logger";
 
 export const sendPaidNotificationsEmails = async () => {
-  logger.info("Checking for paid sections that need notification");
-
   // Find all sections where isPaid is true but paidNotified is false
   const sectionsToNotify = await prisma.watchedSection.findMany({
     where: {
@@ -21,11 +19,10 @@ export const sendPaidNotificationsEmails = async () => {
   });
 
   if (sectionsToNotify.length === 0) {
-    logger.info("No paid sections need notification");
     return;
   }
 
-  logger.info(`Found ${sectionsToNotify.length} section(s) to notify`);
+  logger.info(`Sending ${sectionsToNotify.length} payment succeeded emails`);
 
   for (const section of sectionsToNotify) {
     try {
@@ -41,8 +38,6 @@ export const sendPaidNotificationsEmails = async () => {
         where: { id: section.id },
         data: { paidNotified: true },
       });
-
-      logger.info(`Notified ${section.student.email} for section ${section.section}`);
     } catch (error) {
       logger.error(`Failed to send paid notification for section ${section.id}: ${error}`);
     }

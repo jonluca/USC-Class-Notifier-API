@@ -6,7 +6,6 @@ import logger from "@/server/logger";
 import { isProd } from "@/constants";
 import { GmailVenmoImapClient } from "./venmoGmail/gmailClient.ts";
 import { sendMessage } from "@/server/Twilio.ts";
-import { sendPaidNotificationsEmails } from "@/server/paid-notifications-emails.ts";
 
 const scheduler = new ToadScheduler();
 const job = new SimpleIntervalJob(
@@ -36,10 +35,7 @@ const client = new GmailVenmoImapClient();
 
 const checkVenmoEmails = async () => {
   try {
-    logger.info("Checking for Venmo emails via Gmail API");
     await client.checkEmails();
-
-    logger.info("Finished checking Venmo emails");
     return;
   } catch (e) {
     await sendMessage({ to: process.env.TO_NUMBER!, message: `Error checking Venmo emails via Gmail: ${e}` });

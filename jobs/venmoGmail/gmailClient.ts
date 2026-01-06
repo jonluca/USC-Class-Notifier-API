@@ -4,6 +4,7 @@ import { simpleParser } from "mailparser";
 import { convert } from "html-to-text";
 import { prisma } from "@/server/db.ts";
 import { sendPaidNotificationsEmails } from "@/server/paid-notifications-emails.ts";
+import logger from "@/server/logger.ts";
 
 /**
  * ENV:
@@ -79,10 +80,8 @@ export class GmailVenmoImapClient {
       // Gmail supports the "All Mail" mailbox for searching across archived+inbox.
       // If it doesn't exist (rare), fall back to INBOX.
       const gmailAllMail = "[Gmail]/All Mail";
-      let mailbox = "INBOX";
       try {
         await client.mailboxOpen(gmailAllMail);
-        mailbox = gmailAllMail;
       } catch {
         await client.mailboxOpen("INBOX");
       }
@@ -97,7 +96,7 @@ export class GmailVenmoImapClient {
       });
 
       if (!uids) {
-        console.warn("No emails found");
+        logger.warn("No emails found");
         return [];
       }
       // Fetch newest first
@@ -139,12 +138,11 @@ export class GmailVenmoImapClient {
   checkEmails = async (): Promise<void> => {
     const paidIds = await this.fetchVenmoPaidYouIds();
     if (paidIds.length === 0) {
-      console.info("No Venmo paid IDs found in emails");
       return;
     }
 
     const updatedCount = await this.submitPaidIds(paidIds);
-    console.info(`Marked ${updatedCount} sections as paid based on Venmo emails`);
+    logger.info(`Marked ${updatedCount} sections as paid based on Venmo emails`);
     if (updatedCount) {
       await sendPaidNotificationsEmails();
     }

@@ -20,5 +20,5 @@ export const paidProcessedEmail = async (props: PaidProcessedEmailProps) => {
     subject,
     previewText: subject,
   });
-  logger.info(`Sent paid processed email to ${email} for section ${sectionEntry.section}`);
+  logger.info(`Sent payment processed email to ${email} for section ${sectionEntry.section}`);
 };
