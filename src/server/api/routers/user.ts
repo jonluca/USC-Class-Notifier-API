@@ -245,7 +245,7 @@ WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.
         },
       });
     }),
-  changePhoneNumberForAccount: publicProcedure
+  changePhoneNumberForAccount: publicProcedureWithUser
     .input(
       z.object({
         phoneNumber: z.string().length(10),
