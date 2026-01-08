@@ -101,20 +101,41 @@ const PaidIdLookupForm = () => {
             Student Details
           </Typography>
           <div className="space-y-1 text-neutral-700">
-            <div><span className="font-semibold">Email:</span> {lookupResult.student.email}</div>
-            <div><span className="font-semibold">Phone:</span> {lookupResult.student.phone || "N/A"}</div>
-            <div><span className="font-semibold">USC ID:</span> {lookupResult.student.uscID || "N/A"}</div>
-            <div><span className="font-semibold">Valid Account:</span> {lookupResult.student.validAccount ? "Yes" : "No"}</div>
-            <div><span className="font-semibold">Created:</span> {new Date(lookupResult.student.createdAt).toLocaleDateString()}</div>
+            <div>
+              <span className="font-semibold">Email:</span> {lookupResult.student.email}
+            </div>
+            <div>
+              <span className="font-semibold">Phone:</span> {lookupResult.student.phone || "N/A"}
+            </div>
+            <div>
+              <span className="font-semibold">USC ID:</span> {lookupResult.student.uscID || "N/A"}
+            </div>
+            <div>
+              <span className="font-semibold">Valid Account:</span> {lookupResult.student.validAccount ? "Yes" : "No"}
+            </div>
+            {lookupResult.student.createdAt && (
+              <div>
+                <span className="font-semibold">Created:</span>{" "}
+                {new Date(lookupResult.student.createdAt).toLocaleDateString()}
+              </div>
+            )}
           </div>
           <Typography variant="body2" className="font-bold text-neutral-600 mt-3 mb-2">
             Section Details
           </Typography>
           <div className="space-y-1 text-neutral-700">
-            <div><span className="font-semibold">Section:</span> {lookupResult.section}</div>
-            <div><span className="font-semibold">Semester:</span> {lookupResult.semester}</div>
-            <div><span className="font-semibold">Paid:</span> {lookupResult.isPaid ? "Yes" : "No"}</div>
-            <div><span className="font-semibold">Notified:</span> {lookupResult.notified ? "Yes" : "No"}</div>
+            <div>
+              <span className="font-semibold">Section:</span> {lookupResult.section}
+            </div>
+            <div>
+              <span className="font-semibold">Semester:</span> {lookupResult.semester}
+            </div>
+            <div>
+              <span className="font-semibold">Paid:</span> {lookupResult.isPaid ? "Yes" : "No"}
+            </div>
+            <div>
+              <span className="font-semibold">Notified:</span> {lookupResult.notified ? "Yes" : "No"}
+            </div>
           </div>
         </div>
       )}

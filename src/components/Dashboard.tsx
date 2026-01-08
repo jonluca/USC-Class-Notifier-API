@@ -11,7 +11,7 @@ import { SettingEntry } from "@/components/SettingsEntry";
 import { toast } from "react-toastify";
 import PencilIcon from "@mui/icons-material/Edit";
 import Close from "@mui/icons-material/Close";
-import Save from "@mui/icons-material/Save";
+import Save from "@mui/icons-material/Check";
 import LinkIcon from "@mui/icons-material/Link";
 import Link from "next/link";
 import Cookies from "js-cookie";
