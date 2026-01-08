@@ -39,4 +39,21 @@ export const adminRouter = {
       });
       return { updated: result.count };
     }),
+  getStudentByPaidId: adminProcedure
+    .input(
+      z.object({
+        paidId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { paidId } = input;
+      return ctx.prisma.watchedSection.findFirst({
+        where: {
+          paidId,
+        },
+        include: {
+          student: true,
+        },
+      });
+    }),
 } satisfies TRPCRouterRecord;

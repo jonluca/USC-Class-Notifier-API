@@ -52,6 +52,53 @@ const AddPaidIdForm = () => {
   );
 };
 
+const PaidIdLookupForm = () => {
+  const [paidId, setPaidId] = useState("");
+  const { mutateAsync } = api.admin.getStudentByPaidId.useMutation();
+  const utils = api.useUtils();
+
+  return (
+    <div className="flex flex-col items-center gap-4 bg-gray-100 rounded-xl p-2 w-[400px] mt-4">
+      <Typography variant="body2" className="font-bold text-neutral-400 text-xs ml-4 -mb-3 w-full">
+        Lookup User by Paid ID
+      </Typography>
+      <TextField
+        className={`flex w-full bg-white rounded-xl`}
+        size="small"
+        variant="outlined"
+        sx={{
+          ".MuiOutlinedInput-notchedOutline": { border: 0 },
+          ".MuiOutlinedInput-root": { paddingY: 0.3 },
+          ".MuiInputBase-input": { fontSize: 16, fontWeight: "bold" },
+        }}
+        placeholder={"e.g. 12345678"}
+        onChange={(e) => {
+          setPaidId(e.target.value.trim());
+        }}
+        onKeyDown={async (e) => {
+          if (e.key === "Enter") {
+            if (!paidId) {
+              alert("Please enter a paid ID");
+              return;
+            }
+            const data = await mutateAsync({ paidId });
+            if (!data) {
+              alert("No section found with that paid ID");
+              return;
+            }
+            Cookies.set(cookieKey, data.student.verificationKey, {
+              path: "/",
+            });
+            await utils.invalidate();
+            setPaidId("");
+          }
+        }}
+        value={paidId}
+      />
+    </div>
+  );
+};
+
 export default () => {
   const [email, setEmail] = useState("");
   const { mutateAsync, data } = api.admin.getUserKey.useMutation();
@@ -96,12 +143,14 @@ export default () => {
             value={email}
           />
         </div>
+        <PaidIdLookupForm />
         <AddPaidIdForm />
       </>
     );
   }
   return (
     <>
+      <PaidIdLookupForm />
       <AddPaidIdForm />
       <Dashboard isAdmin />
     </>
