@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { splitDays } from "@/extension/utils";
 import $ from "jquery";
 import { insertAllOverlap } from "./insert-class-info";
@@ -6,6 +5,17 @@ import { insertAllOverlap } from "./insert-class-info";
 import * as Moment from "moment";
 import { extendMoment } from "moment-range";
 const moment = extendMoment(Moment);
+const USC_TIMEZONE = "America/Los_Angeles";
+const uscDayFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  timeZone: USC_TIMEZONE,
+});
+const uscTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+  timeZone: USC_TIMEZONE,
+});
 export interface Schedule {
   Data: Datum[];
 }
@@ -16,8 +26,8 @@ export interface Datum {
   Title: string;
   SectionId: string;
   Status: Status;
-  Start: Date;
-  End: Date;
+  Start: string | Date;
+  End: string | Date;
   StartTimezone: null;
   EndTimezone: null;
   RecurrenceRule: null;
@@ -29,6 +39,35 @@ export interface Datum {
 export enum Status {
   Conflicted = "Conflicted",
   Scheduled = "Scheduled",
+}
+
+function parseScheduleDate(dateLike: string | Date) {
+  if (dateLike instanceof Date) {
+    return Number.isNaN(dateLike.getTime()) ? null : dateLike;
+  }
+  const microsoftJsonDateMatch = dateLike.match(/\/Date\((\d+)(?:[-+]\d+)?\)\//);
+  if (microsoftJsonDateMatch) {
+    const parsedDate = new Date(Number(microsoftJsonDateMatch[1]));
+    return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+  }
+  const parsedDate = new Date(dateLike);
+  return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+}
+
+function formatScheduleDayInLosAngeles(dateLike: string | Date) {
+  const parsedDate = parseScheduleDate(dateLike);
+  if (!parsedDate) {
+    return null;
+  }
+  return uscDayFormatter.format(parsedDate);
+}
+
+function formatScheduleTimeInLosAngeles(dateLike: string | Date) {
+  const parsedDate = parseScheduleDate(dateLike);
+  if (!parsedDate) {
+    return null;
+  }
+  return uscTimeFormatter.format(parsedDate).replace(/\s+/g, "").toLowerCase();
 }
 
 export async function getCurrentSchedule(): Promise<Schedule | null> {
@@ -73,12 +112,16 @@ export function parseSchedule(data: Schedule) {
     classname: string;
   }[] = [];
   for (const singleClass of data.Data) {
-    const startTime = dayjs(singleClass.Start);
-    const endTime = dayjs(singleClass.End);
+    const startDay = formatScheduleDayInLosAngeles(singleClass.Start);
+    const startTime = formatScheduleTimeInLosAngeles(singleClass.Start);
+    const endTime = formatScheduleTimeInLosAngeles(singleClass.End);
+    if (!startDay || !startTime || !endTime) {
+      continue;
+    }
     const classInfo = singleClass.Title.split(" ");
     const time = {
-      day: [startTime.format("dddd")],
-      time: [startTime.format("hh:mma"), endTime.format("hh:mma")],
+      day: [startDay],
+      time: [startTime, endTime],
       section: classInfo[1].slice(1, -2),
       classname: classInfo[0],
     };
