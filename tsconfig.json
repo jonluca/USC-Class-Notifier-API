@@ -23,6 +23,5 @@
       "@app/prisma/*": ["./prisma/generated/*"],
       "-/*": ["./assets/*"]
     },
-    "baseUrl": "."
   }
 }
