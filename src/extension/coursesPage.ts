@@ -4,6 +4,33 @@ import { getProfessorRatings, ratingURLTemplate } from "@/extension/utils";
 
 const COURSE_ID_PATTERN = /\b([A-Z]{2,5}\s+\d+[A-Z]?)\b/;
 const TERM_PATTERN = /\/term\/(\d{5})(?:\/|$)/i;
+const COURSE_PAGE_CLICK_EVENT = "click.usc-helper-course-page";
+const COURSE_PAGE_PARSE_DELAYS_MS = [0, 150, 400];
+
+let coursePageObserver: MutationObserver | null = null;
+let pendingCoursePageParses: number[] = [];
+
+function clearScheduledCoursePageParses() {
+  for (const pendingParse of pendingCoursePageParses) {
+    window.clearTimeout(pendingParse);
+  }
+  pendingCoursePageParses = [];
+}
+
+function scheduleCoursePageParse() {
+  clearScheduledCoursePageParses();
+
+  const scheduledParses: number[] = [];
+  for (const delay of COURSE_PAGE_PARSE_DELAYS_MS) {
+    const timeoutId = window.setTimeout(() => {
+      pendingCoursePageParses = pendingCoursePageParses.filter((pendingParse) => pendingParse !== timeoutId);
+      parseCoursePage();
+    }, delay);
+    scheduledParses.push(timeoutId);
+  }
+
+  pendingCoursePageParses = scheduledParses;
+}
 
 function getTextContent(element: Element | undefined) {
   return element?.textContent?.replace(/\s+/g, " ").trim() || "";
@@ -192,6 +219,13 @@ function observeMatTableInsertion(callback: () => void) {
     return tables;
   }
 
+  function isTableRelatedElement(element: HTMLElement) {
+    return (
+      checkForTables(element).length > 0 ||
+      Boolean(element.closest("table, .mat-table, [mat-table], mat-table"))
+    );
+  }
+
   // Create the observer
   const observer = new MutationObserver((mutations) => {
     let shouldCallback = false;
@@ -209,6 +243,15 @@ function observeMatTableInsertion(callback: () => void) {
           shouldCallback = true;
         }
       });
+
+      if (shouldCallback || mutation.type !== "attributes") {
+        return;
+      }
+
+      const target = mutation.target;
+      if (target instanceof HTMLElement && isTableRelatedElement(target)) {
+        shouldCallback = true;
+      }
     });
     if (shouldCallback) {
       callback();
@@ -217,6 +260,8 @@ function observeMatTableInsertion(callback: () => void) {
 
   // Start observing
   observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["aria-expanded", "class", "hidden", "style"],
     childList: true,
     subtree: true,
   });
@@ -227,8 +272,15 @@ function observeMatTableInsertion(callback: () => void) {
 
 export function initCoursePage() {
   parseCoursePage();
-  // Example usage:
-  observeMatTableInsertion(() => {
-    parseCoursePage();
+
+  $(document)
+    .off(COURSE_PAGE_CLICK_EVENT)
+    .on(COURSE_PAGE_CLICK_EVENT, () => {
+      scheduleCoursePageParse();
+    });
+
+  coursePageObserver?.disconnect();
+  coursePageObserver = observeMatTableInsertion(() => {
+    scheduleCoursePageParse();
   });
 }
