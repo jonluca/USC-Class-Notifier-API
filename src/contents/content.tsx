@@ -15,6 +15,53 @@ import {
   useStorageItem,
 } from "@/extension/storage";
 
+const LOCATION_CHANGE_EVENT = "usc-schedule-helper:locationchange";
+
+type HistoryMethodName = "pushState" | "replaceState";
+type HistoryMethod = History["pushState"];
+
+function useLocationHref() {
+  const [href, setHref] = useState(() => window.location.href);
+
+  useEffect(() => {
+    const updateHref = () => {
+      const nextHref = window.location.href;
+      setHref((currentHref) => (currentHref === nextHref ? currentHref : nextHref));
+    };
+
+    const patchHistoryMethod = (methodName: HistoryMethodName) => {
+      const originalMethod = window.history[methodName] as HistoryMethod;
+
+      window.history[methodName] = function patchedHistoryMethod(...args) {
+        const result = Reflect.apply(originalMethod, window.history, args);
+        window.dispatchEvent(new Event(LOCATION_CHANGE_EVENT));
+        return result;
+      } as HistoryMethod;
+
+      return () => {
+        window.history[methodName] = originalMethod;
+      };
+    };
+
+    const restorePushState = patchHistoryMethod("pushState");
+    const restoreReplaceState = patchHistoryMethod("replaceState");
+
+    window.addEventListener(LOCATION_CHANGE_EVENT, updateHref);
+    window.addEventListener("popstate", updateHref);
+    window.addEventListener("hashchange", updateHref);
+
+    return () => {
+      restorePushState();
+      restoreReplaceState();
+      window.removeEventListener(LOCATION_CHANGE_EVENT, updateHref);
+      window.removeEventListener("popstate", updateHref);
+      window.removeEventListener("hashchange", updateHref);
+    };
+  }, []);
+
+  return href;
+}
+
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   const [styleCache] = useState(() =>
@@ -40,14 +87,17 @@ const ExtensionLogic = () => {
   const [enabled] = useStorageItem(extensionEnabledStorage, true);
   const [showConflicts] = useStorageItem(showConflictsStorage, true);
   const [showUnits] = useStorageItem(showUnitsStorage, true);
+  const href = useLocationHref();
   const selectedClass = useScheduleHelperContext((state) => state.selectedClass);
+
   useEffect(() => {
     initExtension({
       enabled,
       showConflicts,
       showUnits,
     });
-  }, [enabled, showConflicts, showUnits]);
+  }, [enabled, href, showConflicts, showUnits]);
+
   if (!selectedClass) {
     return null;
   }
