@@ -54,7 +54,7 @@ const NotifyButton = ({ data }: { data: Section }) => {
 
   return (
     <button
-      className="inline-flex py-1 items-center justify-center rounded-md bg-gray-900 px-3 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
+      className="inline-flex py-1 items-center justify-center rounded-md bg-gray-900 px-3 text-sm font-medium text-gray-50 shadow-sm transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
       disabled={isPending}
       onClick={submit}
     >
@@ -305,7 +305,7 @@ export default function Dashboard({
           </div>
           {userInfo.phone && (
             <button
-              className="inline-flex py-1 items-center justify-center rounded-md bg-gray-900 px-3 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex py-1 items-center justify-center rounded-md bg-gray-900 px-3 text-sm font-medium text-gray-50 shadow-sm transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
               disabled={isPending}
               onClick={setAccountLevelPhoneToAllSections}
             >

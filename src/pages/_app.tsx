@@ -20,7 +20,7 @@ const ReactQueryDevtools = dynamic(
     ssr: false,
   },
 );
-const App = ({ Component, pageProps: pageProps }: AppPropsType) => {
+const App = ({ Component, pageProps }: AppPropsType) => {
   return (
     <CacheProvider value={clientSideEmotionCache}>
       <CssBaseline />

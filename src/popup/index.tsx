@@ -1,20 +1,15 @@
 import "@/styles/globals.css";
-import { useStorage } from "@plasmohq/storage/hook";
-import { extensionEnabledKey, showConflictsKey, showUnitsKey } from "@/constants";
-import { rootShouldForwardProp, slotShouldForwardProp } from "@mui/material/styles/styled";
-
-window.addEventListener("click", function (e) {
-  const href = (e.target as HTMLAnchorElement)?.href;
-  if (href !== undefined) {
-    chrome.tabs.create({ url: href });
-  }
-});
+import {
+  extensionEnabledStorage,
+  showConflictsStorage,
+  showUnitsStorage,
+  useStorageItem,
+} from "@/extension/storage";
 
 function IndexPopup() {
-  const _FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
-  const [enabled, setEnabled] = useStorage(extensionEnabledKey, true);
-  const [showConflicts, setShowConflicts] = useStorage(showConflictsKey, true);
-  const [showUnits, setShowUnits] = useStorage(showUnitsKey, true);
+  const [enabled, setEnabled] = useStorageItem(extensionEnabledStorage, true);
+  const [showConflicts, setShowConflicts] = useStorageItem(showConflictsStorage, true);
+  const [showUnits, setShowUnits] = useStorageItem(showUnitsStorage, true);
   return (
     <div className={"px-4 pt-2 pb-1"}>
       <div className="border p-6 space-y-6 bg-white rounded-lg min-w-[400px]">
@@ -23,7 +18,7 @@ function IndexPopup() {
           <div className="flex items-center">
             <input
               id="enable-extension"
-              className="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
+              className="w-5 h-5 text-blue-600 bg-gray-100 rounded-sm border-gray-300 focus:ring-blue-500"
               type="checkbox"
               checked={enabled}
               onChange={() => setEnabled(!enabled)}
@@ -35,7 +30,7 @@ function IndexPopup() {
           <div className="flex items-center">
             <input
               id="show-conflicts"
-              className="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
+              className="w-5 h-5 text-blue-600 bg-gray-100 rounded-sm border-gray-300 focus:ring-blue-500"
               type="checkbox"
               checked={showConflicts}
               onChange={() => setShowConflicts(!showConflicts)}
@@ -48,7 +43,7 @@ function IndexPopup() {
           <div className="flex items-center">
             <input
               id="show-units"
-              className="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
+              className="w-5 h-5 text-blue-600 bg-gray-100 rounded-sm border-gray-300 focus:ring-blue-500"
               type="checkbox"
               checked={showUnits}
               onChange={() => setShowUnits(!showUnits)}
@@ -61,9 +56,17 @@ function IndexPopup() {
         </div>
       </div>
       <p className="mt-2">
-        <a href="https://jonlu.ca">&copy; {new Date().getFullYear()} JonLuca DeCaro </a> -{" "}
-        <a href="https://github.com/jonluca/USC-Class-Notifier-API">Source Code</a> -{" "}
-        <a href="mailto:uscschedulehelper@jonlu.ca">Support</a>
+        <a href="https://jonlu.ca" rel="noreferrer" target="_blank">
+          &copy; {new Date().getFullYear()} JonLuca DeCaro
+        </a>{" "}
+        -{" "}
+        <a href="https://github.com/jonluca/USC-Class-Notifier-API" rel="noreferrer" target="_blank">
+          Source Code
+        </a>{" "}
+        -{" "}
+        <a href="mailto:uscschedulehelper@jonlu.ca" rel="noreferrer" target="_blank">
+          Support
+        </a>
       </p>
     </div>
   );

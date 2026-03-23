@@ -1,0 +1,74 @@
+- generic [ref=e1]:
+  - generic:
+    - link [ref=e3] [cursor=pointer]:
+      - /url: /term-20261/course/csci-104#main
+      - text: Skip to main content
+    - generic [ref=e9]:
+      - banner [ref=e12]:
+        - button "Open Main Navigation" [ref=e13] [cursor=pointer]:
+          - img [ref=e14]: menu
+        - link "Schedule of Classes" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e18]: Schedule of Classes
+        - navigation [ref=e21]:
+          - link "Sign In" [ref=e23] [cursor=pointer]:
+            - /url: bff/login?returnUrl=%2Fhome
+            - generic [ref=e24]: Sign In
+      - main [ref=e30]:
+        - heading "Schedule of Classes" [level=1] [ref=e31]
+        - generic [ref=e33]:
+          - generic [ref=e35]: Please select a semester below to view the Course List and Registration Information.
+          - generic [ref=e36]:
+            - link "Fall 2026" [ref=e40] [cursor=pointer]:
+              - /url: /term/20263/catalogue
+              - img [ref=e42]
+              - button "Fall 2026" [ref=e43]
+            - link "Summer 2026" [ref=e47] [cursor=pointer]:
+              - /url: /term/20262/catalogue
+              - img [ref=e49]
+              - button "Summer 2026" [ref=e50]
+            - link "Spring 2026" [ref=e54] [cursor=pointer]:
+              - /url: /term/20261/catalogue
+              - img [ref=e56]
+              - button "Spring 2026" [ref=e57]
+        - link "Schedule of Classes Archive" [ref=e59] [cursor=pointer]:
+          - img [ref=e60]
+          - text: Schedule of Classes Archive
+      - contentinfo [ref=e63]:
+        - generic [ref=e65]:
+          - heading "Need help with Registration?" [level=2] [ref=e66]
+          - generic [ref=e67]:
+            - text: "Office of Academic Records and Registrar:"
+            - link "Registration Services - Opens in New Tab" [ref=e68] [cursor=pointer]:
+              - /url: https://arr.usc.edu/
+              - text: Registration Services
+              - img [ref=e69]: launch
+            - img [ref=e70]: "|"
+            - link "Registration FAQs - Opens in New Tab" [ref=e71] [cursor=pointer]:
+              - /url: https://ask.usc.edu/s/topic/0TOTV000000B3rJ4AS/academic-records-registration
+              - text: Registration FAQs
+              - img [ref=e72]: launch
+          - generic [ref=e73]:
+            - text: "Technical Issues:"
+            - generic [ref=e74]:
+              - text: ITS Service Desk
+              - link "(213) 740-5555" [ref=e75] [cursor=pointer]:
+                - /url: tel:+12137405555
+            - img [ref=e76]: "|"
+            - link "consult@usc.edu" [ref=e77] [cursor=pointer]:
+              - /url: mailto:consult@usc.edu
+            - img [ref=e78]: "|"
+            - link "Privacy Notice - Opens in New Tab" [ref=e79] [cursor=pointer]:
+              - /url: https://www.usc.edu/pages/usc-privacy-notice/
+              - text: Privacy Notice
+              - img [ref=e80]: launch
+            - img [ref=e81]: "|"
+            - link "Notice of Non-Discrimination - Opens in New Tab" [ref=e82] [cursor=pointer]:
+              - /url: https://eeotix.usc.edu/notice-of-non-discrimination/
+              - text: Notice of Non-Discrimination
+              - img [ref=e83]: launch
+            - img [ref=e84]: "|"
+            - link "Digital Accessibility - Opens in New Tab" [ref=e85] [cursor=pointer]:
+              - /url: https://accessibility.usc.edu/accessibility-at-usc/digital-accessibility/
+              - text: Digital Accessibility
+              - img [ref=e86]: launch

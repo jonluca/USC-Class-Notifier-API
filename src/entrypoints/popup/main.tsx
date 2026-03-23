@@ -1,0 +1,4 @@
+import Popup from "@/popup/index";
+import ReactDOM from "react-dom/client";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<Popup />);

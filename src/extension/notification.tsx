@@ -4,14 +4,15 @@ import Modal from "@mui/material/Modal";
 import { CircularProgress, TextField, Typography } from "@mui/material";
 import { trpc } from "@/extension/data";
 import { toast } from "react-toastify";
-import venmoBase64 from "data-base64:-/venmo.png";
-import venmoBase64Qr from "data-base64:-/venmo-qr.jpeg";
+import venmoImage from "-/venmo.png";
+import venmoQrImage from "-/venmo-qr.jpeg";
 import * as EmailValidator from "email-validator";
-import { rootShouldForwardProp, slotShouldForwardProp } from "@mui/material/styles/styled";
 import { getCurrentTerm } from "@/extension/getCurrentTerm";
 
 const localStorageEmailKey = "uscScheduleHelperEmail";
 const localStoragePhoneKey = "uscScheduleHelperPhone";
+const venmoImageSrc = venmoImage as string;
+const venmoQrImageSrc = venmoQrImage as string;
 const Input = ({
   label,
   value,
@@ -23,8 +24,6 @@ const Input = ({
   value: string;
   onChange: (value: string) => void;
 }) => {
-  const _FORCE_BUNDLE = [rootShouldForwardProp, slotShouldForwardProp];
-
   return (
     <div className="flex flex-col items-center gap-1 bg-gray-100 rounded-xl p-1 w-full">
       <Typography variant="body2" className="font-bold text-neutral-400 text-xs ml-4 -mb-3 w-full">
@@ -86,7 +85,7 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
       email,
       department: selectedClass.department,
       phone: phone || undefined,
-      semester: getCurrentTerm(),
+      semester: selectedClass.semester || getCurrentTerm(),
     });
   };
 
@@ -120,6 +119,7 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
                 <a
                   href={venmoUrl}
                   target={"_blank"}
+                  rel="noreferrer"
                   id="venmo-image"
                   style={{ position: "relative" }}
                   className={"my-2 underline"}
@@ -128,9 +128,16 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
                 </a>{" "}
                 with just the code {data.paidId}, like below:
               </span>
-              <a href={venmoUrl} target={"_blank"} id="venmo-image" style={{ position: "relative" }} className={"my-2"}>
+              <a
+                href={venmoUrl}
+                target={"_blank"}
+                rel="noreferrer"
+                id="venmo-image"
+                style={{ position: "relative" }}
+                className={"my-2"}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={venmoBase64 as unknown as string} alt="Venmo QR Code" />
+                <img src={venmoImageSrc} alt="Venmo QR Code" />
 
                 <span
                   className={"font-bold"}
@@ -144,7 +151,7 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
                 </span>
               </a>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={venmoBase64Qr as unknown as string} alt="Venmo QR Code" style={{ maxHeight: 250 }} />
+              <img src={venmoQrImageSrc} alt="Venmo QR Code" style={{ maxHeight: 250 }} />
               <span className={"font-bold"}>If it asks for a last 4 digits of the phone number, use 9020</span>
             </>
           ) : null}
@@ -245,7 +252,7 @@ const NotificationModal = () => {
     >
       <>
         <div
-          className={`flex outline-none flex-col items-center gap-4 w-full md:w-[500px] min-h-[200px] absolute bottom-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 px-6 py-6 rounded-t-3xl md:rounded-2xl shadow-lg bg-white max-h-screen overflow-y-auto pb-8 md:pb-4`}
+          className={`flex outline-hidden flex-col items-center gap-4 w-full md:w-[500px] min-h-[200px] absolute bottom-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 px-6 py-6 rounded-t-3xl md:rounded-2xl shadow-lg bg-white max-h-screen overflow-y-auto pb-8 md:pb-4`}
         >
           {selectedClass ? (
             "isInvalid" in selectedClass ? (

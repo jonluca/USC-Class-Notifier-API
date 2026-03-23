@@ -1,0 +1,343 @@
+- generic [ref=e1]:
+  - generic:
+    - link [ref=e3] [cursor=pointer]:
+      - /url: /term/20261/catalogue/search%3Fsearchphrase%3DCSCI%2520104#main
+      - text: Skip to main content
+    - generic [ref=e9]:
+      - banner [ref=e12]:
+        - link "Schedule of Classes" [ref=e13] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e14]: Schedule of Classes
+        - generic [ref=e16]:
+          - generic [ref=e22] [cursor=pointer]:
+            - combobox "Spring 2026 Semester" [ref=e24]:
+              - generic [ref=e27]: Spring 2026 Semester
+            - img [ref=e29]: keyboard_arrow_down
+          - navigation [ref=e30]:
+            - link "Courses" [ref=e31] [cursor=pointer]:
+              - /url: /term/20261/catalogue
+              - generic [ref=e32]: Courses
+            - link "Registration, Exams, and Fees" [ref=e35] [cursor=pointer]:
+              - /url: /term/20261/registration-information
+              - generic [ref=e36]: Registration, Exams, and Fees
+            - link "Sign In" [ref=e40] [cursor=pointer]:
+              - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+              - generic [ref=e41]: Sign In
+      - generic [ref=e48]:
+        - generic [ref=e55]:
+          - combobox "Search for Spring 2026 course prefixes and titles" [ref=e57]: CSCI 104
+          - generic [ref=e58]:
+            - button "Clear" [ref=e348] [cursor=pointer]:
+              - img [ref=e349]: close
+            - button "Search" [ref=e59] [cursor=pointer]:
+              - img [ref=e60]: search
+        - heading "Spring 2026 Search Results" [level=1] [ref=e357]
+        - navigation "breadcrumb" [ref=e359]:
+          - link "Schools / Departments" [ref=e361] [cursor=pointer]:
+            - /url: /term/20261/catalogue/school
+            - img [ref=e362]: chevron_left
+            - generic [ref=e363]: Schools / Departments
+        - generic [ref=e365]:
+          - generic [ref=e366]:
+            - heading "Courses" [level=1] [ref=e367]
+            - generic [ref=e368]:
+              - text: 1 courses found for "
+              - generic [ref=e369]: CSCI 104
+              - text: "\""
+          - generic [ref=e372]:
+            - generic [ref=e375]:
+              - button "Days" [ref=e377]:
+                - generic [ref=e378]: Days
+                - img [ref=e379]: expand_more
+              - button "Time" [ref=e383]:
+                - generic [ref=e384]: Time
+                - img [ref=e385]: expand_more
+              - button "Units" [ref=e389]:
+                - generic [ref=e390]: Units
+                - img [ref=e391]: expand_more
+              - generic [ref=e396]:
+                - generic [ref=e397] [cursor=pointer]:
+                  - checkbox "Show available sections only" [ref=e399]
+                  - generic:
+                    - img
+                - generic [ref=e400] [cursor=pointer]: Show available sections only
+            - button "Expand All" [ref=e402] [cursor=pointer]
+            - generic [ref=e403]:
+              - 'button "CSCI 104 - Data Structures 4.0 Units | Available Seats: 116" [expanded] [active] [ref=e404] [cursor=pointer]':
+                - generic [ref=e407]:
+                  - generic [ref=e410]: CSCI 104 - Data Structures
+                  - generic [ref=e412]: "4.0 Units | Available Seats: 116"
+              - 'region "CSCI 104 - Data Structures 4.0 Units | Available Seats: 116" [ref=e415]':
+                - generic [ref=e418]:
+                  - generic [ref=e419]:
+                    - generic [ref=e420]: Data structures including linked lists, balanced search trees, heaps, hash tables; probability and number theory applicable to the analysis of randomized data structures.
+                    - generic [ref=e422]:
+                      - text: "Prerequisites:"
+                      - generic [ref=e423]:
+                        - link "Course CSCI103" [ref=e424] [cursor=pointer]:
+                          - /url: term/20261/course/CSCI103
+                          - text: CSCI 103
+                        - text: and
+                        - link "Course CSCI170" [ref=e425] [cursor=pointer]:
+                          - /url: term/20261/course/CSCI170
+                          - text: CSCI 170
+                    - generic [ref=e426]:
+                      - text: "Duplicate Credit:"
+                      - link "Course EE355" [ref=e428] [cursor=pointer]:
+                        - /url: term/20261/course/EE355
+                        - text: EE 355
+                  - table [ref=e432]:
+                    - row "SECTION UNITS TYPE SCHEDULE LOCATION INSTRUCTORS SYLLABUS REGISTERED DETAILS" [ref=e433]:
+                      - columnheader "SECTION" [ref=e434]
+                      - columnheader "UNITS" [ref=e435]
+                      - columnheader "TYPE" [ref=e436]
+                      - columnheader "SCHEDULE" [ref=e437]
+                      - columnheader "LOCATION" [ref=e438]
+                      - columnheader "INSTRUCTORS" [ref=e439]
+                      - columnheader "SYLLABUS" [ref=e440]
+                      - columnheader "REGISTERED" [ref=e441]
+                      - columnheader "DETAILS" [ref=e442]
+                    - row:
+                      - cell
+                    - row "29905 4.0 Lecture Mon, Wed, 2:00-3:20 pm Sign In to View Mark Redekopp View Syllabus- Opens in New Tab 149 / 150 View More" [ref=e443]:
+                      - cell "29905" [ref=e444]:
+                        - generic [ref=e445]: "29905"
+                      - cell "4.0" [ref=e446]:
+                        - generic [ref=e447]: "4.0"
+                      - cell "Lecture" [ref=e448]
+                      - cell "Mon, Wed, 2:00-3:20 pm" [ref=e449]:
+                        - generic [ref=e450]: Mon, Wed, 2:00-3:20 pm
+                      - cell "Sign In to View" [ref=e451]:
+                        - link "Sign In to View" [ref=e452] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell "Mark Redekopp" [ref=e453]
+                      - cell "View Syllabus- Opens in New Tab" [ref=e454]:
+                        - link "View Syllabus- Opens in New Tab" [ref=e458] [cursor=pointer]:
+                          - /url: https://usc.simplesyllabus.com/en-US/syllabus/Spring 2026/CSCI/104/29905
+                          - text: View Syllabus
+                          - img [ref=e459]: launch
+                      - cell "149 / 150" [ref=e460]:
+                        - generic [ref=e461]: 149 / 150
+                      - cell "View More" [ref=e462]:
+                        - generic [ref=e463]: View More
+                    - row "29989 4.0 Lecture Tue, Thu, 8:00-9:20 am Sign In to View Mark Redekopp View Syllabus- Opens in New Tab 35 / 150 View More" [ref=e464]:
+                      - cell "29989" [ref=e465]:
+                        - generic [ref=e466]: "29989"
+                      - cell "4.0" [ref=e467]:
+                        - generic [ref=e468]: "4.0"
+                      - cell "Lecture" [ref=e469]
+                      - cell "Tue, Thu, 8:00-9:20 am" [ref=e470]:
+                        - generic [ref=e471]: Tue, Thu, 8:00-9:20 am
+                      - cell "Sign In to View" [ref=e472]:
+                        - link "Sign In to View" [ref=e473] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell "Mark Redekopp" [ref=e474]
+                      - cell "View Syllabus- Opens in New Tab" [ref=e475]:
+                        - link "View Syllabus- Opens in New Tab" [ref=e479] [cursor=pointer]:
+                          - /url: https://usc.simplesyllabus.com/en-US/syllabus/Spring 2026/CSCI/104/29989
+                          - text: View Syllabus
+                          - img [ref=e480]: launch
+                      - cell "35 / 150" [ref=e481]:
+                        - generic [ref=e482]: 35 / 150
+                      - cell "View More" [ref=e483]:
+                        - generic [ref=e484]: View More
+                    - row "29914 0.0 Lab Mon, 12:00-1:50 pm Sign In to View Not Available 28 / 30 View More" [ref=e485]:
+                      - cell "29914" [ref=e486]:
+                        - generic [ref=e487]: "29914"
+                      - cell "0.0" [ref=e488]:
+                        - generic [ref=e489]: "0.0"
+                      - cell "Lab" [ref=e490]
+                      - cell "Mon, 12:00-1:50 pm" [ref=e491]:
+                        - generic [ref=e492]: Mon, 12:00-1:50 pm
+                      - cell "Sign In to View" [ref=e493]:
+                        - link "Sign In to View" [ref=e494] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e495]
+                      - cell "Not Available" [ref=e496]:
+                        - generic [ref=e499]: Not Available
+                      - cell "28 / 30" [ref=e500]:
+                        - generic [ref=e501]: 28 / 30
+                      - cell "View More" [ref=e502]:
+                        - generic [ref=e503]: View More
+                    - row "29912 0.0 Lab Mon, 4:00-5:50 pm Sign In to View Not Available 29 / 30 View More" [ref=e504]:
+                      - cell "29912" [ref=e505]:
+                        - generic [ref=e506]: "29912"
+                      - cell "0.0" [ref=e507]:
+                        - generic [ref=e508]: "0.0"
+                      - cell "Lab" [ref=e509]
+                      - cell "Mon, 4:00-5:50 pm" [ref=e510]:
+                        - generic [ref=e511]: Mon, 4:00-5:50 pm
+                      - cell "Sign In to View" [ref=e512]:
+                        - link "Sign In to View" [ref=e513] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e514]
+                      - cell "Not Available" [ref=e515]:
+                        - generic [ref=e518]: Not Available
+                      - cell "29 / 30" [ref=e519]:
+                        - generic [ref=e520]: 29 / 30
+                      - cell "View More" [ref=e521]:
+                        - generic [ref=e522]: View More
+                    - row "30294 0.0 Lab Tue, 1:00-2:50 pm Sign In to View Not Available 12 / 30 View More" [ref=e523]:
+                      - cell "30294" [ref=e524]:
+                        - generic [ref=e525]: "30294"
+                      - cell "0.0" [ref=e526]:
+                        - generic [ref=e527]: "0.0"
+                      - cell "Lab" [ref=e528]
+                      - cell "Tue, 1:00-2:50 pm" [ref=e529]:
+                        - generic [ref=e530]: Tue, 1:00-2:50 pm
+                      - cell "Sign In to View" [ref=e531]:
+                        - link "Sign In to View" [ref=e532] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e533]
+                      - cell "Not Available" [ref=e534]:
+                        - generic [ref=e537]: Not Available
+                      - cell "12 / 30" [ref=e538]:
+                        - generic [ref=e539]: 12 / 30
+                      - cell "View More" [ref=e540]:
+                        - generic [ref=e541]: View More
+                    - row "30200 0.0 Lab Tue, 3:30-5:20 pm Sign In to View Not Available 29 / 30 View More" [ref=e542]:
+                      - cell "30200" [ref=e543]:
+                        - generic [ref=e544]: "30200"
+                      - cell "0.0" [ref=e545]:
+                        - generic [ref=e546]: "0.0"
+                      - cell "Lab" [ref=e547]
+                      - cell "Tue, 3:30-5:20 pm" [ref=e548]:
+                        - generic [ref=e549]: Tue, 3:30-5:20 pm
+                      - cell "Sign In to View" [ref=e550]:
+                        - link "Sign In to View" [ref=e551] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e552]
+                      - cell "Not Available" [ref=e553]:
+                        - generic [ref=e556]: Not Available
+                      - cell "29 / 30" [ref=e557]:
+                        - generic [ref=e558]: 29 / 30
+                      - cell "View More" [ref=e559]:
+                        - generic [ref=e560]: View More
+                    - row "29915 0.0 Lab Wed, 12:00-1:50 pm Sign In to View Not Available 22 / 30 View More" [ref=e561]:
+                      - cell "29915" [ref=e562]:
+                        - generic [ref=e563]: "29915"
+                      - cell "0.0" [ref=e564]:
+                        - generic [ref=e565]: "0.0"
+                      - cell "Lab" [ref=e566]
+                      - cell "Wed, 12:00-1:50 pm" [ref=e567]:
+                        - generic [ref=e568]: Wed, 12:00-1:50 pm
+                      - cell "Sign In to View" [ref=e569]:
+                        - link "Sign In to View" [ref=e570] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e571]
+                      - cell "Not Available" [ref=e572]:
+                        - generic [ref=e575]: Not Available
+                      - cell "22 / 30" [ref=e576]:
+                        - generic [ref=e577]: 22 / 30
+                      - cell "View More" [ref=e578]:
+                        - generic [ref=e579]: View More
+                    - row "30286 0.0 Lab Wed, 4:00-5:50 pm Sign In to View Not Available 17 / 30 View More" [ref=e580]:
+                      - cell "30286" [ref=e581]:
+                        - generic [ref=e582]: "30286"
+                      - cell "0.0" [ref=e583]:
+                        - generic [ref=e584]: "0.0"
+                      - cell "Lab" [ref=e585]
+                      - cell "Wed, 4:00-5:50 pm" [ref=e586]:
+                        - generic [ref=e587]: Wed, 4:00-5:50 pm
+                      - cell "Sign In to View" [ref=e588]:
+                        - link "Sign In to View" [ref=e589] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e590]
+                      - cell "Not Available" [ref=e591]:
+                        - generic [ref=e594]: Not Available
+                      - cell "17 / 30" [ref=e595]:
+                        - generic [ref=e596]: 17 / 30
+                      - cell "View More" [ref=e597]:
+                        - generic [ref=e598]: View More
+                    - row "30394 0.0 Lab Thu, 12:00-1:50 pm Sign In to View Not Available 26 / 30 View More" [ref=e599]:
+                      - cell "30394" [ref=e600]:
+                        - generic [ref=e601]: "30394"
+                      - cell "0.0" [ref=e602]:
+                        - generic [ref=e603]: "0.0"
+                      - cell "Lab" [ref=e604]
+                      - cell "Thu, 12:00-1:50 pm" [ref=e605]:
+                        - generic [ref=e606]: Thu, 12:00-1:50 pm
+                      - cell "Sign In to View" [ref=e607]:
+                        - link "Sign In to View" [ref=e608] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e609]
+                      - cell "Not Available" [ref=e610]:
+                        - generic [ref=e613]: Not Available
+                      - cell "26 / 30" [ref=e614]:
+                        - generic [ref=e615]: 26 / 30
+                      - cell "View More" [ref=e616]:
+                        - generic [ref=e617]: View More
+                    - row "30379 0.0 Lab Thu, 2:00-3:50 pm Sign In to View Not Available 21 / 30 View More" [ref=e618]:
+                      - cell "30379" [ref=e619]:
+                        - generic [ref=e620]: "30379"
+                      - cell "0.0" [ref=e621]:
+                        - generic [ref=e622]: "0.0"
+                      - cell "Lab" [ref=e623]
+                      - cell "Thu, 2:00-3:50 pm" [ref=e624]:
+                        - generic [ref=e625]: Thu, 2:00-3:50 pm
+                      - cell "Sign In to View" [ref=e626]:
+                        - link "Sign In to View" [ref=e627] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e628]
+                      - cell "Not Available" [ref=e629]:
+                        - generic [ref=e632]: Not Available
+                      - cell "21 / 30" [ref=e633]:
+                        - generic [ref=e634]: 21 / 30
+                      - cell "View More" [ref=e635]:
+                        - generic [ref=e636]: View More
+                    - row "29972 0.0 Quiz Thu, 7:00-8:50 pm Sign In to View Not Available 184 / 300 View More" [ref=e637]:
+                      - cell "29972" [ref=e638]:
+                        - generic [ref=e639]: "29972"
+                      - cell "0.0" [ref=e640]:
+                        - generic [ref=e641]: "0.0"
+                      - cell "Quiz" [ref=e642]
+                      - cell "Thu, 7:00-8:50 pm" [ref=e643]:
+                        - generic [ref=e644]: Thu, 7:00-8:50 pm
+                      - cell "Sign In to View" [ref=e645]:
+                        - link "Sign In to View" [ref=e646] [cursor=pointer]:
+                          - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+                      - cell [ref=e647]
+                      - cell "Not Available" [ref=e648]:
+                        - generic [ref=e651]: Not Available
+                      - cell "184 / 300" [ref=e652]:
+                        - generic [ref=e653]: 184 / 300
+                      - cell "View More" [ref=e654]:
+                        - generic [ref=e655]: View More
+      - contentinfo [ref=e323]:
+        - generic [ref=e325]:
+          - heading "Need help with Registration?" [level=2] [ref=e326]
+          - generic [ref=e327]:
+            - text: "Office of Academic Records and Registrar:"
+            - link "Registration Services - Opens in New Tab" [ref=e328] [cursor=pointer]:
+              - /url: https://arr.usc.edu/
+              - text: Registration Services
+              - img [ref=e329]: launch
+            - img [ref=e330]: "|"
+            - link "Registration FAQs - Opens in New Tab" [ref=e331] [cursor=pointer]:
+              - /url: https://ask.usc.edu/s/topic/0TOTV000000B3rJ4AS/academic-records-registration
+              - text: Registration FAQs
+              - img [ref=e332]: launch
+          - generic [ref=e333]:
+            - text: "Technical Issues:"
+            - generic [ref=e334]:
+              - text: ITS Service Desk
+              - link "(213) 740-5555" [ref=e335] [cursor=pointer]:
+                - /url: tel:+12137405555
+            - img [ref=e336]: "|"
+            - link "consult@usc.edu" [ref=e337] [cursor=pointer]:
+              - /url: mailto:consult@usc.edu
+            - img [ref=e338]: "|"
+            - link "Privacy Notice - Opens in New Tab" [ref=e339] [cursor=pointer]:
+              - /url: https://www.usc.edu/pages/usc-privacy-notice/
+              - text: Privacy Notice
+              - img [ref=e340]: launch
+            - img [ref=e341]: "|"
+            - link "Notice of Non-Discrimination - Opens in New Tab" [ref=e342] [cursor=pointer]:
+              - /url: https://eeotix.usc.edu/notice-of-non-discrimination/
+              - text: Notice of Non-Discrimination
+              - img [ref=e343]: launch
+            - img [ref=e344]: "|"
+            - link "Digital Accessibility - Opens in New Tab" [ref=e345] [cursor=pointer]:
+              - /url: https://accessibility.usc.edu/accessibility-at-usc/digital-accessibility/
+              - text: Digital Accessibility
+              - img [ref=e346]: launch

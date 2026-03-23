@@ -1,0 +1,75 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "nextjs"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "worker": true,
+    "serviceworker": true,
+    "es2021": true
+  },
+  "globals": {
+    "$": "readonly"
+  },
+  "ignorePatterns": [
+    "client/cypress/plugins/index.js",
+    ".lintstagedrc.js",
+    ".next/**/*",
+    ".output/**/*",
+    ".wxt/**/*",
+    "**/.next/**/*",
+    "**/.yarn/**/*",
+    "**/.expo/**/*",
+    "**/dist/**/*",
+    "public/js/*",
+    ".yarn/js/*",
+    "ui/out/**/*",
+    "ios/**/*",
+    "build/**/*",
+    "android/**/*",
+    "electron/build/**/*",
+    "public/*.js",
+    "public/*.map"
+  ],
+  "rules": {
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "no-prototype-builtins": "off",
+    "no-use-before-define": "off",
+    "prefer-const": "error",
+    "curly": ["error", "all"],
+    "no-async-promise-executor": "off",
+    "no-empty": "off",
+    "no-case-declarations": "off",
+    "no-control-regex": "off",
+    "no-unused-vars": [
+      "warn",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/no-unknown-property": "off",
+    "react/self-closing-comp": "error",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "nextjs/no-html-link-for-pages": "off",
+    "typescript/ban-types": "off",
+    "typescript/no-this-alias": "off",
+    "typescript/no-explicit-any": "off",
+    "typescript/no-namespace": "off",
+    "typescript/no-empty-interface": "off",
+    "typescript/consistent-type-definitions": ["error", "interface"],
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
+    "typescript/ban-ts-comment": "off"
+  }
+}

@@ -13,6 +13,8 @@
 # next.js
 /.next/
 /out/
+/.output/
+/.wxt/
 
 # production
 /build

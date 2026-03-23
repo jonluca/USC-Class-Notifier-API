@@ -29,23 +29,31 @@ export class GmailVenmoImapClient {
   };
   private parsePaidIds(text: string): string[] {
     const valid = new Set<string>();
-    if (!text) return [];
+    if (!text) {
+      return [];
+    }
 
     // numbers on their own lines
     for (const line of text.split("\n")) {
       const t = line.trim();
-      if (/^\d{8}$/.test(t)) valid.add(t);
+      if (/^\d{8}$/.test(t)) {
+        valid.add(t);
+      }
     }
 
     // regex fallback - find all 8-digit numbers
     const matches = text.match(/\b\d{8}\b/g);
-    if (matches) matches.forEach((m) => valid.add(m));
+    if (matches) {
+      matches.forEach((m) => valid.add(m));
+    }
 
     return [...valid];
   }
 
   private normalizeBody(parsed: Awaited<ReturnType<typeof simpleParser>>): string {
-    if (parsed.text && parsed.text.trim()) return parsed.text;
+    if (parsed.text && parsed.text.trim()) {
+      return parsed.text;
+    }
 
     if (parsed.html) {
       return convert(parsed.html.toString(), { wordwrap: false });
@@ -58,8 +66,12 @@ export class GmailVenmoImapClient {
     const user = process.env.GMAIL_IMAP_USER;
     const pass = process.env.GMAIL_IMAP_APP_PASSWORD;
 
-    if (!user) throw new Error("GMAIL_IMAP_USER not set");
-    if (!pass) throw new Error("GMAIL_IMAP_APP_PASSWORD not set");
+    if (!user) {
+      throw new Error("GMAIL_IMAP_USER not set");
+    }
+    if (!pass) {
+      throw new Error("GMAIL_IMAP_APP_PASSWORD not set");
+    }
 
     const client = new ImapFlow({
       host: "imap.gmail.com",
@@ -104,12 +116,16 @@ export class GmailVenmoImapClient {
 
       for await (const msg of client.fetch(uids, { uid: true, envelope: true, source: true })) {
         const uid = msg.uid;
-        if (this.processedUids.has(uid)) continue;
+        if (this.processedUids.has(uid)) {
+          continue;
+        }
 
         const subject = msg.envelope?.subject ?? "";
 
         // Match your prior logic
-        if (!subject.toLowerCase().includes("paid you")) continue;
+        if (!subject.toLowerCase().includes("paid you")) {
+          continue;
+        }
 
         const text = msg.source?.toString();
         if (!text) {
@@ -119,7 +135,9 @@ export class GmailVenmoImapClient {
         const bodyText = this.normalizeBody(parsed);
 
         const ids = this.parsePaidIds(bodyText);
-        if (ids.length) allPaidIds.push(...ids);
+        if (ids.length) {
+          allPaidIds.push(...ids);
+        }
 
         this.processedUids.add(uid);
       }

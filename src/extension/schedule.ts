@@ -2,9 +2,7 @@ import { splitDays } from "@/extension/utils";
 import $ from "jquery";
 import { insertAllOverlap } from "./insert-class-info";
 
-import * as Moment from "moment";
-import { extendMoment } from "moment-range";
-const moment = extendMoment(Moment);
+import moment from "moment";
 const USC_TIMEZONE = "America/Los_Angeles";
 const uscDayFormatter = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -68,6 +66,24 @@ function formatScheduleTimeInLosAngeles(dateLike: string | Date) {
     return null;
   }
   return uscTimeFormatter.format(parsedDate).replace(/\s+/g, "").toLowerCase();
+}
+
+function timesOverlap(
+  firstStartTime: string,
+  firstEndTime: string,
+  secondStartTime: string,
+  secondEndTime: string,
+) {
+  const firstStart = moment(firstStartTime, "hh:mma");
+  const firstEnd = moment(firstEndTime, "hh:mma");
+  const secondStart = moment(secondStartTime, "hh:mma");
+  const secondEnd = moment(secondEndTime, "hh:mma");
+
+  if (!firstStart.isValid() || !firstEnd.isValid() || !secondStart.isValid() || !secondEnd.isValid()) {
+    return false;
+  }
+
+  return firstStart.isBefore(secondEnd) && secondStart.isBefore(firstEnd);
 }
 
 export async function getCurrentSchedule(): Promise<Schedule | null> {
@@ -167,14 +183,7 @@ export function parseSchedule(data: Schedule) {
               continue;
             }
             //Class already registered/scheduled
-            const start = moment(currClass.time[0], "hh:mma");
-            const end = moment(currClass.time[1], "hh:mma");
-            const range = moment.range(start, end);
-
-            const start2 = moment(secHours[0], "hh:mma");
-            const end2 = moment(secHours[1], "hh:mma");
-            const range2 = moment.range(start2, end2);
-            if (range.overlaps(range2)) {
+            if (timesOverlap(currClass.time[0], currClass.time[1], secHours[0], secHours[1])) {
               addConflictOverlay(this, currClass.classname);
               return;
             }

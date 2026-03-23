@@ -27,7 +27,7 @@ export const SendLoginEmail = () => {
           onClick={() => {
             router.push("/dashboard");
           }}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow-sm transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
         >
           Dashboard
         </button>
@@ -54,7 +54,7 @@ export const SendLoginEmail = () => {
           submit();
         }}
         disabled={isPending}
-        className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
+        className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow-sm transition-colors hover:bg-gray-900/90 disabled:pointer-events-none disabled:opacity-50"
       >
         Submit
       </button>

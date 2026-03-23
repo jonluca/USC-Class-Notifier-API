@@ -1,6 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
   --rt-color-white: #fff;
@@ -56,4 +74,30 @@ html {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease-in;
+}
+
+.usc-helper-notify-cell {
+  margin-top: 0.35rem;
+}
+
+.usc-helper-notify-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #990000;
+  border-radius: 999px;
+  background: #990000;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.usc-helper-notify-button:hover {
+  background: #7a0000;
+  border-color: #7a0000;
 }

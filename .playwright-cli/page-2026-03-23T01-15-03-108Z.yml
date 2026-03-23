@@ -1,0 +1,106 @@
+- generic [ref=e1]:
+  - generic:
+    - link [ref=e3] [cursor=pointer]:
+      - /url: /term/20261/catalogue/search%3Fsearchphrase%3DCSCI%2520104#main
+      - text: Skip to main content
+    - generic [ref=e9]:
+      - banner [ref=e12]:
+        - link "Schedule of Classes" [ref=e13] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e14]: Schedule of Classes
+        - generic [ref=e16]:
+          - generic [ref=e22] [cursor=pointer]:
+            - combobox "Spring 2026 Semester" [ref=e24]:
+              - generic [ref=e27]: Spring 2026 Semester
+            - img [ref=e29]: keyboard_arrow_down
+          - navigation [ref=e30]:
+            - link "Courses" [ref=e31] [cursor=pointer]:
+              - /url: /term/20261/catalogue
+              - generic [ref=e32]: Courses
+            - link "Registration, Exams, and Fees" [ref=e35] [cursor=pointer]:
+              - /url: /term/20261/registration-information
+              - generic [ref=e36]: Registration, Exams, and Fees
+            - link "Sign In" [ref=e40] [cursor=pointer]:
+              - /url: bff/login?returnUrl=%2Fterm%2F20261%2Fcatalogue%2Fsearch%3Fsearchphrase%3DCSCI%2520104
+              - generic [ref=e41]: Sign In
+      - generic [ref=e48]:
+        - generic [ref=e55]:
+          - combobox "Search for Spring 2026 course prefixes and titles" [active] [ref=e57]: CSCI 104
+          - generic [ref=e58]:
+            - button "Clear" [ref=e348] [cursor=pointer]:
+              - img [ref=e349]: close
+            - button "Search" [ref=e59] [cursor=pointer]:
+              - img [ref=e60]: search
+        - heading "Spring 2026 Search Results" [level=1] [ref=e357]
+        - navigation "breadcrumb" [ref=e359]:
+          - link "Schools / Departments" [ref=e361] [cursor=pointer]:
+            - /url: /term/20261/catalogue/school
+            - img [ref=e362]: chevron_left
+            - generic [ref=e363]: Schools / Departments
+        - generic [ref=e365]:
+          - generic [ref=e366]:
+            - heading "Courses" [level=1] [ref=e367]
+            - generic [ref=e368]:
+              - text: 1 courses found for "
+              - generic [ref=e369]: CSCI 104
+              - text: "\""
+          - generic [ref=e372]:
+            - generic [ref=e375]:
+              - button "Days" [ref=e377]:
+                - generic [ref=e378]: Days
+                - img [ref=e379]: expand_more
+              - button "Time" [ref=e383]:
+                - generic [ref=e384]: Time
+                - img [ref=e385]: expand_more
+              - button "Units" [ref=e389]:
+                - generic [ref=e390]: Units
+                - img [ref=e391]: expand_more
+              - generic [ref=e396]:
+                - generic [ref=e397] [cursor=pointer]:
+                  - checkbox "Show available sections only" [ref=e399]
+                  - generic:
+                    - img
+                - generic [ref=e400] [cursor=pointer]: Show available sections only
+            - button "Expand All" [ref=e402] [cursor=pointer]
+            - 'button "CSCI 104 - Data Structures 4.0 Units | Available Seats: 116" [ref=e404] [cursor=pointer]':
+              - generic [ref=e407]:
+                - generic [ref=e410]: CSCI 104 - Data Structures
+                - generic [ref=e412]: "4.0 Units | Available Seats: 116"
+      - contentinfo [ref=e323]:
+        - generic [ref=e325]:
+          - heading "Need help with Registration?" [level=2] [ref=e326]
+          - generic [ref=e327]:
+            - text: "Office of Academic Records and Registrar:"
+            - link "Registration Services - Opens in New Tab" [ref=e328] [cursor=pointer]:
+              - /url: https://arr.usc.edu/
+              - text: Registration Services
+              - img [ref=e329]: launch
+            - img [ref=e330]: "|"
+            - link "Registration FAQs - Opens in New Tab" [ref=e331] [cursor=pointer]:
+              - /url: https://ask.usc.edu/s/topic/0TOTV000000B3rJ4AS/academic-records-registration
+              - text: Registration FAQs
+              - img [ref=e332]: launch
+          - generic [ref=e333]:
+            - text: "Technical Issues:"
+            - generic [ref=e334]:
+              - text: ITS Service Desk
+              - link "(213) 740-5555" [ref=e335] [cursor=pointer]:
+                - /url: tel:+12137405555
+            - img [ref=e336]: "|"
+            - link "consult@usc.edu" [ref=e337] [cursor=pointer]:
+              - /url: mailto:consult@usc.edu
+            - img [ref=e338]: "|"
+            - link "Privacy Notice - Opens in New Tab" [ref=e339] [cursor=pointer]:
+              - /url: https://www.usc.edu/pages/usc-privacy-notice/
+              - text: Privacy Notice
+              - img [ref=e340]: launch
+            - img [ref=e341]: "|"
+            - link "Notice of Non-Discrimination - Opens in New Tab" [ref=e342] [cursor=pointer]:
+              - /url: https://eeotix.usc.edu/notice-of-non-discrimination/
+              - text: Notice of Non-Discrimination
+              - img [ref=e343]: launch
+            - img [ref=e344]: "|"
+            - link "Digital Accessibility - Opens in New Tab" [ref=e345] [cursor=pointer]:
+              - /url: https://accessibility.usc.edu/accessibility-at-usc/digital-accessibility/
+              - text: Digital Accessibility
+              - img [ref=e346]: launch
