@@ -289,3 +289,4 @@ dist/
 .tsbuildinfo
 logs
 prisma/generated
+.playwright-cli
