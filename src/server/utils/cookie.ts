@@ -1,4 +1,4 @@
-import * as cookie from "cookie";
+import { parseCookie, stringifySetCookie } from "cookie";
 import type { IncomingMessage, ServerResponse } from "http";
 import type { NextApiRequest } from "next";
 
@@ -18,7 +18,7 @@ export function getCookies(req: IncomingReq) {
   if (!cookieHeader) {
     return {};
   }
-  return cookie.parse(cookieHeader);
+  return parseCookie(cookieHeader);
 }
 
 export function getCookie(req: IncomingReq, name: string) {
@@ -29,7 +29,7 @@ export function getCookie(req: IncomingReq, name: string) {
   if (!cookieHeader) {
     return;
   }
-  const cookies = cookie.parse(cookieHeader);
+  const cookies = parseCookie(cookieHeader);
   return cookies[name];
 }
 
@@ -42,5 +42,5 @@ export function setCookie(
     httpOnly?: boolean;
   },
 ) {
-  res.setHeader("Set-Cookie", cookie.serialize(name, value, options));
+  res.setHeader("Set-Cookie", stringifySetCookie({ name, value, ...options }));
 }

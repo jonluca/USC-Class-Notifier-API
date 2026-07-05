@@ -17,7 +17,7 @@ export const SettingEntry = ({
         <Typography variant="subtitle1" component="span" className="font-bold">
           {title}
         </Typography>
-        <Typography variant="caption" display="block" className="text-xs font-bold text-neutral-400 -mt-1">
+        <Typography variant="caption" className="block text-xs font-bold text-neutral-400 -mt-1">
           {subtitle}
         </Typography>
       </div>
