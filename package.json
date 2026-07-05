@@ -114,6 +114,11 @@
     "trailingComma": "all"
   },
   "packageManager": "yarn@4.12.0",
+  "resolutions": {
+    "next": "16.2.10",
+    "shell-quote": "1.8.4",
+    "tmp": "0.2.7"
+  },
   "postcss": {
     "plugins": {
       "@tailwindcss/postcss": {}
