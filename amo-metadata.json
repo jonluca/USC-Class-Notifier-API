@@ -1,0 +1,20 @@
+{
+  "summary": {
+    "en-US": "Professor ratings, schedule insights, and class availability notifications for USC students."
+  },
+  "description": {
+    "en-US": "USC Schedule Helper improves the USC class search and Web Registration experience. It adds professor ratings to class results, highlights schedule conflicts, shows unit totals, provides a calendar export shortcut, and lets students request class availability notifications.\n\nEmail notifications are free. Optional SMS notifications cost $1 per section per semester.\n\nThe extension runs only on classes.usc.edu and webreg.usc.edu. Notification requests send the email address, optional phone number, and selected class details that the user submits to usc.jonlu.ca. See the privacy policy at https://usc.jonlu.ca/privacy."
+  },
+  "categories": ["alerts-updates"],
+  "homepage": {
+    "en-US": "https://usc.jonlu.ca"
+  },
+  "support_email": {
+    "en-US": "usc-schedule-helper@jonlu.ca"
+  },
+  "requires_payment": true,
+  "version": {
+    "license": "all-rights-reserved",
+    "approval_notes": "Build instructions are in SOURCE_CODE_REVIEW.md in the uploaded source archive. No API keys or .env files are required. Functional testing can be performed on public pages under https://classes.usc.edu/term/. USC Web Registration features require a USC-authenticated session; the public classes site exercises the ratings and notification UI. Email notifications are free. Optional SMS notifications cost $1 per section per semester. The extension transmits a user-entered email address, optional phone number, and the selected class department/section/semester to https://usc.jonlu.ca only after the user clicks Submit in the notification form."
+  }
+}

@@ -17,8 +17,13 @@
     "monitor": "tsx jobs/monitor.ts",
     "refresh-rmp": "tsx jobs/refreshRmpData.ts && prettier -w src/data",
     "dev:extension": "NODE_ENV=development wxt",
+    "dev:firefox": "NODE_ENV=development wxt -b firefox --mv3",
     "build:extension": "NODE_ENV=production wxt build",
-    "package:extension": "NODE_ENV=production wxt zip"
+    "build:firefox": "NODE_ENV=production wxt build -b firefox --mv3",
+    "package:extension": "NODE_ENV=production wxt zip",
+    "package:firefox": "NODE_ENV=production wxt zip -b firefox --mv3",
+    "lint:firefox": "web-ext lint --source-dir .output/firefox-mv3",
+    "submit:firefox": "web-ext sign --source-dir .output/firefox-mv3 --channel=listed --amo-metadata=amo-metadata.json --upload-source-code=.output/class-notifier-api-*-sources.zip --artifacts-dir=.output/firefox-signed"
   },
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^32.3.9",
@@ -130,6 +135,7 @@
     "@types/mailparser": "^3.4.6",
     "@types/pg": "^8.20.0",
     "oxlint": "^1.72.0",
-    "vite": "^8.1.3"
+    "vite": "^8.1.3",
+    "web-ext": "^10.4.0"
   }
 }

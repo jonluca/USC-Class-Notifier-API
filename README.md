@@ -1,5 +1,17 @@
-# USC-Class Notifier API
+# USC Schedule Helper
 
-USC Class Notifier API is a free to use web API for notifications for the number of spots available in each section at USC. It uses Nextjs and Postgres.
+USC Schedule Helper improves USC class search and registration with professor ratings, schedule insights, and class availability notifications. This repository contains the Next.js notification service and the cross-browser WXT extension.
 
-It is the accompaniment to the chrome extension, which currently resides at https://chrome.google.com/webstore/detail/usc-schedule-helper/gchplemiinhmilinflepfpmjhmbfnlhk
+The Chrome extension is available from the [Chrome Web Store](https://chrome.google.com/webstore/detail/usc-schedule-helper/gchplemiinhmilinflepfpmjhmbfnlhk).
+
+## Extension builds
+
+```sh
+# Chrome
+yarn package:extension
+
+# Firefox (Manifest V3)
+yarn package:firefox
+```
+
+Firefox packages are written to `.output/` as an extension ZIP and a source ZIP for Mozilla review. See `SOURCE_CODE_REVIEW.md` for reproducible build instructions.
