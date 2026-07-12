@@ -66,6 +66,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     setCookie(context.res, cookieKey, key as string, {
       expires: dayjs().add(1, "year").toDate(),
       httpOnly: false,
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     });
   }
   return {

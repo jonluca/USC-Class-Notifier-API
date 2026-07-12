@@ -9,6 +9,7 @@ export interface NowWatchingEmailProps {
   email: string;
   sectionEntry: WatchedSection;
   classInfo: ClassInfo | null;
+  isVerifiedAccount: boolean;
   showVenmoInfo?: boolean;
 }
 
@@ -27,9 +28,18 @@ const buttonStyle = {
   display: "block",
 };
 
-const NowWatchingEmail = ({ classInfo, sectionEntry, verificationKey, showVenmoInfo }: NowWatchingEmailProps) => {
+const NowWatchingEmail = ({
+  classInfo,
+  sectionEntry,
+  verificationKey,
+  isVerifiedAccount,
+  showVenmoInfo,
+}: NowWatchingEmailProps) => {
   const headerTitle = classInfo?.courseNumber;
   const previewText = `Watching ${headerTitle}!`;
+  const accountUrl = isVerifiedAccount
+    ? `${baseDomain}/dashboard?key=${verificationKey}`
+    : `${baseDomain}/verify?key=${verificationKey}`;
 
   return (
     <EmailBase previewText={previewText}>
@@ -86,7 +96,10 @@ const NowWatchingEmail = ({ classInfo, sectionEntry, verificationKey, showVenmoI
       </Section>
       {showVenmoInfo && (
         <>
-          <Button style={buttonStyle} href={`venmo://paycharge?txn=pay&recipients=JonLuca&amount=1&note=${sectionEntry.paidId}`}>
+          <Button
+            style={buttonStyle}
+            href={`venmo://paycharge?txn=pay&recipients=JonLuca&amount=1&note=${sectionEntry.paidId}`}
+          >
             Send Venmo (app)
           </Button>
           <Button
@@ -97,8 +110,13 @@ const NowWatchingEmail = ({ classInfo, sectionEntry, verificationKey, showVenmoI
           </Button>
         </>
       )}
-      <Button style={buttonStyle} href={`${baseDomain}/dashboard?key=${verificationKey}`}>
-        View Dashboard
+      {!isVerifiedAccount && (
+        <Text style={{ color: "#000000", fontSize: "16px", padding: "8px", marginTop: "16px" }}>
+          Verify your email address to activate availability notifications for this section.
+        </Text>
+      )}
+      <Button style={buttonStyle} href={accountUrl}>
+        {isVerifiedAccount ? "View Dashboard" : "Verify Email & View Dashboard"}
       </Button>
     </EmailBase>
   );
@@ -114,6 +132,7 @@ NowWatchingEmail.PreviewProps = {
     paidId: "12345678",
   },
   showVenmoInfo: true,
+  isVerifiedAccount: false,
   email: "usc-schedule-helper@jonlu.ca",
   classInfo: {
     courseNumber: "CSCI 104",

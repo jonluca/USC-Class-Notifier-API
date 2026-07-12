@@ -1,1 +1,1 @@
-gmail-monitor: yarn monitor:venmo-gmail
+monitor: yarn monitor

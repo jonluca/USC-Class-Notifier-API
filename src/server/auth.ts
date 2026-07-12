@@ -1,5 +1,16 @@
 import type { NextRequest } from "next/server";
 import type { IncomingMessage } from "http";
+import { getCookies } from "@/server/utils/cookie";
+
+export const cookieKey = "verificationKey";
+
+export function getVerificationKey(req: NextRequest | IncomingMessage | null | undefined) {
+  const cookies = getCookies(req);
+
+  // `key` was used by an older version of the app. Prefer the current cookie
+  // so an old login cannot override a newer email link.
+  return cookies[cookieKey] || cookies.key;
+}
 
 const adminPassword = process.env.ADMIN_PASSWORD;
 
@@ -22,5 +33,3 @@ export function isAuthenticated(req: NextRequest | IncomingMessage) {
     return false;
   }
 }
-
-export const cookieKey = "verificationKey";

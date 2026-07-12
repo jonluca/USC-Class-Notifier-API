@@ -175,6 +175,7 @@ WHERE ws."classInfoId" is null and ws.section = ci.section AND ws.semester = ci.
         email: student.email,
         sectionEntry: created,
         classInfo: created.ClassInfo || null,
+        isVerifiedAccount: student.validAccount,
         showVenmoInfo,
       });
       return {

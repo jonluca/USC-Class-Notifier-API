@@ -15,9 +15,8 @@ import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 
 import type { IncomingMessage, ServerResponse } from "http";
 import { transformer } from "@/server/api/transformer";
 import type { Student } from "@app/prisma";
-import { getCookie, getCookies } from "@/server/utils/cookie";
 import logger from "@/server/logger";
-import { cookieKey, isAuthenticated } from "@/server/auth";
+import { getVerificationKey, isAuthenticated } from "@/server/auth";
 
 /**
  * 1. CONTEXT
@@ -47,7 +46,7 @@ export interface InnerTrpcContext extends CreateContextOptions {
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
 export const createInnerTRPCContext = async (opts: CreateContextOptions): Promise<InnerTrpcContext> => {
-  const key = getCookie(opts.req, "key");
+  const key = getVerificationKey(opts.req);
 
   const user = key ? await prisma.student.findUnique({ where: { verificationKey: key } }) : null;
   return {
@@ -151,8 +150,7 @@ const enforceUser = t.middleware(async ({ ctx, next, getRawInput }) => {
       },
     });
   }
-  const cookies = getCookies(ctx.req);
-  let verificationKey = cookies[cookieKey];
+  let verificationKey = getVerificationKey(ctx.req);
   if (!verificationKey) {
     const rawInput = await getRawInput();
 
