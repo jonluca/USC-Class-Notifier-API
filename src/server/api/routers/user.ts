@@ -4,9 +4,13 @@ import { z } from "zod/v4";
 import { v4 as uuid } from "uuid";
 import { verificationEmail } from "@/emails/processors/verificationEmail";
 
-import { getCurrentSemester } from "@/utils/semester";
 import { validDepartments } from "@/utils/validDepartments";
 import { nowWatchingEmail } from "@/emails/processors/nowWatchingEmail";
+import {
+  assertMatchingClassInfo,
+  assertMonitoredSemester,
+  notificationSemesterSchema,
+} from "@/server/api/notificationSignup";
 import { prisma } from "@/server/db";
 function generateRandom8DigitNumber(): number {
   const min = 10000000;
@@ -79,10 +83,22 @@ export const userRouter = {
         department: z.string(),
         phone: z.string().optional(),
         uscId: z.string().optional(),
-        semester: z.string().optional(),
+        semester: notificationSemesterSchema,
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      assertMonitoredSemester(input.semester);
+
+      const classInfo = await ctx.prisma.classInfo.findUnique({
+        where: {
+          section_semester: {
+            section: input.sectionNumber,
+            semester: input.semester,
+          },
+        },
+      });
+      assertMatchingClassInfo(classInfo, input.sectionNumber, input.semester);
+
       let student = await ctx.prisma.student.findUnique({
         where: {
           email: input.email,
@@ -103,7 +119,7 @@ export const userRouter = {
         where: {
           section: input.sectionNumber,
           studentId: student.id,
-          semester: input.semester || getCurrentSemester(),
+          semester: input.semester,
         },
       });
       const showVenmoInfo = Boolean(student.phone || input.phone);
@@ -145,22 +161,14 @@ export const userRouter = {
         throw new Error("Please try again later. We are currently at capacity.");
       }
 
-      const semester = input.semester || getCurrentSemester();
-
-      const classInfo = await ctx.prisma.classInfo.findFirst({
-        where: {
-          section: input.sectionNumber,
-          semester,
-        },
-      });
       const created = await ctx.prisma.watchedSection.create({
         data: {
           section: input.sectionNumber,
           studentId: student.id,
           phoneOverride: input.phone,
-          semester,
+          semester: input.semester,
           paidId,
-          classInfoId: classInfo?.id || null,
+          classInfoId: classInfo.id,
         },
         include: {
           ClassInfo: true,

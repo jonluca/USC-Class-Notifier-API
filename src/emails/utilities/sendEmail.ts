@@ -4,23 +4,27 @@ import renderEmailTemplate from "./renderEmailTemplate";
 import type React from "react";
 import { isProd } from "@/constants";
 
-const sendEmail = async ({
-  EmailTemplate,
-  recipient,
-  subject,
-  previewText,
-}: {
-  EmailTemplate: React.ReactElement;
-  recipient: string;
-  subject: string;
-  previewText: string;
-}) => {
+export interface SesEmailClient {
+  send(command: SendEmailCommand): Promise<unknown>;
+}
+
+const sendEmail = async (
+  {
+    EmailTemplate,
+    recipient,
+    subject,
+    previewText,
+  }: {
+    EmailTemplate: React.ReactElement;
+    recipient: string;
+    subject: string;
+    previewText: string;
+  },
+  client: SesEmailClient = new SESClient({ region: "us-east-1" }),
+) => {
   if (!isProd && recipient !== "usc-schedule-helper@jonlu.ca") {
     recipient = "usc-schedule-helper@jonlu.ca";
   }
-  const client = new SESClient({
-    region: "us-east-1",
-  });
 
   const html = await renderEmailTemplate(EmailTemplate);
 
@@ -48,12 +52,7 @@ const sendEmail = async ({
   };
 
   const command = new SendEmailCommand(params);
-
-  try {
-    await client.send(command);
-  } catch (error) {
-    console.error("SES sending error:", error);
-  }
+  await client.send(command);
 };
 
 export default sendEmail;

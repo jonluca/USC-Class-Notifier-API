@@ -12,6 +12,45 @@ export const MONTHS = {
   November: 11,
   December: 12,
 };
+
+export const SEMESTER_CODE_PATTERN = /^\d{4}[123]$/;
+
+const TERM_URL_PATTERN = /(?:^|\/)term\/(\d{4}[123])(?:\/|$|[?#])/i;
+const TERM_LABEL_PATTERN = /^(spring|summer|fall)\s+(\d{4})(?:\s+classes)?$/i;
+const TERM_SUFFIX = {
+  spring: "1",
+  summer: "2",
+  fall: "3",
+} as const;
+
+/**
+ * Parses USC term codes from either a raw five-digit code, a classes.usc.edu
+ * term URL/path, or the term labels USC renders in its active tab.
+ */
+export function parseSemesterTerm(value: string | null | undefined): string | undefined {
+  const normalizedValue = value?.trim().replace(/\s+/g, " ");
+  if (!normalizedValue) {
+    return undefined;
+  }
+
+  if (SEMESTER_CODE_PATTERN.test(normalizedValue)) {
+    return normalizedValue;
+  }
+
+  const urlMatch = normalizedValue.match(TERM_URL_PATTERN);
+  if (urlMatch?.[1]) {
+    return urlMatch[1];
+  }
+
+  const labelMatch = normalizedValue.match(TERM_LABEL_PATTERN);
+  if (!labelMatch?.[1] || !labelMatch[2]) {
+    return undefined;
+  }
+
+  const term = labelMatch[1].toLowerCase() as keyof typeof TERM_SUFFIX;
+  return `${labelMatch[2]}${TERM_SUFFIX[term]}`;
+}
+
 const SPRING_REGISTRATION_RANGE_NEXT_YEAR = [MONTHS.October, MONTHS.November, MONTHS.December];
 const SPRING_REGISTRATION_RANGE_THIS_YEAR = [MONTHS.January, MONTHS.February];
 export const SPRING_REGISTRATION_RANGE = [

@@ -80,12 +80,18 @@ const CollectInfo = ({ onClose }: { onClose: () => void }) => {
   }
   const isValidEmail = EmailValidator.validate(email);
   const onSubmit = async () => {
+    const semester = selectedClass.semester || getCurrentTerm();
+    if (!semester) {
+      toast.error("Unable to determine the semester. Refresh the page and select the section again.");
+      return;
+    }
+
     await mutateAsync({
       sectionNumber: selectedClass.sectionId,
       email,
       department: selectedClass.department,
       phone: phone || undefined,
-      semester: selectedClass.semester || getCurrentTerm(),
+      semester,
     });
   };
 

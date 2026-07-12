@@ -11,7 +11,7 @@
     "start": "NODE_ENV=production next build && next start",
     "dev": "NODE_ENV=development next dev",
     "lint": "oxlint .",
-    "test": "tsx --test src/server/auth.test.ts src/emails/NowWatchingEmail.test.tsx",
+    "test": "tsx --test 'src/**/*.test.ts' 'src/**/*.test.tsx'",
     "dev:email": "email dev --dir src/emails --port 3001",
     "postinstall": "wxt prepare && prisma generate",
     "typecheck": "tsc --noEmit",

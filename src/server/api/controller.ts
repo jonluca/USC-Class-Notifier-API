@@ -5,6 +5,11 @@ import { groupBy, uniq } from "lodash-es";
 import { spotsAvailableEmail } from "@/emails/processors/spotsAvailableEmail";
 import { sendMessage } from "@/server/Twilio";
 import {
+  deliverAvailabilityNotification,
+  hasRecordedEmailSinceLastNotification,
+  NotificationChannelError,
+} from "@/server/api/notificationDelivery.ts";
+import {
   FALL_REGISTRATION_RANGE,
   getValidSemesters,
   SPRING_REGISTRATION_RANGE,
@@ -56,6 +61,13 @@ const checkForAvailabilityForDepartment = async (department: string, semester: s
         student: { select: { id: true, email: true, phone: true, verificationKey: true } },
         isPaid: true,
         phoneOverride: true,
+        lastNotified: true,
+        NotificationSent: {
+          where: { createdAt: { not: null } },
+          orderBy: { createdAt: "desc" },
+          take: 1,
+          select: { createdAt: true },
+        },
       },
     });
     const grouped = groupBy(watchedSections, "section");
@@ -70,45 +82,63 @@ const checkForAvailabilityForDepartment = async (department: string, semester: s
 
       if (availableSpots) {
         const numberOfStudentsWatching = sections.length;
-        const paidSections = sections.filter((s) => s.isPaid);
         const spotText = availableSpots === 1 ? "spot" : "spots";
         const verbText = availableSpots === 1 ? "is" : "are";
         const otherPeople = `${numberOfStudentsWatching} others ${verbText} watching this section.`;
 
-        for (const section of paidSections) {
+        for (const section of sections) {
           const phoneNumber = section.phoneOverride || section.student.phone;
-          if (phoneNumber) {
-            await sendMessage({
-              to: phoneNumber,
-              message: `${availableSpots} ${spotText} available for section ${correspondingSection.sisSectionId} in class ${course.fullCourseName}. ${otherPeople}`,
+          const emailAlreadySent = hasRecordedEmailSinceLastNotification({
+            latestEmailSentAt: section.NotificationSent[0]?.createdAt,
+            lastNotified: section.lastNotified,
+          });
+
+          try {
+            await deliverAvailabilityNotification({
+              emailAlreadySent,
+              sendEmail: () =>
+                spotsAvailableEmail({
+                  sectionEntry: correspondingSection,
+                  course,
+                  email: section.student.email,
+                  key: section.student.verificationKey,
+                  numberOfStudentsWatching,
+                  section,
+                  student: section.student,
+                  sectionId: section.id,
+                }),
+              sendSms:
+                section.isPaid && phoneNumber
+                  ? () =>
+                      sendMessage({
+                        to: phoneNumber,
+                        message: `${availableSpots} ${spotText} available for section ${correspondingSection.sisSectionId} in class ${course.fullCourseName}. ${otherPeople}`,
+                      })
+                  : undefined,
+              markNotified: async () => {
+                await prisma.watchedSection.update({
+                  where: { id: section.id },
+                  data: {
+                    lastNotified: new Date(),
+                    notified: true,
+                  },
+                });
+              },
             });
+          } catch (error) {
+            if (error instanceof NotificationChannelError) {
+              logger.error(
+                `Failed to send ${error.channel} availability notification for watched section ${section.id}; it will be retried`,
+                error.originalError,
+              );
+              continue;
+            }
+            logger.error(
+              `Notification delivery succeeded but watched section ${section.id} could not be marked notified`,
+              error,
+            );
           }
         }
-
-        for (const section of sections) {
-          await spotsAvailableEmail({
-            sectionEntry: correspondingSection,
-            course,
-            email: section.student.email,
-            key: section.student.verificationKey,
-            numberOfStudentsWatching,
-            section,
-            student: section.student,
-            sectionId: section.id,
-          });
-        }
-
-        await prisma.watchedSection.updateMany({
-          where: {
-            id: {
-              in: sections.map((s) => s.id),
-            },
-          },
-          data: {
-            lastNotified: new Date(),
-            notified: true,
-          },
-        });
       }
     }
   } catch (e) {

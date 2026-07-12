@@ -1,9 +1,10 @@
 import $ from "jquery";
+import { getCurrentTerm } from "@/extension/getCurrentTerm";
 import { createClassesPageNotifyButton } from "@/extension/notify";
+import { syncNotifyButtonDataset } from "@/extension/notifyButtonData";
 import { getProfessorRatings, ratingURLTemplate } from "@/extension/utils";
 
 const COURSE_ID_PATTERN = /\b([A-Z]{2,5}\s+\d+[A-Z]?)\b/;
-const TERM_PATTERN = /\/term\/(\d{5})(?:\/|$)/i;
 const COURSE_PAGE_CLICK_EVENT = "click.usc-helper-course-page";
 const COURSE_PAGE_PARSE_DELAYS_MS = [0, 150, 400];
 
@@ -41,7 +42,7 @@ function getColumnIndex(cells: Element[], label: string) {
 }
 
 function getClassesPageSemester() {
-  return window.location.pathname.match(TERM_PATTERN)?.[1] || "";
+  return getCurrentTerm();
 }
 
 function findCourseIdForTable(element: HTMLElement) {
@@ -115,19 +116,24 @@ function addNotifyButtons(parent: JQuery<HTMLElement>) {
     }
 
     const targetCell = detailsIndex >= 0 && cells.length > detailsIndex ? cells[detailsIndex] : cells[cells.length - 1];
-    if (!targetCell || $(targetCell).find(".usc-helper-notify-button").length) {
+    if (!targetCell) {
+      continue;
+    }
+
+    const buttonData = {
+      sectionId,
+      department,
+      fullCourseId,
+      semester,
+    };
+    const existingButton = $(targetCell).find(".usc-helper-notify-button").first();
+    if (existingButton[0]) {
+      syncNotifyButtonDataset(existingButton[0].dataset, buttonData);
       continue;
     }
 
     $(targetCell).append(
-      $("<div>", { class: "usc-helper-notify-cell" }).append(
-        createClassesPageNotifyButton({
-          sectionId,
-          department,
-          fullCourseId,
-          semester,
-        }),
-      ),
+      $("<div>", { class: "usc-helper-notify-cell" }).append(createClassesPageNotifyButton(buttonData)),
     );
   }
 }
@@ -220,10 +226,7 @@ function observeMatTableInsertion(callback: () => void) {
   }
 
   function isTableRelatedElement(element: HTMLElement) {
-    return (
-      checkForTables(element).length > 0 ||
-      Boolean(element.closest("table, .mat-table, [mat-table], mat-table"))
-    );
+    return checkForTables(element).length > 0 || Boolean(element.closest("table, .mat-table, [mat-table], mat-table"));
   }
 
   // Create the observer

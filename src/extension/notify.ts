@@ -1,33 +1,16 @@
 import $ from "jquery";
 import { context } from "@/extension/context";
+import { getCurrentTerm } from "@/extension/getCurrentTerm";
+import { type NotifyButtonData, syncNotifyButtonDataset } from "@/extension/notifyButtonData";
 
 const COURSE_ID_PATTERN = /\b([A-Z]{2,5}\s+\d+[A-Z]?)\b/;
-const TERM_PATTERN = /\/term\/(\d{5})(?:\/|$)/i;
-
-interface NotifyButtonData {
-  sectionId: string;
-  department: string;
-  fullCourseId: string | undefined;
-  semester?: string;
-}
 
 function createWebRegNotifyButton() {
-  return $(
-    `<input name="submit" value="Notify Me" class="btn btn-default addtomycb col-xs-12 notify" type="button">`,
-  );
+  return $(`<input name="submit" value="Notify Me" class="btn btn-default addtomycb col-xs-12 notify" type="button">`);
 }
 
 function getPageSemester() {
-  const termTabText = document.getElementById("activeTermTab")?.textContent?.trim().toLowerCase();
-  if (termTabText) {
-    const [term, year] = termTabText.split(" ");
-    if (year && ["fall", "spring", "summer"].includes(term)) {
-      const suffix = term === "fall" ? "3" : term === "summer" ? "2" : "1";
-      return `${year}${suffix}`;
-    }
-  }
-
-  return window.location.pathname.match(TERM_PATTERN)?.[1] || "";
+  return getCurrentTerm();
 }
 
 function getDepartmentFromCourseId(fullCourseId?: string) {
@@ -96,15 +79,11 @@ export function createClassesPageNotifyButton(data: NotifyButtonData) {
     type: "button",
     text: "Notify Me",
     class: "notify usc-helper-notify-button",
-    "data-section-id": data.sectionId,
-    "data-department": data.department,
   });
 
-  if (data.fullCourseId) {
-    button.attr("data-full-course-id", data.fullCourseId);
-  }
-  if (data.semester) {
-    button.attr("data-semester", data.semester);
+  const buttonElement = button[0];
+  if (buttonElement) {
+    syncNotifyButtonDataset(buttonElement.dataset, data);
   }
 
   return button;
