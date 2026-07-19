@@ -68,12 +68,7 @@ function formatScheduleTimeInLosAngeles(dateLike: string | Date) {
   return uscTimeFormatter.format(parsedDate).replace(/\s+/g, "").toLowerCase();
 }
 
-function timesOverlap(
-  firstStartTime: string,
-  firstEndTime: string,
-  secondStartTime: string,
-  secondEndTime: string,
-) {
+function timesOverlap(firstStartTime: string, firstEndTime: string, secondStartTime: string, secondEndTime: string) {
   const firstStart = moment(firstStartTime, "hh:mma");
   const firstEnd = moment(firstEndTime, "hh:mma");
   const secondStart = moment(secondStartTime, "hh:mma");
@@ -107,14 +102,33 @@ function addConflictOverlay(row: HTMLElement, name: string) {
   if (!addToCourseBin) {
     return;
   }
-  $(row).css("background-color", "rgba(255, 134, 47, 0.37)");
-  $($(row).children()[0]).css("background-color", "rgba(255, 134, 47, 0.37)");
-  $(addToCourseBin).attr("value", `Overlaps ${name}`);
+  const firstChild = $(row).children()[0];
+  const surfaces = firstChild ? $([row, firstChild]) : $(row);
+  surfaces.each(function () {
+    const surface = $(this);
+    if (!surface.hasClass("usc-helper-conflict-surface")) {
+      surface
+        .attr("data-usc-helper-conflict-original-style", surface.attr("style") ?? "")
+        .addClass("usc-helper-conflict-surface");
+    }
+    surface.css("background-color", "rgba(255, 134, 47, 0.37)");
+  });
+
+  const button = $(addToCourseBin);
+  if (!button.hasClass("usc-helper-conflict-button")) {
+    button
+      .attr("data-usc-helper-conflict-original-value", button.attr("value") ?? "")
+      .attr("data-usc-helper-conflict-original-text", button.text())
+      .attr("data-usc-helper-conflict-original-title", button.attr("title") ?? "")
+      .attr("data-usc-helper-conflict-original-orig-name", button.attr("orig_name") ?? "")
+      .addClass("usc-helper-conflict-button");
+  }
+  button.attr("value", `Overlaps ${name}`);
   // set text content of the button to "Overlaps with [class name]"
-  $(addToCourseBin).text(`Overlaps ${name}`);
-  $(addToCourseBin).attr("orig_name", `Overlaps ${name}`);
-  $(addToCourseBin).attr("title", `This class overlaps with ${name}!`);
-  $(addToCourseBin).addClass("warning");
+  button.text(`Overlaps ${name}`);
+  button.attr("orig_name", `Overlaps ${name}`);
+  button.attr("title", `This class overlaps with ${name}!`);
+  button.addClass("warning");
 }
 
 export function parseSchedule(data: Schedule) {
@@ -202,19 +216,19 @@ export function parseSchedule(data: Schedule) {
       insertAllOverlap(this);
     }
   });
-  $(".warning").hover(
-    function () {
+  $(".warning")
+    .off(".usc-helper-conflict")
+    .on("mouseenter.usc-helper-conflict", function () {
       // if it has the notify class, set the value to "Notify Me"
       const text = $(this).hasClass("notify") ? "Notify Me" : "Add Anyway";
       $(this).attr("value", text);
       $(this).text(text);
-    },
-    function () {
+    })
+    .on("mouseleave.usc-helper-conflict", function () {
       const original = $(this).attr("orig_name");
       if (original) {
         $(this).attr("value", original);
         $(this).text(original);
       }
-    },
-  );
+    });
 }

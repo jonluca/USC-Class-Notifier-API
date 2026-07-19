@@ -47,7 +47,7 @@ function insertProfessorRating(row: HTMLElement, professors: Rating[]) {
       if (instructorRow) {
         //long string just to include new
         $(instructorRow).after(
-          `<span class="hours_alt1 text-md-center col-xs-12 col-sm-12 col-md-1 col-lg-1"><span class="hidden-lg hidden-md hidden-visible-xs-* visible-sm-* table-headers-xsmall">Prof. Rating: </span>${rating_anchor}</span>`,
+          `<span class="usc-helper-rating-cell hours_alt1 text-md-center col-xs-12 col-sm-12 col-md-1 col-lg-1"><span class="hidden-lg hidden-md hidden-visible-xs-* visible-sm-* table-headers-xsmall">Prof. Rating: </span>${rating_anchor}</span>`,
         );
       }
       /* Very specific edge case - if you have two professors and you could not find the first, it'll insert an empty cell. However, if you can
@@ -110,7 +110,7 @@ export interface Options {
   showUnits: boolean;
 }
 export const emptySpanCell =
-  '<span class="instr_alt1 empty_rating col-xs-12 col-sm-12 col-md-1 col-lg-1"><span \
+  '<span class="usc-helper-rating-cell instr_alt1 empty_rating col-xs-12 col-sm-12 col-md-1 col-lg-1"><span \
     class="hidden-lg hidden-md visible-xs-* visible-sm-* table-headers-xsmall">Prof. Rating: </span></span>';
 
 export function insertBlankRatingCell(row: HTMLElement | JQuery<HTMLElement>) {

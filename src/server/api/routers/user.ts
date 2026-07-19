@@ -125,18 +125,17 @@ export const userRouter = {
       const showVenmoInfo = Boolean(student.phone || input.phone);
 
       if (section) {
-        if (section.notified) {
-          await ctx.prisma.watchedSection.update({
-            where: {
-              id: section.id,
-            },
-            data: {
-              notified: false,
-            },
-          });
-        }
+        const updatedSection = await ctx.prisma.watchedSection.update({
+          where: {
+            id: section.id,
+          },
+          data: {
+            notified: false,
+            ...(input.phone ? { phoneOverride: input.phone } : {}),
+          },
+        });
         return {
-          ...section,
+          ...updatedSection,
           alreadyWatching: true,
           isVerifiedAccount: student.validAccount,
           showVenmoInfo,

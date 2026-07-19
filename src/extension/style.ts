@@ -1,20 +1,33 @@
 import $ from "jquery";
 
 export function changeCSSColumnWidth() {
+  const setHelperCss = (selector: string, styles: JQuery.PlainObject) => {
+    $(selector).each(function () {
+      const element = $(this);
+      if (!element.hasClass("usc-helper-modified-style")) {
+        element
+          .attr("data-usc-helper-original-style", element.attr("style") ?? "")
+          .addClass("usc-helper-modified-style");
+      }
+      element.css(styles);
+    });
+  };
+
   //Sets CSS of page to display everything correctly
-  $(".rm_").css({
+  setHelperCss(".rm_", {
     width: "4%",
   });
-  $(".btnAddToMyCourseBin").css({
+  setHelperCss(".btnAddToMyCourseBin", {
     width: "12%",
     float: "right",
   });
 
-  $(".session").css({
+  setHelperCss(".session", {
     width: "4%",
   });
 
-  $(`<style type='text/css'>
+  $("#usc-schedule-helper-styles").remove();
+  $(`<style id="usc-schedule-helper-styles" type='text/css'>
 @media (min-width: 992px) {
     .text-md-center {
         text-align: center;

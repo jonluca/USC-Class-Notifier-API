@@ -10,6 +10,9 @@ import { addNotifyMe } from "@/extension/notify";
 import { insertClosedRegistration, insertOnlyLabNumbers, insertTotalSpots } from "./insert-class-info";
 
 function addUnitsToTitle(row: HTMLElement) {
+  const headerText = $(row).prev().find(".course-title-indent");
+  headerText.find(".usc-helper-units").remove();
+
   // get units
   const sections = $(row).find(".section");
   if (sections.length === 0) {
@@ -25,15 +28,8 @@ function addUnitsToTitle(row: HTMLElement) {
       if (actualUnits.trim() === "0.0") {
         continue;
       }
-      const unitText = `<span class="crsTitl spots_remaining"> - ${actualUnits} units</span>`;
-      const header = $(row).prev();
-      const headerText = $(header).find(".course-title-indent");
-      const title = $(headerText).find(".crsTitl")[0];
-      if (title) {
-        title.innerText = `${title.innerText} - ${actualUnits} units`;
-      } else {
-        $(headerText).append(unitText);
-      }
+      const unitText = `<span class="usc-helper-units crsTitl"> - ${actualUnits} units</span>`;
+      headerText.append(unitText);
       return;
     }
   }
@@ -45,8 +41,10 @@ function insertProfRatingHeader(header: JQuery<HTMLElement>) {
   }
   const rows = $(header).find(".section_row");
   const instructorRow = rows.toArray().find((r) => r.innerText.includes("Instructor")) || rows[7];
-  if (instructorRow) {
-    $(instructorRow).before('<span class="section_row col-md-1 col-lg-1"><b>Prof. Rating</b></span>');
+  if (instructorRow && $(header).find(".usc-helper-rating-header").length === 0) {
+    $(instructorRow).before(
+      '<span class="usc-helper-rating-header section_row col-md-1 col-lg-1"><b>Prof. Rating</b></span>',
+    );
   }
 }
 
@@ -55,9 +53,16 @@ function changeAddToCourseBinButton(row: HTMLElement) {
     .find(".addtomycb, .add-to-course-bin")
     .filter((i, el) => !$(el).hasClass("notify"));
   // filter out any with the notify class
-  if (addToCourseBin) {
-    $(addToCourseBin).attr("value", "Add");
-    $(addToCourseBin).text("Add");
+  for (const button of addToCourseBin) {
+    const element = $(button);
+    if (!element.hasClass("usc-helper-modified-button")) {
+      element
+        .attr("data-usc-helper-original-value", element.attr("value") ?? "")
+        .attr("data-usc-helper-original-text", element.text())
+        .addClass("usc-helper-modified-button");
+    }
+    element.attr("value", "Add");
+    element.text("Add");
   }
 }
 

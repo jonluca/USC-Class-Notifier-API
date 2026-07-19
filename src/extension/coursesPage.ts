@@ -152,7 +152,7 @@ function parseCoursePage() {
       // clone it and change text
       const newHeaderCell = $(headerCell).clone();
       newHeaderCell.text("PROF RATING");
-      newHeaderCell.addClass("rating-header");
+      newHeaderCell.addClass("rating-header usc-helper-rating-header");
       // insert after
       $(headerCell).after(newHeaderCell);
     }
@@ -185,7 +185,7 @@ function parseCoursePage() {
       const ratingsHTML = toAdd.join(", ");
       // create new cell
       const newCell = $(instructorCell).clone();
-      newCell.addClass("rating");
+      newCell.addClass("rating usc-helper-rating-cell");
       newCell.html(ratingsHTML || " ");
       // insert after instructor cell
       if ($(row).find(".rating").length === 0) {
@@ -286,4 +286,11 @@ export function initCoursePage() {
   coursePageObserver = observeMatTableInsertion(() => {
     scheduleCoursePageParse();
   });
+}
+
+export function cleanupCoursePage() {
+  clearScheduledCoursePageParses();
+  coursePageObserver?.disconnect();
+  coursePageObserver = null;
+  $(document).off(COURSE_PAGE_CLICK_EVENT);
 }

@@ -8,12 +8,7 @@ import NotificationModal from "@/extension/notification";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { trpc, trpcClient } from "@/extension/data";
 import { ToastContainer } from "react-toastify";
-import {
-  extensionEnabledStorage,
-  showConflictsStorage,
-  showUnitsStorage,
-  useStorageItem,
-} from "@/extension/storage";
+import { extensionEnabledStorage, showConflictsStorage, showUnitsStorage, useStorageItem } from "@/extension/storage";
 
 const LOCATION_CHANGE_EVENT = "usc-schedule-helper:locationchange";
 
@@ -84,19 +79,23 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 };
 
 const ExtensionLogic = () => {
-  const [enabled] = useStorageItem(extensionEnabledStorage, true);
-  const [showConflicts] = useStorageItem(showConflictsStorage, true);
-  const [showUnits] = useStorageItem(showUnitsStorage, true);
+  const [enabled, , enabledLoaded] = useStorageItem(extensionEnabledStorage, true);
+  const [showConflicts, , showConflictsLoaded] = useStorageItem(showConflictsStorage, true);
+  const [showUnits, , showUnitsLoaded] = useStorageItem(showUnitsStorage, true);
   const href = useLocationHref();
   const selectedClass = useScheduleHelperContext((state) => state.selectedClass);
 
   useEffect(() => {
-    initExtension({
+    if (!enabledLoaded || !showConflictsLoaded || !showUnitsLoaded) {
+      return;
+    }
+
+    return initExtension({
       enabled,
       showConflicts,
       showUnits,
     });
-  }, [enabled, href, showConflicts, showUnits]);
+  }, [enabled, enabledLoaded, href, showConflicts, showConflictsLoaded, showUnits, showUnitsLoaded]);
 
   if (!selectedClass) {
     return null;

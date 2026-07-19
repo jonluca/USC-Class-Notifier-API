@@ -23,6 +23,7 @@ export const showUnitsStorage = storage.defineItem<boolean>("local:showUnits", {
 
 export function useStorageItem<T>(item: DefinedStorageItem<T>, initialValue: T) {
   const [value, setValue] = useState(initialValue);
+  const [isLoaded, setIsLoaded] = useState(false);
   const valueRef = useRef(value);
 
   useEffect(() => {
@@ -35,12 +36,14 @@ export function useStorageItem<T>(item: DefinedStorageItem<T>, initialValue: T) 
     item.getValue().then((storedValue) => {
       if (isMounted) {
         setValue(storedValue);
+        setIsLoaded(true);
       }
     });
 
     const unwatch = item.watch((newValue) => {
       if (isMounted) {
         setValue(newValue);
+        setIsLoaded(true);
       }
     });
 
@@ -56,5 +59,5 @@ export function useStorageItem<T>(item: DefinedStorageItem<T>, initialValue: T) 
     await item.setValue(resolvedValue);
   };
 
-  return [value, updateValue] as const;
+  return [value, updateValue, isLoaded] as const;
 }
